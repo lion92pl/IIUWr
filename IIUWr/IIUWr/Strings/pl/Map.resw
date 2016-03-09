@@ -117,12 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="II" xml:space="preserve">
-    <value>Instytut Informatyki</value>
-    <comment>Name of Computer Science faculty</comment>
+  <data name="FirstFloor" xml:space="preserve">
+    <value>Piętro 1</value>
+    <comment>Level (floor) 1</comment>
   </data>
-  <data name="UWr" xml:space="preserve">
-    <value>Uniwersytet Wrocławski</value>
-    <comment>Name of University of Wrocław</comment>
+  <data name="GroundLevel" xml:space="preserve">
+    <value>Parter</value>
+    <comment>Ground level (floor 0)</comment>
+  </data>
+  <data name="MapHeader" xml:space="preserve">
+    <value>Mapa instytutu</value>
+    <comment>Map of building (map of institute)</comment>
+  </data>
+  <data name="SecondFloor" xml:space="preserve">
+    <value>Piętro 2</value>
+    <comment>Level (floor) 2</comment>
+  </data>
+  <data name="ThirdFloor" xml:space="preserve">
+    <value>Piętro 3</value>
+    <comment>Level (floor) 3</comment>
   </data>
 </root>

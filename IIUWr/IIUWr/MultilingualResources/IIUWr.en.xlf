@@ -9,6 +9,46 @@
         <trans-unit id="UWr" translate="yes" xml:space="preserve">
           <source>Uniwersytet Wrocławski</source>
           <target state="new">Uniwersytet Wrocławski</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Name of University of Wrocław</note>
+        </trans-unit>
+        <trans-unit id="II" translate="yes" xml:space="preserve">
+          <source>Instytut Informatyki</source>
+          <target state="new">Instytut Informatyki</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Name of Computer Science faculty</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="pl" target-language="en" original="IIUWR/STRINGS/PL/MAP.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1605.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="IIUWR/STRINGS/PL/MAP.RESW" datatype="resx">
+        <trans-unit id="FirstFloor" translate="yes" xml:space="preserve">
+          <source>Piętro 1</source>
+          <target state="new">Piętro 1</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Level (floor) 1</note>
+        </trans-unit>
+        <trans-unit id="GroundLevel" translate="yes" xml:space="preserve">
+          <source>Parter</source>
+          <target state="new">Parter</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Ground level (floor 0)</note>
+        </trans-unit>
+        <trans-unit id="MapHeader" translate="yes" xml:space="preserve">
+          <source>Mapa instytutu</source>
+          <target state="new">Mapa instytutu</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Map of building (map of institute)</note>
+        </trans-unit>
+        <trans-unit id="SecondFloor" translate="yes" xml:space="preserve">
+          <source>Piętro 2</source>
+          <target state="new">Piętro 2</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Level (floor) 2</note>
+        </trans-unit>
+        <trans-unit id="ThirdFloor" translate="yes" xml:space="preserve">
+          <source>Piętro 3</source>
+          <target state="new">Piętro 3</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Level (floor) 3</note>
         </trans-unit>
       </group>
     </body>
