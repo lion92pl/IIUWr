@@ -17,6 +17,8 @@ namespace IIUWr.Fereol.Model
 
         public string Name { get; set; }
 
+        public CourseType Type { get; set; }
+
         public string Description { get; set; }
         
         public bool? CanEnroll { get; set; }

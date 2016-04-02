@@ -110,6 +110,7 @@
     <Compile Include="CommonRegexes.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="CoursesService.cs" />
+    <Compile Include="Courses\CourseInfoParser.cs" />
     <Compile Include="Interface\IConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\HTMLParsing.rd.xml" />

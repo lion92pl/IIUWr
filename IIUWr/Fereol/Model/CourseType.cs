@@ -17,6 +17,11 @@ namespace IIUWr.Fereol.Model
 
         public int Id { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Id}: {NameKey}";
+        }
+
         public List<CourseType> Children { get; set; }
 
         public CourseType Parent

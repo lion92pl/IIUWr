@@ -1,4 +1,5 @@
-﻿using IIUWr.Fereol.HTMLParsing.Interface;
+﻿using IIUWr.Fereol.HTMLParsing.Courses;
+using IIUWr.Fereol.HTMLParsing.Interface;
 using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
 using IIUWr.Fereol.Model.Enums;
@@ -25,7 +26,6 @@ namespace IIUWr.Fereol.HTMLParsing
         private const string CourseGroup = "course";
         private const string PathGroup = "path";
         private const string NameGroup = "name";
-        private const string ValueGroup = "value";
         private const string TypeGroup = "type";
         private const string DescriptionGroup = "description";
         private const string WasEnrolledGroup = "wasEnrolled";
@@ -35,13 +35,7 @@ namespace IIUWr.Fereol.HTMLParsing
         private const string CourseInfoGroup = "courseInfo";
 
         #endregion
-
-        #region Info names
-
-        private const string ECTSInfo = "Punkty ECTS";
-
-        #endregion
-
+        
         #region Patterns
 
         private static readonly string SemestersAndCoursesPattern =
@@ -96,14 +90,7 @@ namespace IIUWr.Fereol.HTMLParsing
                     {CommonRegexes.TagsPattern}
                 </div>
             </div>)";
-
-        private static readonly string CourseInfoPattern =
-            $@"(?x)
-            <tr>
-                <th>(?<{NameGroup}>[^<]*)</th>
-                <td>(?<{ValueGroup}>[^<]*)</td>
-            </tr>";
-
+        
         #endregion
 
         #region Regeses
@@ -111,7 +98,6 @@ namespace IIUWr.Fereol.HTMLParsing
         private static readonly Regex SemestersAndCoursesRegex = new Regex(SemestersAndCoursesPattern, RegexOptions.Compiled);
         private static readonly Regex CourseFromListRegex = new Regex(CourseFromListPattern, RegexOptions.Compiled);
         private static readonly Regex CourseRegex = new Regex(CoursePattern, RegexOptions.Compiled);
-        private static readonly Regex CourseInfoRegex = new Regex(CourseInfoPattern, RegexOptions.Compiled);
 
         #endregion
 
@@ -199,6 +185,7 @@ namespace IIUWr.Fereol.HTMLParsing
             return new Course
             {
                 Name = match.Groups[NameGroup].Value,
+                Type = CourseType.Find(int.Parse(match.Groups[TypeGroup].Value)),
                 English = bool.Parse(match.Groups[EnglishGroup].Value),
                 Exam = bool.Parse(match.Groups[ExamGroup].Value),
                 Path = match.Groups[PathGroup].Value,
@@ -215,23 +202,7 @@ namespace IIUWr.Fereol.HTMLParsing
             
             foreach (Capture info in match.Groups[CourseInfoGroup].Captures)
             {
-                ParseCourseInfo(course, info);
-            }
-        }
-
-        private void ParseCourseInfo(Course course, Capture capture)
-        {
-            Match match = CourseInfoRegex.Match(capture.Value);
-            if (match.Success)
-            {
-                switch (match.Groups[NameGroup].Value)
-                {
-                    case ECTSInfo:
-                        course.ECTS = int.Parse(match.Groups[ValueGroup].Value);
-                        break;
-                    default:
-                        break;
-                }
+                CourseInfoParser.ParseCourseInfo(course, info);
             }
         }
     }
