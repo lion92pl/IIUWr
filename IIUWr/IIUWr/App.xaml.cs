@@ -58,7 +58,7 @@ namespace IIUWr
 
             Window.Current.Activate();
 
-            new Fereol.HTMLParsing.Courses().GetData();
+            new Fereol.HTMLParsing.Courses(new Fereol.HTMLParsing.Connection()).GetData();
         }
 
         /// <summary>

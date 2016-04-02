@@ -1,6 +1,6 @@
 ﻿namespace IIUWr.Fereol.Model.Enums
 {
-    public enum TutorialTypeEnum
+    public enum TutorialType
     {
         None = 0,
         Lecture = 1,

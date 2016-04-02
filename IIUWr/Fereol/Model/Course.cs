@@ -10,7 +10,7 @@ namespace IIUWr.Fereol.Model
         public int Id { get; set; }
 
         //TODO change to URL if possible
-        public string URL { get; set; }
+        public string Path { get; set; }
 
         /// <summary>Semester in which this course taken place</summary>
         public Semester Semester { get; set; }
@@ -33,5 +33,10 @@ namespace IIUWr.Fereol.Model
         //TODO grupy efektów kształcenia (EffectTypes), tagi, percentage?
 
         public IEnumerable<Tutorial> Tutorials { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
 }

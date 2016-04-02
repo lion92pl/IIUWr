@@ -110,7 +110,8 @@
     <Compile Include="Course.cs" />
     <Compile Include="CourseType.cs" />
     <Compile Include="Employee.cs" />
-    <Compile Include="Enums\TutorialTypeEnum.cs" />
+    <Compile Include="Enums\TutorialType.cs" />
+    <Compile Include="Enums\YearHalf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Semester.cs" />
     <Compile Include="TimeAndLocation.cs" />

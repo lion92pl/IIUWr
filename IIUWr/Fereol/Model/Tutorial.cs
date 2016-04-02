@@ -10,7 +10,7 @@ namespace IIUWr.Fereol.Model
         //TODO implement
         public Course Course { get; set; }
 
-        public TutorialTypeEnum Type { get; set; }
+        public TutorialType Type { get; set; }
 
         public IEnumerable<TimeAndLocation> TimesAndLocations { get; set; }
 

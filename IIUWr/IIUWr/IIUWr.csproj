@@ -142,6 +142,10 @@
       <Project>{335e1699-84f6-4323-bf14-5a672919ad4b}</Project>
       <Name>HTMLParsing</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fereol\Interface\Interface.csproj">
+      <Project>{97d0194c-87bc-4026-a58d-b94d959c540a}</Project>
+      <Name>Interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
