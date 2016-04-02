@@ -18,7 +18,7 @@ namespace IIUWr.Fereol.Model
         public string Name { get; set; }
 
         public string Description { get; set; }
-
+        
         public bool? CanEnroll { get; set; }
 
         public DateTimeOffset? CanEnrollFrom { get; set; }

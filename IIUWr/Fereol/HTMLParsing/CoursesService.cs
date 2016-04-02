@@ -27,6 +27,7 @@ namespace IIUWr.Fereol.HTMLParsing
         private const string NameGroup = "name";
         private const string ValueGroup = "value";
         private const string TypeGroup = "type";
+        private const string DescriptionGroup = "description";
         private const string WasEnrolledGroup = "wasEnrolled";
         private const string EnglishGroup = "english";
         private const string ExamGroup = "exam";
@@ -84,6 +85,12 @@ namespace IIUWr.Fereol.HTMLParsing
                                 <td>[^<]*</td>
                             </tr>)*
                         </table>
+                        <div\s+class=""description"">
+                            <h5>[^<]*</h5>
+                            (?<{DescriptionGroup}>
+                            {CommonRegexes.TagsPattern}
+                            )
+                        </div>
                         {CommonRegexes.TagsPattern}
                     </div>
                     {CommonRegexes.TagsPattern}
@@ -204,6 +211,7 @@ namespace IIUWr.Fereol.HTMLParsing
         private void ParseCourseFullData(Course course, Match match)
         {
             course.Name = match.Groups[NameGroup].Value;
+            course.Description = match.Groups[DescriptionGroup].Value;
             
             foreach (Capture info in match.Groups[CourseInfoGroup].Captures)
             {
