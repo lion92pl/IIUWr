@@ -29,6 +29,10 @@ namespace IIUWr.Fereol.Model
 
         public bool? English { get; set; }
 
+        public bool? SuggestedFor1Year { get; set; }
+
+        public bool? WasEnrolled { get; set; }
+
         //TODO hours per tutorial type
         //TODO grupy efektów kształcenia (EffectTypes), tagi, percentage?
 

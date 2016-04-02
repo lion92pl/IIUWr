@@ -38,5 +38,11 @@ namespace IIUWr.Fereol.HTMLParsing
             httpClient.Dispose();
             httpFilter.Dispose();
         }
+
+        public async Task<bool> CheckConnection()
+        {
+            var response = await httpClient.GetAsync(Endpoint);
+            return response.IsSuccessStatusCode;
+        }
     }
 }

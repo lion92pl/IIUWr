@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -58,7 +59,15 @@ namespace IIUWr
 
             Window.Current.Activate();
 
-            new Fereol.HTMLParsing.Courses(new Fereol.HTMLParsing.Connection()).GetData();
+            Test();
+        }
+
+        private async void Test()
+        {
+            var service = new Fereol.HTMLParsing.CoursesService(new Fereol.HTMLParsing.Connection());
+            var a = await service.GetCourses();
+
+            service.RefreshCourse(a.First().Courses.First());
         }
 
         /// <summary>
