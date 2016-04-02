@@ -12,6 +12,7 @@ namespace UnitTests.Fereol.Model
         [DataRow(1, "Inf")]
         [DataRow(5, "I1")]
         [DataRow(38, "I2T")]
+        [DataRow(35, "Inne")]
         public void Find(int id, string nameKey)
         {
             var type = CourseType.Find(id);

@@ -15,6 +15,4 @@
         Revision = 9,
         Project = 10
     }
-
-    //TODO get info about other types
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IIUWr", "IIUWr\IIUWr.csproj", "{B70AD852-B328-46A8-AEAF-6A24E4FEDD44}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Fereol\Model\Model.csproj", "{3CA09B84-C4FE-44D3-9322-B39BA56F3271}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{C0C815B1-2364-4920-AB74-8F3BCCE33A6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTMLParsing", "Fereol\HTMLParsing\HTMLParsing.csproj", "{335E1699-84F6-4323-BF14-5A672919AD4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,22 @@ Global
 		{C0C815B1-2364-4920-AB74-8F3BCCE33A6C}.Release|x86.ActiveCfg = Release|x86
 		{C0C815B1-2364-4920-AB74-8F3BCCE33A6C}.Release|x86.Build.0 = Release|x86
 		{C0C815B1-2364-4920-AB74-8F3BCCE33A6C}.Release|x86.Deploy.0 = Release|x86
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Debug|ARM.ActiveCfg = Debug|ARM
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Debug|ARM.Build.0 = Debug|ARM
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Debug|x64.ActiveCfg = Debug|x64
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Debug|x64.Build.0 = Debug|x64
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Debug|x86.ActiveCfg = Debug|x86
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Debug|x86.Build.0 = Debug|x86
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Release|ARM.ActiveCfg = Release|ARM
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Release|ARM.Build.0 = Release|ARM
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Release|x64.ActiveCfg = Release|x64
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Release|x64.Build.0 = Release|x64
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Release|x86.ActiveCfg = Release|x86
+		{335E1699-84F6-4323-BF14-5A672919AD4B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,5 +122,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{97D0194C-87BC-4026-A58D-B94D959C540A} = {DBC3D6BE-7DF8-4935-B5F9-9165C0688BBA}
 		{3CA09B84-C4FE-44D3-9322-B39BA56F3271} = {DBC3D6BE-7DF8-4935-B5F9-9165C0688BBA}
+		{335E1699-84F6-4323-BF14-5A672919AD4B} = {DBC3D6BE-7DF8-4935-B5F9-9165C0688BBA}
 	EndGlobalSection
 EndGlobal
