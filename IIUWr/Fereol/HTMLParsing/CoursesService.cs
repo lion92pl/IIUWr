@@ -1,10 +1,10 @@
 ﻿using IIUWr.Fereol.HTMLParsing.Courses;
-using IIUWr.Fereol.HTMLParsing.Interface;
 using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
 using IIUWr.Fereol.Model.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -20,31 +20,30 @@ namespace IIUWr.Fereol.HTMLParsing
 
         #region Pattern groups
 
-        private const string YearGroup = "year";
-        private const string YearHalfGroup = "yearHalf";
-        private const string IdGroup = "id";
-        private const string CourseGroup = "course";
-        private const string PathGroup = "path";
-        private const string NameGroup = "name";
-        private const string TypeGroup = "type";
-        private const string DescriptionGroup = "description";
-        private const string WasEnrolledGroup = "wasEnrolled";
-        private const string EnglishGroup = "english";
-        private const string ExamGroup = "exam";
-        private const string FirstYearGroup = "firstYear";
-        private const string CourseInfoGroup = "courseInfo";
+        private static class Group
+        {
+            public const string Year = "year";
+            public const string YearHalf = "yearHalf";
+            public const string Id = "id";
+            public const string Course = "course";
+            public const string Path = "path";
+            public const string Name = "name";
+            public const string Description = "description";
+            public const string CourseInfo = "courseInfo";
+            public const string HiddenInput = "hiddenInput";
+        }
 
         #endregion
-        
+
         #region Patterns
 
         private static readonly string SemestersAndCoursesPattern =
             $@"(?x)
             (?:<div\s+class=""semester""[^>]*>
-                <h3>[^<>]*<span>(?<{YearGroup}>[^\s]*)\s(?<{YearHalfGroup}>[^<>/]*)</span></h3>
-                <input[^<>/]*name=""semester-id""[^<>/]*value=""(?<{IdGroup}>\d+)""[^<>/]*/>
+                <h3>[^<>]*<span>(?<{Group.Year}>[^\s]*)\s(?<{Group.YearHalf}>[^<>/]*)</span></h3>
+                <input[^<>/]*name=""semester-id""[^<>/]*value=""(?<{Group.Id}>\d+)""[^<>/]*/>
                 <ul\s+class=""courses-list"">
-                    (?<{CourseGroup}>
+                    (?<{Group.Course}>
                     <li>
                         {CommonRegexes.TagsPattern}
                     </li>)*
@@ -54,14 +53,10 @@ namespace IIUWr.Fereol.HTMLParsing
         private static readonly string CourseFromListPattern =
             $@"(?x)
             (?:<li>
-                <a(?:href=""/courses/(?<{PathGroup}>(?:\w|\-)+)""|id=""course\-(?<{IdGroup}>\d+)""|\s*)+>
-                    (?<{NameGroup}>[^<]*)
+                <a(?:href=""/courses/(?<{Group.Path}>(?:\w|\-)+)""|id=""course\-(?<{Group.Id}>\d+)""|\s*)+>
+                    (?<{Group.Name}>[^<]*)
                 </a>
-                <input(?:type=""\w+""|name=""type""|value=""(?<{TypeGroup}>\d+)""|\s*)+/>
-                <input(?:type=""\w+""|name=""wasEnrolled""|value=""(?<{WasEnrolledGroup}>\w+)""|\s*)+/>
-                <input(?:type=""\w+""|name=""english""|value=""(?<{EnglishGroup}>\w+)""|\s*)+/>
-                <input(?:type=""\w+""|name=""exam""|value=""(?<{ExamGroup}>\w+)""|\s*)+/>
-                <input(?:type=""\w+""|name=""suggested_for_first_year""|value=""(?<{FirstYearGroup}>\w+)""|\s*)+/>
+                (?<{Group.HiddenInput}><input(?:\s*type=""hidden""|\s*name=""[^<]*""|\s*value=""[^<]*""){{3}}\s*/>)*
                 {CommonRegexes.TagsPattern}
             </li>)";
 
@@ -70,20 +65,18 @@ namespace IIUWr.Fereol.HTMLParsing
             (?:<div\s+id=""main\-content"">
                 {CommonRegexes.TagsPattern}
                 <div\s+id=""enr\-course\-view"">
-                    <h2>(?<{NameGroup}>[^<]*)</h2>
+                    <h2>(?<{Group.Name}>[^<]*)</h2>
                     <div\s+class=""details\s+course\-details"">
                         <table\s+class=""table\-info"">
-                            (?<{CourseInfoGroup}>
+                            (?<{Group.CourseInfo}>
                             <tr>
                                 <th>[^<]*</th>
-                                <td>[^<]*</td>
+                                <td>{CommonRegexes.TagsPattern}</td>
                             </tr>)*
                         </table>
                         <div\s+class=""description"">
                             <h5>[^<]*</h5>
-                            (?<{DescriptionGroup}>
-                            {CommonRegexes.TagsPattern}
-                            )
+                            (?<{Group.Description}>{CommonRegexes.TagsPattern})
                         </div>
                         {CommonRegexes.TagsPattern}
                     </div>
@@ -110,7 +103,7 @@ namespace IIUWr.Fereol.HTMLParsing
         {
             var page = await _connection.GetStringAsync(CoursesPath);
 
-            List<Semester> semesters = new List<Semester>();
+             List<Semester> semesters = new List<Semester>();
 
             foreach (Match match in SemestersAndCoursesRegex.Matches(page))
             {
@@ -119,14 +112,27 @@ namespace IIUWr.Fereol.HTMLParsing
                     semesters.Add(ParseSemester(match));
                 }
             }
-
+            
             return semesters;
+        }
+
+        public async Task RefreshCoursesForSemester(Semester semester)
+        {
+            List<Task> tasks = new List<Task>();
+
+            foreach (Course course in semester.Courses)
+            {
+                tasks.Add(RefreshCourse(course));
+            }
+
+            await Task.Run(() => Task.WaitAll(tasks.ToArray()));
         }
 
         public async Task RefreshCourse(Course course)
         {
+            System.Diagnostics.Debug.WriteLine($"Downloading {course.Path} page");
             var page = await _connection.GetStringAsync(CoursesPath + course.Path);
-
+            System.Diagnostics.Debug.WriteLine($"Finished downloading {course.Path} page");
             Match match = CourseRegex.Match(page);
 
             if (match.Success)
@@ -139,7 +145,7 @@ namespace IIUWr.Fereol.HTMLParsing
         {
             YearHalf yearHalf;
 
-            switch (match.Groups[YearHalfGroup].Value)
+            switch (match.Groups[Group.YearHalf].Value)
             {
                 case SummerHalf:
                     yearHalf = YearHalf.Summer;
@@ -154,11 +160,11 @@ namespace IIUWr.Fereol.HTMLParsing
 
             Semester semester =  new Semester
             {
-                Year = match.Groups[YearGroup].Value,
+                Year = match.Groups[Group.Year].Value,
                 YearHalf = yearHalf,
-                Id = int.Parse(match.Groups[IdGroup].Value)
+                Id = int.Parse(match.Groups[Group.Id].Value)
             };
-            semester.Courses = ParseCourses(semester, match.Groups[CourseGroup].Captures);
+            semester.Courses = ParseCourses(semester, match.Groups[Group.Course].Captures);
 
             return semester;
         }
@@ -170,10 +176,13 @@ namespace IIUWr.Fereol.HTMLParsing
             foreach (Capture capture in captures)
             {
                 Course course = ParseCourseBasicData(capture);
-                course.Semester = semester;
-                courses.Add(course);
+                if (course != null)
+                {
+                    course.Semester = semester;
+                    courses.Add(course);
+                }
             }
-
+            
             return courses;
         }
 
@@ -181,26 +190,32 @@ namespace IIUWr.Fereol.HTMLParsing
         {
             Match match = CourseFromListRegex.Match(capture.Value);
 
-            //TODO implement
-            return new Course
+            if (!match.Success)
             {
-                Name = match.Groups[NameGroup].Value,
-                Type = CourseType.Find(int.Parse(match.Groups[TypeGroup].Value)),
-                English = bool.Parse(match.Groups[EnglishGroup].Value),
-                Exam = bool.Parse(match.Groups[ExamGroup].Value),
-                Path = match.Groups[PathGroup].Value,
-                Id = int.Parse(match.Groups[IdGroup].Value),
-                SuggestedFor1Year = bool.Parse(match.Groups[FirstYearGroup].Value),
-                WasEnrolled = bool.Parse(match.Groups[WasEnrolledGroup].Value)
+                return null;
+            }
+
+            Course course = new Course
+            {
+                Name = match.Groups[Group.Name].Value,
+                Path = match.Groups[Group.Path].Value,
+                Id = int.Parse(match.Groups[Group.Id].Value)
             };
+
+            foreach (Capture hiddenInput in match.Groups[Group.HiddenInput].Captures)
+            {
+                CourseInfoParser.ParseHiddenInput(course, hiddenInput);
+            }
+
+            return course;
         }
 
         private void ParseCourseFullData(Course course, Match match)
         {
-            course.Name = match.Groups[NameGroup].Value;
-            course.Description = match.Groups[DescriptionGroup].Value;
+            course.Name = match.Groups[Group.Name].Value;
+            course.Description = match.Groups[Group.Description].Value;
             
-            foreach (Capture info in match.Groups[CourseInfoGroup].Captures)
+            foreach (Capture info in match.Groups[Group.CourseInfo].Captures)
             {
                 CourseInfoParser.ParseCourseInfo(course, info);
             }

@@ -1,27 +1,37 @@
 ﻿using IIUWr.Fereol.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace IIUWr.Fereol.HTMLParsing.Courses
 {
     public static class CourseInfoParser
     {
-        private const string NameGroup = "name";
-        private const string ValueGroup = "value";
+        private static class Group
+        {
+            public const string Name = "name";
+            public const string Value = "value";
+        }
 
-        private const string ECTSInfo = "Punkty ECTS";
+        private static class InfoConsts
+        {
+            public const string ECTS = "Punkty ECTS";
+        }
+
+        private static class HiddenConsts
+        {
+            public const string Type = "type";
+            public const string WasEnrolled = "wasEnrolled";
+            public const string English = "english";
+            public const string Exam = "exam";
+            public const string SuggestedFor1Year = "suggested_for_first_year";
+        }
 
         private static readonly string CourseInfoPattern =
             $@"(?x)
             <tr>
-                <th>(?<{NameGroup}>[^<]*)</th>
-                <td>(?<{ValueGroup}>[^<]*)</td>
+                <th>(?<{Group.Name}>[^<]*)</th>
+                <td>(?<{Group.Value}>[^<]*)</td>
             </tr>";
-
+        
         private static readonly Regex CourseInfoRegex = new Regex(CourseInfoPattern, RegexOptions.Compiled);
 
         public static void ParseCourseInfo(Course course, Capture capture)
@@ -29,10 +39,38 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             Match match = CourseInfoRegex.Match(capture.Value);
             if (match.Success)
             {
-                switch (match.Groups[NameGroup].Value)
+                switch (match.Groups[Group.Name].Value)
                 {
-                    case ECTSInfo:
-                        course.ECTS = int.Parse(match.Groups[ValueGroup].Value);
+                    case InfoConsts.ECTS:
+                        course.ECTS = int.Parse(match.Groups[Group.Value].Value);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public static void ParseHiddenInput(Course course, Capture capture)
+        {
+            var tuple = CommonRegexes.ParseHiddenInput(capture);
+            if (tuple != null)
+            {
+                switch (tuple.Item1)
+                {
+                    case HiddenConsts.English:
+                        course.English = bool.Parse(tuple.Item2);
+                        break;
+                    case HiddenConsts.Exam:
+                        course.Exam = bool.Parse(tuple.Item2);
+                        break;
+                    case HiddenConsts.SuggestedFor1Year:
+                        course.SuggestedFor1Year = bool.Parse(tuple.Item2);
+                        break;
+                    case HiddenConsts.Type:
+                        course.Type = CourseType.Find(int.Parse(tuple.Item2));
+                        break;
+                    case HiddenConsts.WasEnrolled:
+                        course.WasEnrolled = bool.Parse(tuple.Item2);
                         break;
                     default:
                         break;

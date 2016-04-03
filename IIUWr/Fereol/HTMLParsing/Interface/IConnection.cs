@@ -10,6 +10,6 @@ namespace IIUWr.Fereol.HTMLParsing.Interface
 {
     public interface IConnection : Fereol.Interface.IConnection
     {
-        IAsyncOperationWithProgress<string, HttpProgress> GetStringAsync(string relativeUri);
+        Task<string> GetStringAsync(string relativeUri);
     }
 }

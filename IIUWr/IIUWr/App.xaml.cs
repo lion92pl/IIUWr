@@ -58,18 +58,8 @@ namespace IIUWr
             }
 
             Window.Current.Activate();
-
-            Test();
         }
-
-        private async void Test()
-        {
-            var service = new Fereol.HTMLParsing.CoursesService(new Fereol.HTMLParsing.Connection());
-            var a = await service.GetCourses();
-
-            service.RefreshCourse(a.First().Courses.First());
-        }
-
+        
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>
