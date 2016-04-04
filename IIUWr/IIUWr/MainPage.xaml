@@ -10,26 +10,55 @@
         <local:ObjectConverter x:Key="ObjectConverter" />
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="root" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState>
+                    <VisualState.Setters>
+                        <Setter Target="row1.Height" Value="*" />
+                        <Setter Target="column2.Width" Value="0" />
+                        <Setter Target="column3.Width" Value="0" />
+                        <Setter Target="courses.(Grid.Column)" Value="0" />
+                        <Setter Target="courses.(Grid.Row)" Value="1" />
+                        <Setter Target="courseInfo.(Grid.Column)" Value="1" />
+                        <Setter Target="description.(Grid.Column)" Value="1" />
+                        <Setter Target="description.(Grid.Row)" Value="1" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0" x:Name="row1" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition x:Name="column2" />
+            <ColumnDefinition x:Name="column3" />
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{x:Bind VM.Semesters, Mode=OneWay}" SelectedItem="{x:Bind VM.SelectedSemester, Mode=TwoWay, Converter={StaticResource ObjectConverter}}"/>
-        <ListView ItemsSource="{x:Bind VM.SelectedSemester.Courses, Mode=OneWay}" Grid.Column="1" SelectedItem="{x:Bind VM.SelectedCourse, Converter={StaticResource ObjectConverter}, Mode=TwoWay}"/>
-        <Button Content="Refresh" Click="{x:Bind VM.RefreshSemesters}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
-        <StackPanel Grid.Column="2" Margin="10">
+        <ListView x:Name="semesters" ItemsSource="{x:Bind VM.Semesters, Mode=OneWay}" SelectedItem="{x:Bind VM.SelectedSemester, Mode=TwoWay, Converter={StaticResource ObjectConverter}}">
+            <ListView.Header>
+                <Button Content="Refresh" Click="{x:Bind VM.RefreshSemesters}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="32" />
+            </ListView.Header>
+        </ListView>
+        <ListView x:Name="courses" ItemsSource="{x:Bind VM.SelectedSemester.Courses, Mode=OneWay}" Grid.Column="1" SelectedItem="{x:Bind VM.SelectedCourse, Converter={StaticResource ObjectConverter}, Mode=TwoWay}"/>
+        <StackPanel x:Name="courseInfo" Grid.Column="2" Margin="10">
+            <Button Content="Refresh" Click="{x:Bind RefreshDescription}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="32"/>
             <TextBlock TextWrapping="Wrap" Text="{x:Bind VM.SelectedCourse.Name, Mode=OneWay}"/>
             <TextBlock TextWrapping="Wrap" Text="{x:Bind VM.SelectedCourse.Type, Mode=OneWay}"/>
         </StackPanel>
-        <Button Content="Refresh" Click="{x:Bind RefreshDescription}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="1"/>
-        <WebView x:Name="description" Grid.Column="3" Width="319" />
+        <WebView x:Name="description" Grid.Column="3" />
 
     </Grid>
 </Page>

@@ -101,9 +101,13 @@ namespace IIUWr.Fereol.HTMLParsing
 
         public async Task<IEnumerable<Semester>> GetCourses()
         {
+            System.Diagnostics.Debug.WriteLine($"{nameof(GetCourses)}: Start download");
+
             var page = await _connection.GetStringAsync(CoursesPath);
 
-             List<Semester> semesters = new List<Semester>();
+            System.Diagnostics.Debug.WriteLine($"{nameof(GetCourses)}: Finished download, start parsing");
+
+            List<Semester> semesters = new List<Semester>();
 
             foreach (Match match in SemestersAndCoursesRegex.Matches(page))
             {
@@ -112,7 +116,9 @@ namespace IIUWr.Fereol.HTMLParsing
                     semesters.Add(ParseSemester(match));
                 }
             }
-            
+
+            System.Diagnostics.Debug.WriteLine($"{nameof(GetCourses)}: Finished parsing");
+
             return semesters;
         }
 
