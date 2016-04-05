@@ -1,6 +1,9 @@
-﻿using IIUWr.Fereol.Model;
+﻿using IIUWr.Fereol.Interface;
+using IIUWr.Fereol.Model;
+using LionCub.Patterns.DependencyInjection;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
@@ -18,6 +21,11 @@ namespace IIUWr
         public async Task RefreshDescription()
         {
             await VM.RefreshSelectedCourse();
+            ShowDescription();
+        }
+
+        private void ShowDescription()
+        {
             description.NavigateToString(
                 VM?.SelectedCourse?.Description ??
                 $@"<h1>Cannot parse!<h1><br /><h3>{VM?.SelectedCourse?.Name ?? "No course selected"}</h3>");
@@ -27,11 +35,13 @@ namespace IIUWr
 
         public class ViewModel : INotifyPropertyChanged
         {
-            private Fereol.HTMLParsing.CoursesService _coursesService;
+            private ICoursesService _coursesService;
+            private int? _lastSemesterId;
+            private int? _lastCourseId;
 
             public ViewModel()
             {
-                _coursesService = new Fereol.HTMLParsing.CoursesService(new Fereol.HTMLParsing.Connection());
+                _coursesService = IoC.Get<ICoursesService>();
             }
 
             public async Task RefreshSemesters()
@@ -44,6 +54,7 @@ namespace IIUWr
                 if (SelectedCourse != null)
                 {
                     await _coursesService.RefreshCourse(SelectedCourse);
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCourse)));
                 }
             }
 
@@ -58,7 +69,9 @@ namespace IIUWr
                     if (_semesters != value)
                     {
                         _semesters = value;
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Semesters))); 
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Semesters)));
+                        SelectedSemester = _semesters?.FirstOrDefault(s => s.Id == _lastSemesterId)
+                                        ?? _semesters?.FirstOrDefault();
                     }
                 }
             }
@@ -72,7 +85,13 @@ namespace IIUWr
                     if (_selectedSemester != value)
                     {
                         _selectedSemester = value;
+                        if (_selectedSemester != null)
+                        {
+                            _lastSemesterId = _selectedSemester.Id;
+                        }
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSemester)));
+                        SelectedCourse = _selectedSemester?.Courses?.FirstOrDefault(c => c.Id == _lastCourseId)
+                                      ?? _selectedSemester?.Courses?.FirstOrDefault();
                     }
                 }
             }
@@ -86,6 +105,10 @@ namespace IIUWr
                     if (_selectedCourse != value)
                     {
                         _selectedCourse = value;
+                        if (_selectedCourse != null)
+                        {
+                            _lastCourseId = _selectedCourse.Id;
+                        }
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCourse)));
                     }
                 }

@@ -3,11 +3,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IIUWr"
+    xmlns:conv="using:LionCub.UI.Xaml.Data.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Resources>
         <local:ObjectConverter x:Key="ObjectConverter" />
+        <conv:LocaleTextConverter x:Key="CourseTypeNameConverter" Map="CourseType" />
+        <conv:BooleanConverter x:Key="BooleanConverter" />
     </Page.Resources>
 
     <Grid x:Name="root" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -53,10 +56,14 @@
             </ListView.Header>
         </ListView>
         <ListView x:Name="courses" ItemsSource="{x:Bind VM.SelectedSemester.Courses, Mode=OneWay}" Grid.Column="1" SelectedItem="{x:Bind VM.SelectedCourse, Converter={StaticResource ObjectConverter}, Mode=TwoWay}"/>
-        <StackPanel x:Name="courseInfo" Grid.Column="2" Margin="10">
+        <StackPanel x:Name="courseInfo" Grid.Column="2" Margin="10" Visibility="{x:Bind VM.SelectedCourse, Mode=OneWay, Converter={StaticResource BooleanConverter}}">
             <Button Content="Refresh" Click="{x:Bind RefreshDescription}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="32"/>
-            <TextBlock TextWrapping="Wrap" Text="{x:Bind VM.SelectedCourse.Name, Mode=OneWay}"/>
-            <TextBlock TextWrapping="Wrap" Text="{x:Bind VM.SelectedCourse.Type, Mode=OneWay}"/>
+            <TextBlock TextWrapping="Wrap" Text="{x:Bind VM.SelectedCourse.Name, Mode=OneWay}" />
+            <TextBlock TextWrapping="Wrap" Text="{x:Bind VM.SelectedCourse.Type.NameKey, Mode=OneWay, Converter={StaticResource CourseTypeNameConverter}}" />
+            <StackPanel Orientation="Horizontal" Visibility="{x:Bind VM.SelectedCourse.ECTS, Mode=OneWay, Converter={StaticResource BooleanConverter}}">
+                <TextBlock x:Uid="/Course/ECTSLabel" Margin="0,0,10,0" />
+                <TextBlock Text="{x:Bind VM.SelectedCourse.ECTS, Mode=OneWay}" />
+            </StackPanel>
         </StackPanel>
         <WebView x:Name="description" Grid.Column="3" />
 

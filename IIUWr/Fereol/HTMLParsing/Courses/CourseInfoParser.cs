@@ -14,6 +14,7 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
         private static class InfoConsts
         {
             public const string ECTS = "Punkty ECTS";
+            public const string Hours = "Liczba godzin";
         }
 
         private static class HiddenConsts
@@ -31,8 +32,12 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 <th>(?<{Group.Name}>[^<]*)</th>
                 <td>(?<{Group.Value}>[^<]*)</td>
             </tr>";
-        
+
+        private static readonly string HoursPattern =
+            $@"";
+
         private static readonly Regex CourseInfoRegex = new Regex(CourseInfoPattern, RegexOptions.Compiled);
+        private static readonly Regex HoursRegex = new Regex(HoursPattern, RegexOptions.Compiled);
 
         public static void ParseCourseInfo(Course course, Capture capture)
         {
@@ -43,6 +48,9 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 {
                     case InfoConsts.ECTS:
                         course.ECTS = int.Parse(match.Groups[Group.Value].Value);
+                        break;
+                    case InfoConsts.Hours:
+                        ParseHours(course, capture);
                         break;
                     default:
                         break;
@@ -76,6 +84,11 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                         break;
                 }
             }
+        }
+
+        private static void ParseHours(Course course, Capture capture)
+        {
+            //TODO implement
         }
     }
 }

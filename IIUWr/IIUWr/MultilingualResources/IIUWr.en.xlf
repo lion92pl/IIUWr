@@ -53,4 +53,114 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="pl" target-language="en" original="IIUWR/STRINGS/PL/COURSETYPE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1605.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="IIUWR/STRINGS/PL/COURSETYPE.RESW" datatype="resx">
+        <trans-unit id="O1" translate="yes" xml:space="preserve">
+          <source>Obowiązkowy 1</source>
+          <target state="new">Obowiązkowy 1</target>
+        </trans-unit>
+        <trans-unit id="I1" translate="yes" xml:space="preserve">
+          <source>Informatyczny 1</source>
+          <target state="new">Informatyczny 1</target>
+        </trans-unit>
+        <trans-unit id="I2" translate="yes" xml:space="preserve">
+          <source>Informatyczny 2</source>
+          <target state="new">Informatyczny 2</target>
+        </trans-unit>
+        <trans-unit id="I2T" translate="yes" xml:space="preserve">
+          <source>Informatyczny 2 - teoria</source>
+          <target state="new">Informatyczny 2 - teoria</target>
+        </trans-unit>
+        <trans-unit id="I2Z" translate="yes" xml:space="preserve">
+          <source>Informatyczny 2 - zastosowania</source>
+          <target state="new">Informatyczny 2 - zastosowania</target>
+        </trans-unit>
+        <trans-unit id="Iinż" translate="yes" xml:space="preserve">
+          <source>Informatyczny inżynierski</source>
+          <target state="new">Informatyczny inżynierski</target>
+        </trans-unit>
+        <trans-unit id="Inf" translate="yes" xml:space="preserve">
+          <source>Informatyczny</source>
+          <target state="new">Informatyczny</target>
+        </trans-unit>
+        <trans-unit id="Inne" translate="yes" xml:space="preserve">
+          <source>Inne</source>
+          <target state="new">Inne</target>
+        </trans-unit>
+        <trans-unit id="K1" translate="yes" xml:space="preserve">
+          <source>Kurs 1</source>
+          <target state="new">Kurs 1</target>
+        </trans-unit>
+        <trans-unit id="K2" translate="yes" xml:space="preserve">
+          <source>Kurs 2</source>
+          <target state="new">Kurs 2</target>
+        </trans-unit>
+        <trans-unit id="Kinż" translate="yes" xml:space="preserve">
+          <source>Kurs inżynierski</source>
+          <target state="new">Kurs inżynierski</target>
+        </trans-unit>
+        <trans-unit id="Kurs" translate="yes" xml:space="preserve">
+          <source>Kurs</source>
+          <target state="new">Kurs</target>
+        </trans-unit>
+        <trans-unit id="KursySeminaria" translate="yes" xml:space="preserve">
+          <source>Kursy i seminaria</source>
+          <target state="new">Kursy i seminaria</target>
+        </trans-unit>
+        <trans-unit id="Lektorat" translate="yes" xml:space="preserve">
+          <source>Lektorat</source>
+          <target state="new">Lektorat</target>
+        </trans-unit>
+        <trans-unit id="Nieinformatyczny" translate="yes" xml:space="preserve">
+          <source>Nieinformatyczny</source>
+          <target state="new">Nieinformatyczny</target>
+        </trans-unit>
+        <trans-unit id="O" translate="yes" xml:space="preserve">
+          <source>Obowiązkowy</source>
+          <target state="new">Obowiązkowy</target>
+        </trans-unit>
+        <trans-unit id="O2" translate="yes" xml:space="preserve">
+          <source>Obowiązkowy 2</source>
+          <target state="new">Obowiązkowy 2</target>
+        </trans-unit>
+        <trans-unit id="O3" translate="yes" xml:space="preserve">
+          <source>Obowiązkowy 3</source>
+          <target state="new">Obowiązkowy 3</target>
+        </trans-unit>
+        <trans-unit id="Oinż" translate="yes" xml:space="preserve">
+          <source>Obowiązkowy inżynierski</source>
+          <target state="new">Obowiązkowy inżynierski</target>
+        </trans-unit>
+        <trans-unit id="Projekt" translate="yes" xml:space="preserve">
+          <source>Projekt</source>
+          <target state="new">Projekt</target>
+        </trans-unit>
+        <trans-unit id="Seminarium" translate="yes" xml:space="preserve">
+          <source>Seminarium</source>
+          <target state="new">Seminarium</target>
+        </trans-unit>
+        <trans-unit id="WF" translate="yes" xml:space="preserve">
+          <source>Wychowanie fizyczne</source>
+          <target state="new">Wychowanie fizyczne</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="pl" target-language="en" original="IIUWR/STRINGS/PL/COURSE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1605.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="IIUWR/STRINGS/PL/COURSE.RESW" datatype="resx">
+        <trans-unit id="ECTSLabel.Text" translate="yes" xml:space="preserve">
+          <source>ECTS:</source>
+          <target state="new">ECTS:</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>

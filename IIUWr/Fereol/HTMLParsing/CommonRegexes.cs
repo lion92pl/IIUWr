@@ -5,32 +5,26 @@ namespace IIUWr.Fereol.HTMLParsing
 {
     public static class CommonRegexes
     {
-        public const string TagsPattern =
-            @"(?>
-                <!--.*?-->                          |
-                <[^>]*/>                            |
-                (?<opentag><(?!/)[^>]*[^/]>)        |
-                (?<closetag-opentag></[^>]*[^/]>)   |
-                [^<>]*)*
-            (?(opentag)(?!))";
-
-        //TODO: check what's wrong, correct, use
-        public const string TagsPatternNew =
-            @"(?>
-                <hr>                             |
-                <br>                             |
-                <!--.*?-->                       |
-                <[^/>]*/>                        |
-                (?<opentag><(?!/)[^/>]*>)        |
-                (?<closetag-opentag></[^/>]*>)   |
-                [^<>]*)*
-            (?(opentag)(?!))";
-
         private static class Group
         {
             public const string Name = "name";
             public const string Value = "value";
         }
+
+        public const string TagsPattern =
+            @"(?>
+                <!-- .*? -->                                 |
+                <     [^>]*/>                                |
+                <hr   [^>]* >                                |
+                <br   [^>]* >                                |
+                <img  [^>]* >                                |
+                (?<opentag>          <(?!/) [^>]* [^/]>)     |
+                (?<closetag-opentag> </     [^>]* [^/]>)     |
+                [^<>]*
+            )*
+            (?(opentag)(?!))";
+
+        
 
         private static readonly string HiddenInputPatern =
             $@"<input(?:\s*type=""hidden""|\s*name=""(?<{Group.Name}>[^""]*)""|\s*value=""(?<{Group.Value}>[^""]*)""){{3}}\s*/>";

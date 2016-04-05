@@ -18,8 +18,9 @@ namespace IIUWr
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
+            ConfigureIoC.Fereol.HTMLParsing();
         }
 
         /// <summary>

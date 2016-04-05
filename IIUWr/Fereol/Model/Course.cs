@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace IIUWr.Fereol.Model
 {
-    public class Course
+    public class Course : INotifyPropertyChanged
     {
         //TODO implement
 
@@ -25,7 +26,19 @@ namespace IIUWr.Fereol.Model
 
         public DateTimeOffset? CanEnrollFrom { get; set; }
 
-        public int? ECTS { get; set; }
+        private int? _ECTS;
+        public int? ECTS
+        {
+            get { return _ECTS; }
+            set
+            {
+                if (_ECTS != value)
+                {
+                    _ECTS = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ECTS)));
+                }
+            }
+        }
 
         public bool? Exam { get; set; }
 
@@ -39,6 +52,8 @@ namespace IIUWr.Fereol.Model
         //TODO grupy efektów kształcenia (EffectTypes), tagi, percentage?
 
         public IEnumerable<Tutorial> Tutorials { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public override string ToString()
         {

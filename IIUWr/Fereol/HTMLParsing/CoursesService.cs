@@ -17,9 +17,7 @@ namespace IIUWr.Fereol.HTMLParsing
 
         private const string SummerHalf = "letni";
         private const string WinterHalf = "zimowy";
-
-        #region Pattern groups
-
+        
         private static class Group
         {
             public const string Year = "year";
@@ -33,12 +31,10 @@ namespace IIUWr.Fereol.HTMLParsing
             public const string HiddenInput = "hiddenInput";
         }
 
-        #endregion
-
         #region Patterns
 
         private static readonly string SemestersAndCoursesPattern =
-            $@"(?x)
+            $@"(?snx)
             (?:<div\s+class=""semester""[^>]*>
                 <h3>[^<>]*<span>(?<{Group.Year}>[^\s]*)\s(?<{Group.YearHalf}>[^<>/]*)</span></h3>
                 <input[^<>/]*name=""semester-id""[^<>/]*value=""(?<{Group.Id}>\d+)""[^<>/]*/>
@@ -51,7 +47,7 @@ namespace IIUWr.Fereol.HTMLParsing
             </div>)";
 
         private static readonly string CourseFromListPattern =
-            $@"(?x)
+            $@"(?snx)
             (?:<li>
                 <a(?:href=""/courses/(?<{Group.Path}>(?:\w|\-)+)""|id=""course\-(?<{Group.Id}>\d+)""|\s*)+>
                     (?<{Group.Name}>[^<]*)
@@ -61,7 +57,7 @@ namespace IIUWr.Fereol.HTMLParsing
             </li>)";
 
         private static readonly string CoursePattern =
-            $@"(?x)
+            $@"(?snx)
             (?:<div\s+id=""main\-content"">
                 {CommonRegexes.TagsPattern}
                 <div\s+id=""enr\-course\-view"">
@@ -82,6 +78,7 @@ namespace IIUWr.Fereol.HTMLParsing
                     </div>
                     {CommonRegexes.TagsPattern}
                 </div>
+                {CommonRegexes.TagsPattern}
             </div>)";
         
         #endregion
@@ -136,9 +133,8 @@ namespace IIUWr.Fereol.HTMLParsing
 
         public async Task RefreshCourse(Course course)
         {
-            System.Diagnostics.Debug.WriteLine($"Downloading {course.Path} page");
             var page = await _connection.GetStringAsync(CoursesPath + course.Path);
-            System.Diagnostics.Debug.WriteLine($"Finished downloading {course.Path} page");
+
             Match match = CourseRegex.Match(page);
 
             if (match.Success)
