@@ -111,8 +111,11 @@
     <Compile Include="Connection.cs" />
     <Compile Include="CoursesService.cs" />
     <Compile Include="Courses\CourseInfoParser.cs" />
+    <Compile Include="CredentialsManager.cs" />
     <Compile Include="Interface\IConnection.cs" />
+    <Compile Include="Interface\ISessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegexGroups.cs" />
     <EmbeddedResource Include="Properties\HTMLParsing.rd.xml" />
   </ItemGroup>
   <ItemGroup>

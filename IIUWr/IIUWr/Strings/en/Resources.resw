@@ -12,4 +12,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="UWr" xml:space="preserve">
+    <value>University of Wrocław</value>
+    <comment>Name of University of Wrocław</comment>
+  </data>
+  <data name="II" xml:space="preserve">
+    <value>Computer Science faculty</value>
+    <comment>Name of Computer Science faculty</comment>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Enrollment CS UWr</value>
+    <comment>App name</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>Refresh</comment>
+  </data>
+  <data name="RefreshButton.Content" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>Refresh</comment>
+  </data>
 </root>

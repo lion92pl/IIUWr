@@ -8,5 +8,7 @@ namespace IIUWr.Fereol.Interface
         Uri FereolBaseUri { get; set; }
 
         Task<bool> CheckConnection();
+
+        Task<bool> Login(string username, string password);
     }
 }

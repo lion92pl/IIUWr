@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace IIUWr.Fereol.HTMLParsing
 {
@@ -18,28 +19,15 @@ namespace IIUWr.Fereol.HTMLParsing
         private const string SummerHalf = "letni";
         private const string WinterHalf = "zimowy";
         
-        private static class Group
-        {
-            public const string Year = "year";
-            public const string YearHalf = "yearHalf";
-            public const string Id = "id";
-            public const string Course = "course";
-            public const string Path = "path";
-            public const string Name = "name";
-            public const string Description = "description";
-            public const string CourseInfo = "courseInfo";
-            public const string HiddenInput = "hiddenInput";
-        }
-
         #region Patterns
 
         private static readonly string SemestersAndCoursesPattern =
             $@"(?snx)
             (?:<div\s+class=""semester""[^>]*>
-                <h3>[^<>]*<span>(?<{Group.Year}>[^\s]*)\s(?<{Group.YearHalf}>[^<>/]*)</span></h3>
-                <input[^<>/]*name=""semester-id""[^<>/]*value=""(?<{Group.Id}>\d+)""[^<>/]*/>
+                <h3>[^<>]*<span>(?<{RegexGroups.Year}>[^\s]*)\s(?<{RegexGroups.YearHalf}>[^<>/]*)</span></h3>
+                <input[^<>/]*name=""semester-id""[^<>/]*value=""(?<{RegexGroups.Id}>\d+)""[^<>/]*/>
                 <ul\s+class=""courses-list"">
-                    (?<{Group.Course}>
+                    (?<{RegexGroups.Course}>
                     <li>
                         {CommonRegexes.TagsPattern}
                     </li>)*
@@ -49,10 +37,10 @@ namespace IIUWr.Fereol.HTMLParsing
         private static readonly string CourseFromListPattern =
             $@"(?snx)
             (?:<li>
-                <a(?:href=""/courses/(?<{Group.Path}>(?:\w|\-)+)""|id=""course\-(?<{Group.Id}>\d+)""|\s*)+>
-                    (?<{Group.Name}>[^<]*)
+                <a(?:href=""/courses/(?<{RegexGroups.Path}>(?:\w|\-)+)""|id=""course\-(?<{RegexGroups.Id}>\d+)""|\s*)+>
+                    (?<{RegexGroups.Name}>[^<]*)
                 </a>
-                (?<{Group.HiddenInput}><input(?:\s*type=""hidden""|\s*name=""[^<]*""|\s*value=""[^<]*""){{3}}\s*/>)*
+                (?<{RegexGroups.HiddenInput}><input(?:\s*type=""hidden""|\s*name=""[^<]*""|\s*value=""[^<]*""){{3}}\s*/>)*
                 {CommonRegexes.TagsPattern}
             </li>)";
 
@@ -61,10 +49,10 @@ namespace IIUWr.Fereol.HTMLParsing
             (?:<div\s+id=""main\-content"">
                 {CommonRegexes.TagsPattern}
                 <div\s+id=""enr\-course\-view"">
-                    <h2>(?<{Group.Name}>[^<]*)</h2>
+                    <h2>(?<{RegexGroups.Name}>[^<]*)</h2>
                     <div\s+class=""details\s+course\-details"">
                         <table\s+class=""table\-info"">
-                            (?<{Group.CourseInfo}>
+                            (?<{RegexGroups.CourseInfo}>
                             <tr>
                                 <th>[^<]*</th>
                                 <td>{CommonRegexes.TagsPattern}</td>
@@ -72,7 +60,7 @@ namespace IIUWr.Fereol.HTMLParsing
                         </table>
                         <div\s+class=""description"">
                             <h5>[^<]*</h5>
-                            (?<{Group.Description}>{CommonRegexes.TagsPattern})
+                            (?<{RegexGroups.Description}>{CommonRegexes.TagsPattern})
                         </div>
                         {CommonRegexes.TagsPattern}
                     </div>
@@ -94,8 +82,39 @@ namespace IIUWr.Fereol.HTMLParsing
         public CoursesService(Interface.IConnection connection)
         {
             _connection = connection;
+            Semesters = new ObservableCollection<Semester>();
         }
 
+        public ObservableCollection<Semester> Semesters { get; }
+
+        public async Task RefreshSemesters()
+        {
+            System.Diagnostics.Debug.WriteLine($"{nameof(RefreshSemesters)}: Start download");
+
+            var page = await _connection.GetStringAsync(CoursesPath);
+
+            System.Diagnostics.Debug.WriteLine($"{nameof(RefreshSemesters)}: Finished download, start parsing");
+            
+            foreach (Match match in SemestersAndCoursesRegex.Matches(page))
+            {
+                if (match.Success)
+                {
+                    var semester = ParseSemester(match);
+                    if (Semesters.Contains(semester))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Semesters.Add(semester);
+                    }
+                }
+            }
+
+            System.Diagnostics.Debug.WriteLine($"{nameof(RefreshSemesters)}: Finished parsing");
+        }
+
+        /*
         public async Task<IEnumerable<Semester>> GetCourses()
         {
             System.Diagnostics.Debug.WriteLine($"{nameof(GetCourses)}: Start download");
@@ -118,7 +137,7 @@ namespace IIUWr.Fereol.HTMLParsing
 
             return semesters;
         }
-
+        
         public async Task RefreshCoursesForSemester(Semester semester)
         {
             List<Task> tasks = new List<Task>();
@@ -130,6 +149,7 @@ namespace IIUWr.Fereol.HTMLParsing
 
             await Task.Run(() => Task.WaitAll(tasks.ToArray()));
         }
+        */
 
         public async Task RefreshCourse(Course course)
         {
@@ -147,7 +167,7 @@ namespace IIUWr.Fereol.HTMLParsing
         {
             YearHalf yearHalf;
 
-            switch (match.Groups[Group.YearHalf].Value)
+            switch (match.Groups[RegexGroups.YearHalf].Value)
             {
                 case SummerHalf:
                     yearHalf = YearHalf.Summer;
@@ -162,11 +182,11 @@ namespace IIUWr.Fereol.HTMLParsing
 
             Semester semester =  new Semester
             {
-                Year = match.Groups[Group.Year].Value,
+                Year = match.Groups[RegexGroups.Year].Value,
                 YearHalf = yearHalf,
-                Id = int.Parse(match.Groups[Group.Id].Value)
+                Id = int.Parse(match.Groups[RegexGroups.Id].Value)
             };
-            semester.Courses = ParseCourses(semester, match.Groups[Group.Course].Captures);
+            semester.Courses = ParseCourses(semester, match.Groups[RegexGroups.Course].Captures);
 
             return semester;
         }
@@ -199,12 +219,12 @@ namespace IIUWr.Fereol.HTMLParsing
 
             Course course = new Course
             {
-                Name = match.Groups[Group.Name].Value,
-                Path = match.Groups[Group.Path].Value,
-                Id = int.Parse(match.Groups[Group.Id].Value)
+                Name = match.Groups[RegexGroups.Name].Value,
+                Path = match.Groups[RegexGroups.Path].Value,
+                Id = int.Parse(match.Groups[RegexGroups.Id].Value)
             };
 
-            foreach (Capture hiddenInput in match.Groups[Group.HiddenInput].Captures)
+            foreach (Capture hiddenInput in match.Groups[RegexGroups.HiddenInput].Captures)
             {
                 CourseInfoParser.ParseHiddenInput(course, hiddenInput);
             }
@@ -214,10 +234,10 @@ namespace IIUWr.Fereol.HTMLParsing
 
         private void ParseCourseFullData(Course course, Match match)
         {
-            course.Name = match.Groups[Group.Name].Value;
-            course.Description = match.Groups[Group.Description].Value;
+            course.Name = match.Groups[RegexGroups.Name].Value;
+            course.Description = match.Groups[RegexGroups.Description].Value;
             
-            foreach (Capture info in match.Groups[Group.CourseInfo].Captures)
+            foreach (Capture info in match.Groups[RegexGroups.CourseInfo].Captures)
             {
                 CourseInfoParser.ParseCourseInfo(course, info);
             }

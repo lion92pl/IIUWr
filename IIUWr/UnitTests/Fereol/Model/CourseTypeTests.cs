@@ -1,6 +1,5 @@
 ﻿using IIUWr.Fereol.Model;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace UnitTests.Fereol.Model

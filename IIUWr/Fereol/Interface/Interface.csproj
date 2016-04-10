@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="IConnection.cs" />
     <Compile Include="ICoursesService.cs" />
+    <Compile Include="ICredentialsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Interface.rd.xml" />
   </ItemGroup>

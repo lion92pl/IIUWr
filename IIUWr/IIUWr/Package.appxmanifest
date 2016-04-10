@@ -3,7 +3,7 @@
   <Identity Name="5a52687a-9d48-4d50-9b43-ed4517032600" Publisher="CN=Tomasz" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="5a52687a-9d48-4d50-9b43-ed4517032600" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>IIUWr</DisplayName>
+    <DisplayName>ms-resource:AppName</DisplayName>
     <PublisherDisplayName>Tomasz</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="IIUWr.App">
-      <uap:VisualElements DisplayName="IIUWr" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Application for Computer Science students at University of Wrocław" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="ms-resource:AppName" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Application for Computer Science students at University of Wrocław" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="II UWr" Square71x71Logo="Assets\Square71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="wide310x150Logo" />
@@ -27,5 +27,6 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <uap:Capability Name="appointments" />
   </Capabilities>
 </Package>

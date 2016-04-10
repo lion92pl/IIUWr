@@ -117,24 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppName" xml:space="preserve">
-    <value>Zapisy II UWr</value>
-    <comment>App name</comment>
+  <data name="Summer" xml:space="preserve">
+    <value>letni</value>
   </data>
-  <data name="II" xml:space="preserve">
-    <value>Instytut Informatyki</value>
-    <comment>Name of Computer Science faculty</comment>
-  </data>
-  <data name="Refresh" xml:space="preserve">
-    <value>Odśwież</value>
-    <comment>Refresh</comment>
-  </data>
-  <data name="RefreshButton.Content" xml:space="preserve">
-    <value>Odśwież</value>
-    <comment>Refresh</comment>
-  </data>
-  <data name="UWr" xml:space="preserve">
-    <value>Uniwersytet Wrocławski</value>
-    <comment>Name of University of Wrocław</comment>
+  <data name="Winter" xml:space="preserve">
+    <value>zimowy</value>
   </data>
 </root>

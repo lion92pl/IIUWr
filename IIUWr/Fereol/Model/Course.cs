@@ -6,11 +6,9 @@ namespace IIUWr.Fereol.Model
 {
     public class Course : INotifyPropertyChanged
     {
-        //TODO implement
-
         public int Id { get; set; }
-
-        //TODO change to URL if possible
+        
+        //TODO move to HTMLParsing as implementation specific (here create interface, same with other types)
         public string Path { get; set; }
 
         /// <summary>Semester in which this course taken place</summary>
@@ -20,8 +18,20 @@ namespace IIUWr.Fereol.Model
 
         public CourseType Type { get; set; }
 
-        public string Description { get; set; }
-        
+        private string _description;
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                if (_description != value)
+                {
+                    _description = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
+
         public bool? CanEnroll { get; set; }
 
         public DateTimeOffset? CanEnrollFrom { get; set; }
@@ -35,7 +45,7 @@ namespace IIUWr.Fereol.Model
                 if (_ECTS != value)
                 {
                     _ECTS = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ECTS)));
+                    PropertyChanged.Notify(this);
                 }
             }
         }

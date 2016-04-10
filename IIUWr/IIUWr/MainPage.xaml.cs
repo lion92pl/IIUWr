@@ -15,10 +15,10 @@ namespace IIUWr
         public MainPage()
         {
             InitializeComponent();
-            VM = new ViewModel();
+            VM = IoC.Get<ViewModel>();
         }
 
-        public async Task RefreshDescription()
+        public async void RefreshDescription()
         {
             await VM.RefreshSelectedCourse();
             ShowDescription();
@@ -35,67 +35,29 @@ namespace IIUWr
 
         public class ViewModel : INotifyPropertyChanged
         {
-            private ICoursesService _coursesService;
-            private int? _lastSemesterId;
-            private int? _lastCourseId;
-
-            public ViewModel()
+            public ViewModel(ICoursesService coursesService)
             {
-                _coursesService = IoC.Get<ICoursesService>();
+                CoursesService = coursesService;
             }
 
-            public async Task RefreshSemesters()
+            public ICoursesService CoursesService { get; }
+
+            public async void RefreshSemesters()
             {
-                Semesters = await _coursesService.GetCourses();
+                await CoursesService.RefreshSemesters();
             }
 
             public async Task RefreshSelectedCourse()
             {
                 if (SelectedCourse != null)
                 {
-                    await _coursesService.RefreshCourse(SelectedCourse);
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCourse)));
+                    await CoursesService.RefreshCourse(SelectedCourse);
+                    PropertyChanged.Notify(this, nameof(SelectedCourse));
                 }
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
-
-            private IEnumerable<Semester> _semesters;
-            public IEnumerable<Semester> Semesters
-            {
-                get { return _semesters; }
-                set
-                {
-                    if (_semesters != value)
-                    {
-                        _semesters = value;
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Semesters)));
-                        SelectedSemester = _semesters?.FirstOrDefault(s => s.Id == _lastSemesterId)
-                                        ?? _semesters?.FirstOrDefault();
-                    }
-                }
-            }
-
-            private Semester _selectedSemester;
-            public Semester SelectedSemester
-            {
-                get { return _selectedSemester; }
-                set
-                {
-                    if (_selectedSemester != value)
-                    {
-                        _selectedSemester = value;
-                        if (_selectedSemester != null)
-                        {
-                            _lastSemesterId = _selectedSemester.Id;
-                        }
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSemester)));
-                        SelectedCourse = _selectedSemester?.Courses?.FirstOrDefault(c => c.Id == _lastCourseId)
-                                      ?? _selectedSemester?.Courses?.FirstOrDefault();
-                    }
-                }
-            }
-
+            
             private Course _selectedCourse;
             public Course SelectedCourse
             {
@@ -105,11 +67,7 @@ namespace IIUWr
                     if (_selectedCourse != value)
                     {
                         _selectedCourse = value;
-                        if (_selectedCourse != null)
-                        {
-                            _lastCourseId = _selectedCourse.Id;
-                        }
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCourse)));
+                        PropertyChanged.Notify(this);
                     }
                 }
             }

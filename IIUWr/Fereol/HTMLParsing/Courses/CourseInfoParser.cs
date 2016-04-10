@@ -5,12 +5,6 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
 {
     public static class CourseInfoParser
     {
-        private static class Group
-        {
-            public const string Name = "name";
-            public const string Value = "value";
-        }
-
         private static class InfoConsts
         {
             public const string ECTS = "Punkty ECTS";
@@ -29,8 +23,8 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
         private static readonly string CourseInfoPattern =
             $@"(?x)
             <tr>
-                <th>(?<{Group.Name}>[^<]*)</th>
-                <td>(?<{Group.Value}>[^<]*)</td>
+                <th>(?<{RegexGroups.Name}>[^<]*)</th>
+                <td>(?<{RegexGroups.Value}>[^<]*)</td>
             </tr>";
 
         private static readonly string HoursPattern =
@@ -44,10 +38,10 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             Match match = CourseInfoRegex.Match(capture.Value);
             if (match.Success)
             {
-                switch (match.Groups[Group.Name].Value)
+                switch (match.Groups[RegexGroups.Name].Value)
                 {
                     case InfoConsts.ECTS:
-                        course.ECTS = int.Parse(match.Groups[Group.Value].Value);
+                        course.ECTS = int.Parse(match.Groups[RegexGroups.Value].Value);
                         break;
                     case InfoConsts.Hours:
                         ParseHours(course, capture);

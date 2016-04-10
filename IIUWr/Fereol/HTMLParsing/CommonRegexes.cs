@@ -5,12 +5,6 @@ namespace IIUWr.Fereol.HTMLParsing
 {
     public static class CommonRegexes
     {
-        private static class Group
-        {
-            public const string Name = "name";
-            public const string Value = "value";
-        }
-
         public const string TagsPattern =
             @"(?>
                 <!-- .*? -->                                 |
@@ -23,11 +17,9 @@ namespace IIUWr.Fereol.HTMLParsing
                 [^<>]*
             )*
             (?(opentag)(?!))";
-
         
-
         private static readonly string HiddenInputPatern =
-            $@"<input(?:\s*type=""hidden""|\s*name=""(?<{Group.Name}>[^""]*)""|\s*value=""(?<{Group.Value}>[^""]*)""){{3}}\s*/>";
+            $@"<input(?:\s*type=""hidden""|\s*name=""(?<{RegexGroups.Name}>[^""]*)""|\s*value=""(?<{RegexGroups.Value}>[^""]*)""){{3}}\s*/>";
 
         private static readonly Regex HiddenInputRegex = new Regex(HiddenInputPatern, RegexOptions.Compiled);
 
@@ -36,7 +28,7 @@ namespace IIUWr.Fereol.HTMLParsing
             Match match = HiddenInputRegex.Match(capture.Value);
             if (match.Success)
             {
-                return new Tuple<string, string>(match.Groups[Group.Name].Value, match.Groups[Group.Value].Value);
+                return new Tuple<string, string>(match.Groups[RegexGroups.Name].Value, match.Groups[RegexGroups.Value].Value);
             }
             return null;
         }

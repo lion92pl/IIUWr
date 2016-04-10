@@ -8,13 +8,28 @@
       <group id="IIUWR/STRINGS/PL/RESOURCES.RESW" datatype="resx">
         <trans-unit id="UWr" translate="yes" xml:space="preserve">
           <source>Uniwersytet Wrocławski</source>
-          <target state="new">Uniwersytet Wrocławski</target>
+          <target state="translated">University of Wrocław</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Name of University of Wrocław</note>
         </trans-unit>
         <trans-unit id="II" translate="yes" xml:space="preserve">
           <source>Instytut Informatyki</source>
-          <target state="new">Instytut Informatyki</target>
+          <target state="translated">Computer Science faculty</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Name of Computer Science faculty</note>
+        </trans-unit>
+        <trans-unit id="AppName" translate="yes" xml:space="preserve">
+          <source>Zapisy II UWr</source>
+          <target state="translated">Enrollment CS UWr</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">App name</note>
+        </trans-unit>
+        <trans-unit id="Refresh" translate="yes" xml:space="preserve">
+          <source>Odśwież</source>
+          <target state="translated">Refresh</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Refresh</note>
+        </trans-unit>
+        <trans-unit id="RefreshButton.Content" translate="yes" xml:space="preserve">
+          <source>Odśwież</source>
+          <target state="translated">Refresh</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Refresh</note>
         </trans-unit>
       </group>
     </body>
@@ -27,27 +42,27 @@
       <group id="IIUWR/STRINGS/PL/MAP.RESW" datatype="resx">
         <trans-unit id="FirstFloor" translate="yes" xml:space="preserve">
           <source>Piętro 1</source>
-          <target state="new">Piętro 1</target>
+          <target state="translated">Floor 1</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Level (floor) 1</note>
         </trans-unit>
         <trans-unit id="GroundLevel" translate="yes" xml:space="preserve">
           <source>Parter</source>
-          <target state="new">Parter</target>
+          <target state="translated">Ground level</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Ground level (floor 0)</note>
         </trans-unit>
         <trans-unit id="MapHeader" translate="yes" xml:space="preserve">
           <source>Mapa instytutu</source>
-          <target state="new">Mapa instytutu</target>
+          <target state="translated">Building map</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Map of building (map of institute)</note>
         </trans-unit>
         <trans-unit id="SecondFloor" translate="yes" xml:space="preserve">
           <source>Piętro 2</source>
-          <target state="new">Piętro 2</target>
+          <target state="translated">Floor 2</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Level (floor) 2</note>
         </trans-unit>
         <trans-unit id="ThirdFloor" translate="yes" xml:space="preserve">
           <source>Piętro 3</source>
-          <target state="new">Piętro 3</target>
+          <target state="translated">Floor 3</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Level (floor) 3</note>
         </trans-unit>
       </group>
@@ -89,7 +104,7 @@
         </trans-unit>
         <trans-unit id="Inne" translate="yes" xml:space="preserve">
           <source>Inne</source>
-          <target state="new">Inne</target>
+          <target state="translated">Other</target>
         </trans-unit>
         <trans-unit id="K1" translate="yes" xml:space="preserve">
           <source>Kurs 1</source>
@@ -137,7 +152,7 @@
         </trans-unit>
         <trans-unit id="Projekt" translate="yes" xml:space="preserve">
           <source>Projekt</source>
-          <target state="new">Projekt</target>
+          <target state="translated">Project</target>
         </trans-unit>
         <trans-unit id="Seminarium" translate="yes" xml:space="preserve">
           <source>Seminarium</source>
@@ -158,7 +173,24 @@
       <group id="IIUWR/STRINGS/PL/COURSE.RESW" datatype="resx">
         <trans-unit id="ECTSLabel.Text" translate="yes" xml:space="preserve">
           <source>ECTS:</source>
-          <target state="new">ECTS:</target>
+          <target state="translated">ECTS:</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="pl" target-language="en" original="IIUWR/STRINGS/PL/ENUMS/YEARHALF.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1605.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="IIUWR/STRINGS/PL/ENUMS/YEARHALF.RESW" datatype="resx">
+        <trans-unit id="Summer" translate="yes" xml:space="preserve">
+          <source>letni</source>
+          <target state="translated">summer</target>
+        </trans-unit>
+        <trans-unit id="Winter" translate="yes" xml:space="preserve">
+          <source>zimowy</source>
+          <target state="translated">winter</target>
         </trans-unit>
       </group>
     </body>
