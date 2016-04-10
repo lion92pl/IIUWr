@@ -6,6 +6,12 @@ namespace IIUWr
 {
     public static class ConfigureIoC
     {
+        public static void All()
+        {
+            ViewModels();
+            Fereol.HTMLParsing();
+        }
+
         public static void ViewModels()
         {
             IoC.AsSingleton<MainPage.ViewModel>();

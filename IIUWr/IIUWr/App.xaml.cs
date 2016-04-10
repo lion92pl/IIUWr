@@ -20,7 +20,8 @@ namespace IIUWr
         {
             InitializeComponent();
             Suspending += OnSuspending;
-            ConfigureIoC.Fereol.HTMLParsing();
+
+            ConfigureIoC.All();
         }
 
         /// <summary>
@@ -36,6 +37,11 @@ namespace IIUWr
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
+
+            if (e.PrelaunchActivated)
+            {
+                //TODO handle prelaunch
+            }
 
             Frame rootFrame = Window.Current.Content as Frame;
             
