@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IIUWr"
     xmlns:model="using:IIUWr.Fereol.Model"
+    xmlns:webView="using:LionCub.UI.Xaml.WebView"
     xmlns:conv="using:LionCub.UI.Xaml.Data.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -83,7 +84,7 @@
             </ListView.GroupStyle>
         </ListView>
         <StackPanel x:Name="courseInfo" Grid.Column="1" Margin="10" Visibility="{x:Bind VM.SelectedCourse, Mode=OneWay, Converter={StaticResource BooleanConverter}}">
-            <Button x:Uid="RefreshButton" Click="{x:Bind RefreshDescription}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="32"/>
+            <Button x:Uid="RefreshButton" Click="{x:Bind VM.RefreshSelectedCourse}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="32"/>
             <TextBlock TextWrapping="Wrap" Text="{x:Bind VM.SelectedCourse.Name, Mode=OneWay}" />
             <TextBlock TextWrapping="Wrap" Text="{x:Bind VM.SelectedCourse.Type.NameKey, Mode=OneWay, Converter={StaticResource CourseTypeNameConverter}}" />
             <StackPanel Orientation="Horizontal" Visibility="{x:Bind VM.SelectedCourse.ECTS, Mode=OneWay, Converter={StaticResource BooleanConverter}}">
@@ -91,7 +92,7 @@
                 <TextBlock Text="{x:Bind VM.SelectedCourse.ECTS, Mode=OneWay}" />
             </StackPanel>
         </StackPanel>
-        <WebView x:Name="description" Grid.Column="2" />
+        <WebView x:Name="description" Grid.Column="2" webView:Extensions.HTMLString="{x:Bind VM.SelectedCourse.Description, Mode=OneWay}" />
 
     </Grid>
 </Page>

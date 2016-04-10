@@ -18,7 +18,8 @@ namespace IIUWr.Fereol.HTMLParsing
 
         private const string SummerHalf = "letni";
         private const string WinterHalf = "zimowy";
-        
+        private const string DescriptionForParseError = "<h1>Cannot parse!<h1>";
+
         #region Patterns
 
         private static readonly string SemestersAndCoursesPattern =
@@ -160,6 +161,10 @@ namespace IIUWr.Fereol.HTMLParsing
             if (match.Success)
             {
                 ParseCourseFullData(course, match);
+            }
+            else
+            {
+                course.Description = DescriptionForParseError;
             }
         }
 

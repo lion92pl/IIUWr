@@ -17,20 +17,7 @@ namespace IIUWr
             InitializeComponent();
             VM = IoC.Get<ViewModel>();
         }
-
-        public async void RefreshDescription()
-        {
-            await VM.RefreshSelectedCourse();
-            ShowDescription();
-        }
-
-        private void ShowDescription()
-        {
-            description.NavigateToString(
-                VM?.SelectedCourse?.Description ??
-                $@"<h1>Cannot parse!<h1><br /><h3>{VM?.SelectedCourse?.Name ?? "No course selected"}</h3>");
-        }
-
+        
         public ViewModel VM { get; set; }
 
         public class ViewModel : INotifyPropertyChanged
@@ -47,7 +34,7 @@ namespace IIUWr
                 await CoursesService.RefreshSemesters();
             }
 
-            public async Task RefreshSelectedCourse()
+            public async void RefreshSelectedCourse()
             {
                 if (SelectedCourse != null)
                 {
