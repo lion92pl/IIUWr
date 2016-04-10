@@ -21,7 +21,7 @@
     </Page.Resources>
 
     <Grid x:Name="root" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
@@ -56,7 +56,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0" />
@@ -66,23 +66,28 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <ListView x:Name="semesters" ItemsSource="{Binding Source={StaticResource CoursesPerSemesterCollection}}" SelectedItem="{x:Bind VM.SelectedCourse, Mode=TwoWay, Converter={StaticResource ObjectConverter}}">
-            <ListView.Header>
-                <Button x:Uid="RefreshButton" Click="{x:Bind VM.RefreshSemesters}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="32" />
-            </ListView.Header>
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="model:Semester">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Bind Year}" Margin="0,0,7,0" />
-                                <TextBlock Text="{x:Bind YearHalf, Converter={StaticResource LocaleTextConverter}}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
-        </ListView>
+        <Grid x:Name="semesters">
+            <ListView ItemsSource="{Binding Source={StaticResource CoursesPerSemesterCollection}}" SelectedItem="{x:Bind VM.SelectedCourse, Mode=TwoWay, Converter={StaticResource ObjectConverter}}">
+                <ListView.Header>
+                    <Button x:Uid="RefreshButton" Click="{x:Bind VM.RefreshSemesters}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="32" />
+                </ListView.Header>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate x:DataType="model:Semester">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Bind Year}" Margin="0,0,7,0" />
+                                    <TextBlock Text="{x:Bind YearHalf, Converter={StaticResource LocaleTextConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+            <ProgressRing IsActive="{x:Bind VM.IsRefreshingSemesters, Mode=OneWay}"
+                          Width="50" Height="50"
+                          VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Grid>
         <StackPanel x:Name="courseInfo" Grid.Column="1" Margin="10" Visibility="{x:Bind VM.SelectedCourse, Mode=OneWay, Converter={StaticResource BooleanConverter}}">
             <Button x:Uid="RefreshButton" Click="{x:Bind VM.RefreshSelectedCourse}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="32"/>
             <TextBlock TextWrapping="Wrap" Text="{x:Bind VM.SelectedCourse.Name, Mode=OneWay}" />
@@ -92,7 +97,12 @@
                 <TextBlock Text="{x:Bind VM.SelectedCourse.ECTS, Mode=OneWay}" />
             </StackPanel>
         </StackPanel>
-        <WebView x:Name="description" Grid.Column="2" webView:Extensions.HTMLString="{x:Bind VM.SelectedCourse.Description, Mode=OneWay}" />
+        <Grid x:Name="description" Grid.Column="2">
+            <WebView  webView:Extensions.HTMLString="{x:Bind VM.SelectedCourse.Description, Mode=OneWay}" />
+            <ProgressRing IsActive="{x:Bind VM.IsRefreshingCourse, Mode=OneWay}"
+                          Width="50" Height="50"
+                          VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Grid>
 
     </Grid>
 </Page>
