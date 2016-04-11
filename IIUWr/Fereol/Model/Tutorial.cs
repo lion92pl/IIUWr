@@ -11,9 +11,7 @@ namespace IIUWr.Fereol.Model
         public Course Course { get; set; }
 
         public TutorialType Type { get; set; }
-
-        public IEnumerable<TimeAndLocation> TimesAndLocations { get; set; }
-
+        
         //TODO english name?
         public Employee Prowadzący { get; set; }
 

@@ -7,10 +7,10 @@ namespace IIUWr.Fereol.Interface
 {
     public interface ICoursesService
     {
-        ObservableCollection<Semester> Semesters { get; }
+        Task Refresh();
+        Task<IEnumerable<Semester>> GetSemesters();
+        Task<IEnumerable<Course>> GetCourses(Semester semester);
 
-        Task RefreshSemesters();
-
-        Task RefreshCourse(Course course);
+        Task<bool> RefreshCourse(Course course);
     }
 }

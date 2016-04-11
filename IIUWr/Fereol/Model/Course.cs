@@ -60,10 +60,37 @@ namespace IIUWr.Fereol.Model
 
         //TODO hours per tutorial type
         //TODO grupy efektów kształcenia (EffectTypes), tagi, percentage?
-
-        public IEnumerable<Tutorial> Tutorials { get; set; }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #region Equality
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return Id.Equals((obj as Course).Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id;
+        }
+        
+        public static bool operator ==(Course x, Course y)
+        {
+            return x?.Id == y?.Id;
+        }
+
+        public static bool operator !=(Course x, Course y)
+        {
+            return x?.Id != y?.Id;
+        }
+
+        #endregion
 
         public override string ToString()
         {

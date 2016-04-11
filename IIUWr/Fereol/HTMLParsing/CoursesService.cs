@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System;
+using System.Linq;
 
 namespace IIUWr.Fereol.HTMLParsing
 {
@@ -82,76 +84,35 @@ namespace IIUWr.Fereol.HTMLParsing
         public CoursesService(Interface.IHTTPConnection connection)
         {
             _connection = connection;
-            Semesters = new ObservableCollection<Semester>();
         }
 
-        public ObservableCollection<Semester> Semesters { get; }
+        private Dictionary<Semester, List<Course>> Semesters { get; set; }
 
-        public async Task RefreshSemesters()
+        public async Task Refresh()
         {
-            System.Diagnostics.Debug.WriteLine($"{nameof(RefreshSemesters)}: Start download");
+            var semesters = new Dictionary<Semester, List<Course>>();
+
+            System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Start download");
 
             var page = await _connection.GetStringAsync(CoursesPath);
 
-            System.Diagnostics.Debug.WriteLine($"{nameof(RefreshSemesters)}: Finished download, start parsing");
+            System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished download, start parsing");
             
             foreach (Match match in SemestersAndCoursesRegex.Matches(page))
             {
                 if (match.Success)
                 {
-                    var semester = ParseSemester(match);
-                    if (Semesters.Contains(semester))
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        Semesters.Add(semester);
-                    }
+                    var pair = ParseSemester(match);
+                    semesters.Add(pair.Key, pair.Value);
                 }
             }
 
-            System.Diagnostics.Debug.WriteLine($"{nameof(RefreshSemesters)}: Finished parsing");
-        }
+            System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished parsing");
 
-        /*
-        public async Task<IEnumerable<Semester>> GetCourses()
-        {
-            System.Diagnostics.Debug.WriteLine($"{nameof(GetCourses)}: Start download");
-
-            var page = await _connection.GetStringAsync(CoursesPath);
-
-            System.Diagnostics.Debug.WriteLine($"{nameof(GetCourses)}: Finished download, start parsing");
-
-            List<Semester> semesters = new List<Semester>();
-
-            foreach (Match match in SemestersAndCoursesRegex.Matches(page))
-            {
-                if (match.Success)
-                {
-                    semesters.Add(ParseSemester(match));
-                }
-            }
-
-            System.Diagnostics.Debug.WriteLine($"{nameof(GetCourses)}: Finished parsing");
-
-            return semesters;
+            Semesters = semesters;
         }
         
-        public async Task RefreshCoursesForSemester(Semester semester)
-        {
-            List<Task> tasks = new List<Task>();
-
-            foreach (Course course in semester.Courses)
-            {
-                tasks.Add(RefreshCourse(course));
-            }
-
-            await Task.Run(() => Task.WaitAll(tasks.ToArray()));
-        }
-        */
-
-        public async Task RefreshCourse(Course course)
+        public async Task<bool> RefreshCourse(Course course)
         {
             var page = await _connection.GetStringAsync(CoursesPath + course.Path);
 
@@ -165,9 +126,11 @@ namespace IIUWr.Fereol.HTMLParsing
             {
                 course.Description = DescriptionForParseError;
             }
+
+            return match.Success;
         }
 
-        private Semester ParseSemester(Match match)
+        private KeyValuePair<Semester, List<Course>> ParseSemester(Match match)
         {
             YearHalf yearHalf;
 
@@ -190,9 +153,9 @@ namespace IIUWr.Fereol.HTMLParsing
                 YearHalf = yearHalf,
                 Id = int.Parse(match.Groups[RegexGroups.Id].Value)
             };
-            semester.Courses = ParseCourses(semester, match.Groups[RegexGroups.Course].Captures);
+            var courses = ParseCourses(semester, match.Groups[RegexGroups.Course].Captures);
 
-            return semester;
+            return new KeyValuePair<Semester, List<Course>>(semester, courses);
         }
 
         private List<Course> ParseCourses(Semester semester, CaptureCollection captures)
@@ -245,6 +208,24 @@ namespace IIUWr.Fereol.HTMLParsing
             {
                 CourseInfoParser.ParseCourseInfo(course, info);
             }
+        }
+
+        public async Task<IEnumerable<Semester>> GetSemesters()
+        {
+            if (Semesters == null)
+            {
+                await Refresh();
+            }
+            return Semesters.Keys;
+        }
+
+        public async Task<IEnumerable<Course>> GetCourses(Semester semester)
+        {
+            if (Semesters == null)
+            {
+                await Refresh();
+            }
+            return Semesters[semester];
         }
     }
 }

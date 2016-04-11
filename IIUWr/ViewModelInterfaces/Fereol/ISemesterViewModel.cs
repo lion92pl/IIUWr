@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace IIUWr.ViewModelInterfaces.Fereol
 {
-    public interface ISemesterViewModel : INotifyPropertyChanged
+    public interface ISemesterViewModel : IRefreshable, INotifyPropertyChanged
     {
-        Semester Semester { get; }
+        Semester Semester { get; set; }
 
         ObservableCollection<ICourseViewModel> Courses { get; }
-
-        Task<bool> RefreshCourses();
     }
 }

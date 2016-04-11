@@ -110,6 +110,7 @@
     <Compile Include="Fereol\ICourseViewModel.cs" />
     <Compile Include="Fereol\ISemestersViewModel.cs" />
     <Compile Include="Fereol\ISemesterViewModel.cs" />
+    <Compile Include="IRefreshable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ViewModelInterfaces.rd.xml" />
   </ItemGroup>

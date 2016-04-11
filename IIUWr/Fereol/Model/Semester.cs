@@ -7,11 +7,13 @@ namespace IIUWr.Fereol.Model
     {
         //TODO implement
         public string Year { get; set; }
+
         public YearHalf YearHalf { get; set; }
+
         public int Id { get; set; }
 
-        public IEnumerable<Course> Courses { get; set; }
-        
+        #region Equality
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -26,6 +28,18 @@ namespace IIUWr.Fereol.Model
         {
             return Id;
         }
+
+        public static bool operator ==(Semester x, Semester y)
+        {
+            return x?.Id == y?.Id;
+        }
+
+        public static bool operator !=(Semester x, Semester y)
+        {
+            return x?.Id != y?.Id;
+        }
+
+        #endregion
 
         public override string ToString()
         {

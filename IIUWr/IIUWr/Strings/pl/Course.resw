@@ -117,7 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CanEnrollLabel.Text" xml:space="preserve">
+    <value>Zapis możliwy:</value>
+  </data>
   <data name="ECTSLabel.Text" xml:space="preserve">
     <value>ECTS:</value>
+  </data>
+  <data name="EnglishLabel.Text" xml:space="preserve">
+    <value>Po angielsku:</value>
+  </data>
+  <data name="ExamLabel.Text" xml:space="preserve">
+    <value>Egzamin:</value>
+  </data>
+  <data name="ForFirstYearLabel.Text" xml:space="preserve">
+    <value>Polecane dla pierwszego roku:</value>
+  </data>
+  <data name="TypeLabel.Text" xml:space="preserve">
+    <value>Typ:</value>
+  </data>
+  <data name="WasEnrolledLabel.Text" xml:space="preserve">
+    <value>Byłeś/aś zapisany/na:</value>
   </data>
 </root>

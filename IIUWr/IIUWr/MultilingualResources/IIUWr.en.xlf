@@ -175,6 +175,30 @@
           <source>ECTS:</source>
           <target state="translated">ECTS:</target>
         </trans-unit>
+        <trans-unit id="CanEnrollLabel.Text" translate="yes" xml:space="preserve">
+          <source>Zapis możliwy:</source>
+          <target state="new">Zapis możliwy:</target>
+        </trans-unit>
+        <trans-unit id="EnglishLabel.Text" translate="yes" xml:space="preserve">
+          <source>Po angielsku:</source>
+          <target state="new">Po angielsku:</target>
+        </trans-unit>
+        <trans-unit id="ExamLabel.Text" translate="yes" xml:space="preserve">
+          <source>Egzamin:</source>
+          <target state="new">Egzamin:</target>
+        </trans-unit>
+        <trans-unit id="ForFirstYearLabel.Text" translate="yes" xml:space="preserve">
+          <source>Polecane dla pierwszego roku:</source>
+          <target state="new">Polecane dla pierwszego roku:</target>
+        </trans-unit>
+        <trans-unit id="TypeLabel.Text" translate="yes" xml:space="preserve">
+          <source>Typ:</source>
+          <target state="new">Typ:</target>
+        </trans-unit>
+        <trans-unit id="WasEnrolledLabel.Text" translate="yes" xml:space="preserve">
+          <source>Byłeś/aś zapisany/na:</source>
+          <target state="new">Byłeś/aś zapisany/na:</target>
+        </trans-unit>
       </group>
     </body>
   </file>

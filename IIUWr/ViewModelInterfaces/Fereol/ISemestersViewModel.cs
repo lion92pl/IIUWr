@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace IIUWr.ViewModelInterfaces.Fereol
 {
-    public interface ISemestersViewModel
+    public interface ISemestersViewModel : IRefreshable, INotifyPropertyChanged
     {
         ObservableCollection<ISemesterViewModel> Semesters { get; }
-
-        Task<bool> RefreshSemesters();
     }
 }

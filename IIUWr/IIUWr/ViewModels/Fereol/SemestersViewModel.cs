@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using IIUWr.Fereol.Interface;
+using IIUWr.Fereol.Model;
+using LionCub.Patterns.DependencyInjection;
+using System.ComponentModel;
 
 namespace IIUWr.ViewModels.Fereol
 {
@@ -18,27 +21,83 @@ namespace IIUWr.ViewModels.Fereol
             _coursesService = coursesService;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private ObservableCollection<ISemesterViewModel> _allSemesters;
-        private ObservableCollection<ISemesterViewModel> _newestSemester;
         public ObservableCollection<ISemesterViewModel> Semesters { get; }
             = new ObservableCollection<ISemesterViewModel>();
 
         private bool _onlyCurrent;
-
         public bool OnlyCurent
         {
             get { return _onlyCurrent; }
             set
             {
-                _onlyCurrent = value;
+                if (_onlyCurrent != value)
+                {
+                    _onlyCurrent = value;
+                    ApplyOnlyCurrent(_onlyCurrent);
+                    PropertyChanged.Notify(this);
+                }
             }
         }
 
-
-        public async Task<bool> RefreshSemesters()
+        private bool _isRefreshing;
+        public bool IsRefreshing
         {
-            await _coursesService.RefreshSemesters();
-            return true;
+            get { return _isRefreshing; }
+            set
+            {
+                if (_isRefreshing != value)
+                {
+                    _isRefreshing = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
+
+        public async void Refresh()
+        {
+            IsRefreshing = true;
+            var semesters = await _coursesService.GetSemesters();
+            if (semesters != null)
+            {
+                _allSemesters = new ObservableCollection<ISemesterViewModel>();
+                foreach (Semester semester in OnlyCurent ? semesters.Take(1) : semesters)
+                {
+                    var semesterVM = Semesters.FirstOrDefault(vm => vm.Semester == semester);
+                    if (semesterVM == null)
+                    {
+                        semesterVM = IoC.Get<ISemesterViewModel>();
+                        semesterVM.Semester = semester;
+                        Semesters.Add(semesterVM);
+                    }
+                    else
+                    {
+                        semesterVM.Semester = semester;
+                    }
+                    _allSemesters.Add(semesterVM);
+                }
+            }
+            IsRefreshing = false;
+        }
+
+        private void ApplyOnlyCurrent(bool onlyCurrent)
+        {
+            if (onlyCurrent)
+            {
+                while (Semesters.Count > 1)
+                {
+                    Semesters.RemoveAt(1);
+                }
+            }
+            else
+            {
+                for (int i = Semesters.Count; i < _allSemesters.Count; i++)
+                {
+                    Semesters.Add(_allSemesters[i]);
+                }
+            }
         }
     }
 }
