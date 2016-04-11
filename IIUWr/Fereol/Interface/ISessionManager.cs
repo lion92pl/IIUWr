@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 
-namespace IIUWr.Fereol.HTMLParsing.Interface
+namespace IIUWr.Fereol.Interface
 {
     public interface ISessionManager
     {
-        string SessionCookie { get; set; }
+        string SessionIdentifier { get; set; }
     }
 }

@@ -110,10 +110,15 @@
     <Compile Include="IConnection.cs" />
     <Compile Include="ICoursesService.cs" />
     <Compile Include="ICredentialsManager.cs" />
+    <Compile Include="ISessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Interface.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ViewModelInterfaces\ViewModelInterfaces.csproj">
+      <Project>{304363b6-d2c4-409f-8d53-855062c469fa}</Project>
+      <Name>ViewModelInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{3ca09b84-c4fe-44d3-9322-b39ba56f3271}</Project>
       <Name>Model</Name>

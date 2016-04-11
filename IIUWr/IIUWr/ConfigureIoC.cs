@@ -1,5 +1,7 @@
-﻿using IIUWr.Fereol.Interface;
+﻿using IIUWr.Fereol.Common;
+using IIUWr.Fereol.Interface;
 using LionCub.Patterns.DependencyInjection;
+using System;
 using HTMLParsing = IIUWr.Fereol.HTMLParsing;
 
 namespace IIUWr
@@ -8,7 +10,10 @@ namespace IIUWr
     {
         public static void All()
         {
+            IoC.AsInstance(new Uri(@"https://zapisy.ii.uni.wroc.pl/"));
+
             ViewModels();
+            Fereol.Common();
             Fereol.HTMLParsing();
         }
 
@@ -19,12 +24,16 @@ namespace IIUWr
 
         public static class Fereol
         {
+            public static void Common()
+            {
+                IoC.AsSingleton<ICredentialsManager, CredentialsManager>();
+                IoC.AsSingleton<ISessionManager, CredentialsManager>();
+            }
+
             public static void HTMLParsing()
             {
                 IoC.AsSingleton<IConnection, HTMLParsing.Connection>();
-                IoC.AsSingleton<HTMLParsing.Interface.IConnection, HTMLParsing.Connection>();
-                IoC.AsSingleton<ICredentialsManager, HTMLParsing.CredentialsManager>();
-                IoC.AsSingleton<HTMLParsing.Interface.ISessionManager, HTMLParsing.CredentialsManager>();
+                IoC.AsSingleton<HTMLParsing.Interface.IHTTPConnection, HTMLParsing.Connection>();
 
                 IoC.AsSingleton<ICoursesService, HTMLParsing.CoursesService>();
             }

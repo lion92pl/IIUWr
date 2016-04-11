@@ -1,19 +1,18 @@
 ﻿using IIUWr.Fereol.HTMLParsing.Courses;
+using IIUWr.Fereol.HTMLParsing.Interface;
 using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
 using IIUWr.Fereol.Model.Enums;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 
 namespace IIUWr.Fereol.HTMLParsing
 {
     public class CoursesService : ICoursesService
     {
-        private Interface.IConnection _connection;
+        private IHTTPConnection _connection;
         private const string CoursesPath = @"courses/";
 
         private const string SummerHalf = "letni";
@@ -80,7 +79,7 @@ namespace IIUWr.Fereol.HTMLParsing
 
         #endregion
 
-        public CoursesService(Interface.IConnection connection)
+        public CoursesService(Interface.IHTTPConnection connection)
         {
             _connection = connection;
             Semesters = new ObservableCollection<Semester>();

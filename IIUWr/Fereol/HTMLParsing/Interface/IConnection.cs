@@ -8,7 +8,7 @@ using Windows.Web.Http;
 
 namespace IIUWr.Fereol.HTMLParsing.Interface
 {
-    public interface IConnection : Fereol.Interface.IConnection
+    public interface IHTTPConnection : Fereol.Interface.IConnection
     {
         Task<string> GetStringAsync(string relativeUri);
     }

@@ -1,17 +1,14 @@
-﻿using IIUWr.Fereol.HTMLParsing.Interface;
-using IIUWr.Fereol.Interface;
-using System;
+﻿using IIUWr.Fereol.Interface;
 using System.Linq;
 using Windows.Security.Credentials;
-using Windows.Web.Http;
 
-namespace IIUWr.Fereol.HTMLParsing
+namespace IIUWr.Fereol.Common
 {
     public class CredentialsManager : ISessionManager, ICredentialsManager
     {
-        private const string SessionCookieResource = "IIUWr SessionCookie";
-        private const string SessionCookieUsername = "session";
-        private const string CredentialResource = "IIUWr";
+        private const string SessionIdentifierResource = "IIUWr session";
+        private const string SessionIdentifierUsername = "session";
+        private const string CredentialResource = "IIUWr credential";
 
         private readonly PasswordVault Vault;
 
@@ -20,17 +17,17 @@ namespace IIUWr.Fereol.HTMLParsing
             Vault = new PasswordVault();
         }
 
-        public string SessionCookie
+        public string SessionIdentifier
         {
             get
             {
-                var credential = Vault.FindAllByResource(SessionCookieResource).FirstOrDefault();
+                var credential = Vault.FindAllByResource(SessionIdentifierResource).FirstOrDefault();
                 credential?.RetrievePassword();
                 return credential?.Password;
             }
             set
             {
-                Vault.Add(new PasswordCredential(SessionCookieResource, SessionCookieUsername, value));
+                Vault.Add(new PasswordCredential(SessionIdentifierResource, SessionIdentifierUsername, value));
             }
         }
 

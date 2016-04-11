@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{335E1699-84F6-4323-BF14-5A672919AD4B}</ProjectGuid>
+    <ProjectGuid>{164AB07E-F8D3-4A98-8471-18480B0C56B9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IIUWr.Fereol.HTMLParsing</RootNamespace>
-    <AssemblyName>IIUWr.Fereol.HTMLParsing</AssemblyName>
+    <RootNamespace>IIUWr.Fereol.Common</RootNamespace>
+    <AssemblyName>IIUWr.Fereol.Common</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -107,28 +107,14 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonRegexes.cs" />
-    <Compile Include="Connection.cs" />
-    <Compile Include="CoursesService.cs" />
-    <Compile Include="Courses\CourseInfoParser.cs" />
-    <Compile Include="Interface\IConnection.cs" />
+    <Compile Include="CredentialsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegexGroups.cs" />
-    <Compile Include="Utils\HttpProgressHandler.cs" />
-    <EmbeddedResource Include="Properties\HTMLParsing.rd.xml" />
+    <EmbeddedResource Include="Properties\Common.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ViewModelInterfaces\ViewModelInterfaces.csproj">
-      <Project>{304363b6-d2c4-409f-8d53-855062c469fa}</Project>
-      <Name>ViewModelInterfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Interface\Interface.csproj">
-      <Project>{97d0194c-87bc-4026-a58d-b94d959c540a}</Project>
+      <Project>{97D0194C-87BC-4026-A58D-B94D959C540A}</Project>
       <Name>Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{3ca09b84-c4fe-44d3-9322-b39ba56f3271}</Project>
-      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

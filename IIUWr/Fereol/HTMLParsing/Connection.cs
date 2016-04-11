@@ -1,4 +1,6 @@
 ﻿using IIUWr.Fereol.HTMLParsing.Interface;
+using IIUWr.Fereol.HTMLParsing.Utils;
+using IIUWr.Fereol.Interface;
 using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -7,17 +9,19 @@ using Windows.Web.Http.Filters;
 
 namespace IIUWr.Fereol.HTMLParsing
 {
-    public class Connection : IConnection, IDisposable
+    public class Connection : IHTTPConnection, IDisposable
     {
-        private static readonly Uri Endpoint = new Uri(@"https://zapisy.ii.uni.wroc.pl/");
+        private Uri Endpoint { get; }
 
         public Uri FereolBaseUri { get; set; }
 
         private HttpBaseProtocolFilter httpFilter;
         private HttpClient httpClient;
 
-        public Connection()
+        public Connection(Uri uri, ICredentialsManager credentialsManager)
         {
+            Endpoint = uri;
+
             httpFilter = new HttpBaseProtocolFilter();
             // Fereol certificate is not updated frequently, so ...
             httpFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
@@ -27,42 +31,23 @@ namespace IIUWr.Fereol.HTMLParsing
 
         public async Task<string> GetStringAsync(string relativeUri)
         {
-            return await httpClient.GetStringAsync(new Uri(Endpoint, relativeUri)).AsTask(new HttpProgressHandler(relativeUri));
-        }
-
-        private class HttpProgressHandler : IProgress<HttpProgress>
-        {
-            private string _relativeUri;
-
-            public HttpProgressHandler(string relativeUri)
+            try
             {
-                _relativeUri = relativeUri;
+                return await httpClient.GetStringAsync(new Uri(Endpoint, relativeUri)).AsTask(new HttpProgressHandler(relativeUri));
             }
-
-            public void Report(HttpProgress progress)
+            catch
             {
-                System.Diagnostics.Debug.WriteLine($"Download progress: {progress.BytesReceived}/{progress.TotalBytesToReceive} of {_relativeUri}");
+                //TODO handle errors properly
+                return string.Empty;
             }
         }
-
+        
         public void Dispose()
         {
             httpClient.Dispose();
             httpFilter.Dispose();
         }
-
-        private void ba(IAsyncOperationWithProgress<string, HttpProgress> op, HttpProgress progress)
-        {
-            //TODO log to special file
-            System.Diagnostics.Debug.WriteLine($"Downloaded {progress.BytesReceived}");
-        }
-
-        private void bac(IAsyncOperationWithProgress<string, HttpProgress> op, AsyncStatus progress)
-        {
-            //TODO log to special file
-            System.Diagnostics.Debug.WriteLine($"Downloaded {progress.ToString()}");
-        }
-
+        
         public async Task<bool> CheckConnection()
         {
             var response = await httpClient.GetAsync(Endpoint);
