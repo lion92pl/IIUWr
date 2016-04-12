@@ -1,9 +1,4 @@
 ﻿using IIUWr.ViewModelInterfaces.Fereol;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IIUWr.Fereol.Model;
 using System.ComponentModel;
 using IIUWr.Fereol.Interface;

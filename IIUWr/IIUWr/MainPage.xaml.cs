@@ -21,5 +21,10 @@ namespace IIUWr
         }
         
         public ISemestersViewModel VM { get; }
+
+        private void StackPanel_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            Flyout.ShowAttachedFlyout(sender as Windows.UI.Xaml.FrameworkElement);
+        }
     }
 }

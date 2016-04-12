@@ -9,9 +9,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:LionCub.UI.Xaml.Behaviors"
     x:Class="IIUWr.MainPage"
     mc:Ignorable="d">
-    
+    <Interactivity:Interaction.Behaviors>
+        <Core:EventTriggerBehavior EventName="Loaded">
+            <Core:CallMethodAction MethodName="Refresh" TargetObject="{Binding}" />
+        </Core:EventTriggerBehavior>
+    </Interactivity:Interaction.Behaviors>
+
     <Page.Resources>
         <CollectionViewSource x:Key="CoursesPerSemesterCollection"
                               IsSourceGrouped="True"
@@ -19,6 +25,7 @@
                               ItemsPath="Courses" />
         <conv:LocaleTextConverter x:Key="CourseTypeNameConverter" Map="CourseType" />
         <conv:LocaleTextConverter x:Key="LocaleTextConverter" />
+        <conv:LocaleTextConverter x:Key="PascalCaseLocaleTextConverter" Format="Pascal" />
         <conv:BooleanConverter x:Key="BooleanConverter" />
     </Page.Resources>
 
@@ -64,31 +71,79 @@
             <RowDefinition Height="0" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="200"/>
+            <ColumnDefinition MaxWidth="250"/>
             <ColumnDefinition/>
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Grid x:Name="semesters">
             <ListView x:Name="listView" ItemsSource="{Binding Source={StaticResource CoursesPerSemesterCollection}}">
+                <Interactivity:Interaction.Behaviors>
+                    <Core:EventTriggerBehavior EventName="SelectionChanged">
+                        <Core:CallMethodAction MethodName="Refresh" TargetObject="{Binding SelectedItem, ElementName=listView}" />
+                    </Core:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="fereolViewModel:ICourseViewModel">
-                        <TextBlock Text="{x:Bind Course.Name}" TextWrapping="WrapWholeWords" Padding="10" />
+                        <Grid Padding="10,5" HorizontalAlignment="Stretch" Background="Transparent">
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="RightTapped">
+                                    <behaviors:ShowFlyoutAction />
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout>
+                                    <StackPanel>
+                                        <TextBlock Text="FLYOUT" />
+                                        <StackPanel Orientation="Horizontal" DataContext="{Binding Course.Exam}" Visibility="{Binding Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
+                                            <TextBlock x:Uid="/Course/ExamLabel" Margin="0,0,10,0" />
+                                            <TextBlock Text="{Binding Converter={StaticResource PascalCaseLocaleTextConverter}}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
+                            <TextBlock Text="{x:Bind Course.Name}" TextWrapping="Wrap" Padding="0,0,0,3" />
+                            <TextBlock Text="{x:Bind Course.Type.NameKey, Converter={StaticResource CourseTypeNameConverter}}"
+                                       TextWrapping="Wrap" FontSize="9" Foreground="Gray"
+                                       Grid.Row="1" />
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Header>
-                    <Button x:Uid="RefreshButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="32">
-                        <Interactivity:Interaction.Behaviors>
-                            <Core:EventTriggerBehavior EventName="Click">
-                                <Core:CallMethodAction MethodName="Refresh" TargetObject="{Binding}" />
-                            </Core:EventTriggerBehavior>
-                        </Interactivity:Interaction.Behaviors>
-                    </Button>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button x:Uid="RefreshButton" VerticalAlignment="Stretch" Height="32">
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="Click">
+                                    <Core:CallMethodAction MethodName="Refresh" TargetObject="{Binding}" />
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </Button>
+                        <CheckBox IsChecked="{Binding OnlyCurrent, Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Stretch" Height="32" />
+                    </Grid>
                 </ListView.Header>
                 <ListView.GroupStyle>
                     <GroupStyle>
+                        <GroupStyle.HeaderContainerStyle>
+                            <Style TargetType="ListViewHeaderItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </GroupStyle.HeaderContainerStyle>
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate x:DataType="fereolViewModel:ISemesterViewModel">
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" Background="Transparent" HorizontalAlignment="Stretch">
                                     <Interactivity:Interaction.Behaviors>
                                         <Core:EventTriggerBehavior EventName="Tapped">
                                             <Core:CallMethodAction MethodName="Refresh" TargetObject="{Binding}" />
@@ -98,8 +153,8 @@
                                     <TextBlock Text="{x:Bind Semester.YearHalf, Converter={StaticResource LocaleTextConverter}}" />
                                     <ProgressRing IsActive="{Binding IsRefreshing}"
                                                   Width="25" Height="25"
-                                                  Margin="20,0,0,0"
-                                                  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                  Margin="20,0"
+                                                  VerticalAlignment="Center" HorizontalAlignment="Right" />
                                 </StackPanel>
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
@@ -128,15 +183,15 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding Course.Exam}" Visibility="{Binding Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
                 <TextBlock x:Uid="/Course/ExamLabel" Margin="0,0,10,0" />
-                <TextBlock Text="{Binding}" />
+                <TextBlock Text="{Binding Converter={StaticResource PascalCaseLocaleTextConverter}}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding Course.English}" Visibility="{Binding Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
                 <TextBlock x:Uid="/Course/EnglishLabel" Margin="0,0,10,0" />
-                <TextBlock Text="{Binding}" />
+                <TextBlock Text="{Binding Converter={StaticResource PascalCaseLocaleTextConverter}}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding Course.SuggestedFor1Year}" Visibility="{Binding Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
                 <TextBlock x:Uid="/Course/ForFirstYearLabel" Margin="0,0,10,0" />
-                <TextBlock Text="{Binding}" />
+                <TextBlock Text="{Binding Converter={StaticResource PascalCaseLocaleTextConverter}}" />
             </StackPanel>
         </StackPanel>
         <Grid x:Name="description" DataContext="{Binding CurrentItem, Source={StaticResource CoursesPerSemesterCollection}}" Grid.Column="2">

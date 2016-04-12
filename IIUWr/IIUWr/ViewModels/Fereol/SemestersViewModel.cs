@@ -24,11 +24,11 @@ namespace IIUWr.ViewModels.Fereol
         public event PropertyChangedEventHandler PropertyChanged;
 
         private ObservableCollection<ISemesterViewModel> _allSemesters;
-        public ObservableCollection<ISemesterViewModel> Semesters { get; }
+        public ObservableCollection<ISemesterViewModel> Semesters { get; private set; }
             = new ObservableCollection<ISemesterViewModel>();
 
         private bool _onlyCurrent;
-        public bool OnlyCurent
+        public bool OnlyCurrent
         {
             get { return _onlyCurrent; }
             set
@@ -63,7 +63,8 @@ namespace IIUWr.ViewModels.Fereol
             if (semesters != null)
             {
                 _allSemesters = new ObservableCollection<ISemesterViewModel>();
-                foreach (Semester semester in OnlyCurent ? semesters.Take(1) : semesters)
+                //TODO better handling of OnlyCurrent
+                foreach (Semester semester in OnlyCurrent ? semesters.Take(1) : semesters)
                 {
                     var semesterVM = Semesters.FirstOrDefault(vm => vm.Semester == semester);
                     if (semesterVM == null)
@@ -90,6 +91,7 @@ namespace IIUWr.ViewModels.Fereol
                 {
                     Semesters.RemoveAt(1);
                 }
+                Semesters[0]?.Refresh();
             }
             else
             {

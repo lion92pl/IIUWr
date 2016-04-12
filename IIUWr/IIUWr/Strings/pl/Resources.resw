@@ -121,6 +121,12 @@
     <value>Zapisy II UWr</value>
     <comment>App name</comment>
   </data>
+  <data name="False" xml:space="preserve">
+    <value>nie</value>
+  </data>
+  <data name="False@Pascal" xml:space="preserve">
+    <value>Nie</value>
+  </data>
   <data name="II" xml:space="preserve">
     <value>Instytut Informatyki</value>
     <comment>Name of Computer Science faculty</comment>
@@ -132,6 +138,12 @@
   <data name="RefreshButton.Content" xml:space="preserve">
     <value>Odśwież</value>
     <comment>Refresh</comment>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>tak</value>
+  </data>
+  <data name="True@Pascal" xml:space="preserve">
+    <value>Tak</value>
   </data>
   <data name="UWr" xml:space="preserve">
     <value>Uniwersytet Wrocławski</value>

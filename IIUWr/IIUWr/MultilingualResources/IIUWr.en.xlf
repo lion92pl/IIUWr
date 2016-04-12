@@ -31,6 +31,22 @@
           <target state="translated">Refresh</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Refresh</note>
         </trans-unit>
+        <trans-unit id="False" translate="yes" xml:space="preserve">
+          <source>nie</source>
+          <target state="new">nie</target>
+        </trans-unit>
+        <trans-unit id="False@Pascal" translate="yes" xml:space="preserve">
+          <source>Nie</source>
+          <target state="new">Nie</target>
+        </trans-unit>
+        <trans-unit id="True" translate="yes" xml:space="preserve">
+          <source>tak</source>
+          <target state="new">tak</target>
+        </trans-unit>
+        <trans-unit id="True@Pascal" translate="yes" xml:space="preserve">
+          <source>Tak</source>
+          <target state="new">Tak</target>
+        </trans-unit>
       </group>
     </body>
   </file>
