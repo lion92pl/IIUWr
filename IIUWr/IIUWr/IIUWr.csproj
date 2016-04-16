@@ -116,6 +116,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConfigureIoC.cs" />
+    <Compile Include="DesignTime\Fereol\CourseViewModel.cs" />
+    <Compile Include="DesignTime\Fereol\SemestersViewModel.cs" />
+    <Compile Include="DesignTime\Fereol\SemesterViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

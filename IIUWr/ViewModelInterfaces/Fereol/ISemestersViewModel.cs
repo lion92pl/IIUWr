@@ -7,5 +7,7 @@ namespace IIUWr.ViewModelInterfaces.Fereol
     public interface ISemestersViewModel : IRefreshable, INotifyPropertyChanged
     {
         ObservableCollection<ISemesterViewModel> Semesters { get; }
+
+        bool OnlyCurrent { get; set; }
     }
 }
