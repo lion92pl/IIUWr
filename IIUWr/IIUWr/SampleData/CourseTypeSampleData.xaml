@@ -1,0 +1,9 @@
+﻿<CourseType xmlns="using:IIUWr.Fereol.Model" Id="1" NameKey="O">
+    <CourseType.Children>
+        <CourseType Id="2" NameKey="O1">
+            <CourseType.Parent>
+                <CourseType Id="1" NameKey="O" />
+            </CourseType.Parent>
+        </CourseType>
+    </CourseType.Children>
+</CourseType>

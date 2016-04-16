@@ -1,0 +1,11 @@
+﻿<VM:CourseViewModel xmlns:VM="using:IIUWr.ViewModels.Fereol"
+                    xmlns:M="using:IIUWr.Fereol.Model"
+                    IsRefreshing="False">
+    <VM:CourseViewModel.Course>
+        <M:Course Name="Algebra" Exam="True" ECTS="7" English="False" SuggestedFor1Year="False" WasEnrolled="True" CanEnroll="True" CanEnrollFrom="2016/10/23" Description="Description">
+            <M:Course.Type>
+                <M:CourseType NameKey="O1"/>
+            </M:Course.Type>
+        </M:Course>
+    </VM:CourseViewModel.Course>
+</VM:CourseViewModel>

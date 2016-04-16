@@ -1,0 +1,36 @@
+﻿<VM:SemestersViewModel xmlns:VM="using:IIUWr.ViewModels.Fereol"
+                       xmlns:M="using:IIUWr.Fereol.Model"
+                       IsRefreshing="False">
+    <VM:SemestersViewModel.Semesters>
+        <VM:SemesterViewModel>
+            <VM:SemesterViewModel.Semester>
+                <M:Semester Year="2015/16" YearHalf="Summer" />
+            </VM:SemesterViewModel.Semester>
+            <VM:SemesterViewModel.Courses>
+                <VM:CourseViewModel>
+                    <VM:CourseViewModel.Course>
+                        <M:Course Name="Algebra" Exam="True" ECTS="7">
+                            <M:Course.Type>
+                                <M:CourseType NameKey="O1"/>
+                            </M:Course.Type>
+                        </M:Course>
+                    </VM:CourseViewModel.Course>
+                </VM:CourseViewModel>
+                <VM:CourseViewModel>
+                    <VM:CourseViewModel.Course>
+                        <M:Course Name="Inny" Exam="False" ECTS="4" English="True" SuggestedFor1Year="True">
+                            <M:Course.Type>
+                                <M:CourseType NameKey="Inne"/>
+                            </M:Course.Type>
+                        </M:Course>
+                    </VM:CourseViewModel.Course>
+                </VM:CourseViewModel>
+            </VM:SemesterViewModel.Courses>
+        </VM:SemesterViewModel>
+        <VM:SemesterViewModel IsRefreshing="True">
+            <VM:SemesterViewModel.Semester>
+                <M:Semester Year="2015/16" YearHalf="Winter" />
+            </VM:SemesterViewModel.Semester>
+        </VM:SemesterViewModel>
+    </VM:SemestersViewModel.Semesters>
+</VM:SemestersViewModel>

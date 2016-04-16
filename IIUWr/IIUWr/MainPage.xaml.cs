@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace IIUWr
 {
@@ -16,15 +17,13 @@ namespace IIUWr
         public MainPage()
         {
             InitializeComponent();
-            VM = IoC.Get<ISemestersViewModel>();
-            DataContext = VM;
         }
-        
-        public ISemestersViewModel VM { get; }
 
-        private void StackPanel_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Flyout.ShowAttachedFlyout(sender as Windows.UI.Xaml.FrameworkElement);
+            base.OnNavigatedTo(e);
+
+            DataContext = e.Parameter;
         }
     }
 }

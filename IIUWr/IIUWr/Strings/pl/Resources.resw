@@ -127,11 +127,19 @@
   <data name="False@Pascal" xml:space="preserve">
     <value>Nie</value>
   </data>
+  <data name="FilterAppBarButton.Label" xml:space="preserve">
+    <value>Filtr</value>
+    <comment>Filter</comment>
+  </data>
   <data name="II" xml:space="preserve">
     <value>Instytut Informatyki</value>
     <comment>Name of Computer Science faculty</comment>
   </data>
   <data name="Refresh" xml:space="preserve">
+    <value>Odśwież</value>
+    <comment>Refresh</comment>
+  </data>
+  <data name="RefreshAppBarButton.Label" xml:space="preserve">
     <value>Odśwież</value>
     <comment>Refresh</comment>
   </data>

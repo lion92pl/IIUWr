@@ -6,7 +6,7 @@
     "LionCub.UI.Xaml.Data.Converters": "1.1.1-Dev",
     "LionCub.UI.Xaml.Data.Observable": "1.0.2-Dev",
     "LionCub.UI.Xaml.WebView": "1.0.1-Dev",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
     "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0"
   },
   "frameworks": {

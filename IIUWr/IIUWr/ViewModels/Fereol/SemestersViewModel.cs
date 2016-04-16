@@ -91,7 +91,6 @@ namespace IIUWr.ViewModels.Fereol
                 {
                     Semesters.RemoveAt(1);
                 }
-                Semesters[0]?.Refresh();
             }
             else
             {

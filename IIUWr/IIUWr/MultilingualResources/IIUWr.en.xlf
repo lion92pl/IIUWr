@@ -47,6 +47,16 @@
           <source>Tak</source>
           <target state="new">Tak</target>
         </trans-unit>
+        <trans-unit id="RefreshAppBarButton.Label" translate="yes" xml:space="preserve">
+          <source>Odśwież</source>
+          <target state="new">Odśwież</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Refresh</note>
+        </trans-unit>
+        <trans-unit id="FilterAppBarButton.Label" translate="yes" xml:space="preserve">
+          <source>Filtr</source>
+          <target state="new">Filtr</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Filter</note>
+        </trans-unit>
       </group>
     </body>
   </file>
