@@ -110,11 +110,16 @@
     <Compile Include="Fereol\ICourseViewModel.cs" />
     <Compile Include="Fereol\ISemestersViewModel.cs" />
     <Compile Include="Fereol\ISemesterViewModel.cs" />
+    <Compile Include="IExpandable.cs" />
     <Compile Include="IRefreshable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ViewModelInterfaces.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fereol\Common\Common.csproj">
+      <Project>{164ab07e-f8d3-4a98-8471-18480b0c56b9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fereol\Model\Model.csproj">
       <Project>{3CA09B84-C4FE-44D3-9322-B39BA56F3271}</Project>
       <Name>Model</Name>

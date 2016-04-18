@@ -245,4 +245,33 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="pl" target-language="en" original="IIUWR/STRINGS/PL/ENUMS/REFRESHTYPE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1605.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="IIUWR/STRINGS/PL/ENUMS/REFRESHTYPE.RESW" datatype="resx">
+        <trans-unit id="Basic" translate="yes" xml:space="preserve">
+          <source>Podstawowe</source>
+          <target state="new">Podstawowe</target>
+        </trans-unit>
+        <trans-unit id="Failed" translate="yes" xml:space="preserve">
+          <source>Nieudane</source>
+          <target state="new">Nieudane</target>
+        </trans-unit>
+        <trans-unit id="Full" translate="yes" xml:space="preserve">
+          <source>Pełne</source>
+          <target state="new">Pełne</target>
+        </trans-unit>
+        <trans-unit id="LoggedInBasic" translate="yes" xml:space="preserve">
+          <source>Podstawowe (zalogowany)</source>
+          <target state="new">Podstawowe (zalogowany)</target>
+        </trans-unit>
+        <trans-unit id="LoggedInFull" translate="yes" xml:space="preserve">
+          <source>Pełne (zalogowany)</source>
+          <target state="new">Pełne (zalogowany)</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>

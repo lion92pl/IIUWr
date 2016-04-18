@@ -100,6 +100,7 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <PRIResource Include="Strings\pl\Enums\RefreshType.resw" />
     <PRIResource Include="Strings\en\Enums\YearHalf.resw" />
     <PRIResource Include="Strings\en\CourseType.resw" />
     <PRIResource Include="Strings\en\Course.resw" />

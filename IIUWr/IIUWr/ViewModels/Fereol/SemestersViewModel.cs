@@ -1,14 +1,12 @@
-﻿using IIUWr.ViewModelInterfaces.Fereol;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using IIUWr.Fereol.Interface;
+﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
+using IIUWr.Fereol.Model.Enums;
+using IIUWr.ViewModelInterfaces.Fereol;
 using LionCub.Patterns.DependencyInjection;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 
 namespace IIUWr.ViewModels.Fereol
 {
@@ -22,31 +20,15 @@ namespace IIUWr.ViewModels.Fereol
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private ObservableCollection<ISemesterViewModel> _allSemesters;
+        
         public ObservableCollection<ISemesterViewModel> Semesters { get; private set; }
             = new ObservableCollection<ISemesterViewModel>();
-
-        private bool _onlyCurrent;
-        public bool OnlyCurrent
-        {
-            get { return _onlyCurrent; }
-            set
-            {
-                if (_onlyCurrent != value)
-                {
-                    _onlyCurrent = value;
-                    ApplyOnlyCurrent(_onlyCurrent);
-                    PropertyChanged.Notify(this);
-                }
-            }
-        }
-
+        
         private bool _isRefreshing;
         public bool IsRefreshing
         {
             get { return _isRefreshing; }
-            set
+            private set
             {
                 if (_isRefreshing != value)
                 {
@@ -56,15 +38,26 @@ namespace IIUWr.ViewModels.Fereol
             }
         }
 
-        public async void Refresh()
+        public RefreshTimes RefreshTimes { get; } = new RefreshTimes();
+
+        public void Refresh()
+        {
+            Refresh(false);
+        }
+
+        public void ForceRefresh()
+        {
+            Refresh(true);
+        }
+
+        private async void Refresh(bool force)
         {
             IsRefreshing = true;
-            var semesters = await _coursesService.GetSemesters();
-            if (semesters != null)
+            var result = await _coursesService.GetSemesters(force);
+            RefreshTimes.Set(result.Item1);
+            if (result.Item1.IsSuccess && result.Item2 != null)
             {
-                _allSemesters = new ObservableCollection<ISemesterViewModel>();
-                //TODO better handling of OnlyCurrent
-                foreach (Semester semester in OnlyCurrent ? semesters.Take(1) : semesters)
+                foreach (Semester semester in result.Item2)
                 {
                     var semesterVM = Semesters.FirstOrDefault(vm => vm.Semester == semester);
                     if (semesterVM == null)
@@ -77,28 +70,9 @@ namespace IIUWr.ViewModels.Fereol
                     {
                         semesterVM.Semester = semester;
                     }
-                    _allSemesters.Add(semesterVM);
                 }
             }
             IsRefreshing = false;
-        }
-
-        private void ApplyOnlyCurrent(bool onlyCurrent)
-        {
-            if (onlyCurrent)
-            {
-                while (Semesters.Count > 1)
-                {
-                    Semesters.RemoveAt(1);
-                }
-            }
-            else
-            {
-                for (int i = Semesters.Count; i < _allSemesters.Count; i++)
-                {
-                    Semesters.Add(_allSemesters[i]);
-                }
-            }
         }
     }
 }

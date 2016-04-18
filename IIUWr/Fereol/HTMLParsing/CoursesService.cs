@@ -20,6 +20,7 @@ namespace IIUWr.Fereol.HTMLParsing
         private const string SummerHalf = "letni";
         private const string WinterHalf = "zimowy";
         private const string DescriptionForParseError = "<h1>Cannot parse!<h1>";
+        private DateTimeOffset _lastSemestersUpdate;
 
         #region Patterns
 
@@ -88,13 +89,23 @@ namespace IIUWr.Fereol.HTMLParsing
 
         private Dictionary<Semester, List<Course>> Semesters { get; set; }
 
-        public async Task Refresh()
+        private async Task<bool> Refresh()
         {
             var semesters = new Dictionary<Semester, List<Course>>();
 
             System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Start download");
 
-            var page = await _connection.GetStringAsync(CoursesPath);
+            string page;
+            try
+            {
+                page = await _connection.GetStringAsync(CoursesPath);
+            }
+            catch
+            {
+                return false;
+            }
+
+            _lastSemestersUpdate = DateTimeOffset.Now;
 
             System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished download, start parsing");
             
@@ -110,24 +121,33 @@ namespace IIUWr.Fereol.HTMLParsing
             System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished parsing");
 
             Semesters = semesters;
+
+            return true;
         }
-        
-        public async Task<bool> RefreshCourse(Course course)
+
+        public async Task<RefreshTime> RefreshCourse(Course course, bool forceRefresh = false)
         {
-            var page = await _connection.GetStringAsync(CoursesPath + course.Path);
+            string page;
+            try
+            {
+                page = await _connection.GetStringAsync(CoursesPath + course.Path);
+            }
+            catch
+            {
+                return RefreshType.Failed;
+            }
 
             Match match = CourseRegex.Match(page);
 
             if (match.Success)
             {
                 ParseCourseFullData(course, match);
+                return RefreshType.Full;
             }
             else
             {
-                course.Description = DescriptionForParseError;
+                return RefreshType.Failed;
             }
-
-            return match.Success;
         }
 
         private KeyValuePair<Semester, List<Course>> ParseSemester(Match match)
@@ -210,22 +230,28 @@ namespace IIUWr.Fereol.HTMLParsing
             }
         }
 
-        public async Task<IEnumerable<Semester>> GetSemesters()
+        public async Task<Tuple<RefreshTime, IEnumerable<Course>>> GetCourses(Semester semester, bool forceRefresh = false)
         {
-            if (Semesters == null)
+            if (Semesters == null || forceRefresh)
             {
-                await Refresh();
+                if (!await Refresh())
+                {
+                    return new Tuple<RefreshTime, IEnumerable<Course>>(RefreshType.Failed, null);
+                }
             }
-            return Semesters.Keys;
+            return new Tuple<RefreshTime, IEnumerable<Course>>(new RefreshTime(RefreshType.Basic, _lastSemestersUpdate), Semesters[semester]);
         }
 
-        public async Task<IEnumerable<Course>> GetCourses(Semester semester)
+        public async Task<Tuple<RefreshTime, IEnumerable<Semester>>> GetSemesters(bool forceRefresh = false)
         {
-            if (Semesters == null)
+            if (Semesters == null || forceRefresh)
             {
-                await Refresh();
+                if (!await Refresh())
+                {
+                    return new Tuple<RefreshTime, IEnumerable<Semester>>(RefreshType.Failed, null);
+                }
             }
-            return Semesters[semester];
+            return new Tuple<RefreshTime, IEnumerable<Semester>>(new RefreshTime(RefreshType.Full, _lastSemestersUpdate), Semesters.Keys);
         }
     }
 }

@@ -1,14 +1,11 @@
-﻿using IIUWr.ViewModelInterfaces.Fereol;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
+using IIUWr.ViewModelInterfaces.Fereol;
+using LionCub.Patterns.DependencyInjection;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using IIUWr.Fereol.Interface;
-using LionCub.Patterns.DependencyInjection;
+using System.Linq;
 
 namespace IIUWr.ViewModels.Fereol
 {
@@ -55,7 +52,7 @@ namespace IIUWr.ViewModels.Fereol
         public bool IsRefreshing
         {
             get { return _isRefreshing; }
-            set
+            private set
             {
                 if (_isRefreshing != value)
                 {
@@ -65,26 +62,53 @@ namespace IIUWr.ViewModels.Fereol
             }
         }
 
-        public async void Refresh()
+        public RefreshTimes RefreshTimes { get; } = new RefreshTimes();
+
+        private bool _isExpanded;
+        public bool IsExpanded
+        {
+            get { return _isExpanded; }
+            set
+            {
+                if (_isExpanded != value)
+                {
+                    if (value)
+                    {
+                        Refresh();
+                    }
+                    _isExpanded = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
+
+        public void Refresh()
+        {
+            Refresh(false);
+        }
+
+        public void ForceRefresh()
+        {
+            Refresh(true);
+        }
+
+        private async void Refresh(bool force)
         {
             IsRefreshing = true;
-            await _coursesService.Refresh();
-            var courses = await _coursesService.GetCourses(Semester);
-            if (courses != null)
+            var result = await _coursesService.GetCourses(Semester, force);
+            RefreshTimes.Set(result.Item1);
+            if (result.Item1.IsSuccess && result.Item2 != null)
             {
-                foreach (Course course in courses)
+                foreach (Course course in result.Item2)
                 {
                     var courseVM = Courses.FirstOrDefault(vm => vm.Course == course);
                     if (courseVM == null)
                     {
                         courseVM = IoC.Get<ICourseViewModel>();
-                        courseVM.Course = course;
                         Courses.Add(courseVM);
                     }
-                    else
-                    {
-                        courseVM.Course = course;
-                    }
+                    courseVM.Course = course;
+                    courseVM.RefreshTimes.Set(result.Item1);
                 }
             }
             IsRefreshing = false;

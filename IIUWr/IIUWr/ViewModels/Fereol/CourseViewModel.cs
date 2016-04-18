@@ -1,7 +1,7 @@
-﻿using IIUWr.ViewModelInterfaces.Fereol;
+﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
+using IIUWr.ViewModelInterfaces.Fereol;
 using System.ComponentModel;
-using IIUWr.Fereol.Interface;
 
 namespace IIUWr.ViewModels.Fereol
 {
@@ -34,7 +34,7 @@ namespace IIUWr.ViewModels.Fereol
         public bool IsRefreshing
         {
             get { return _isRefreshing; }
-            set
+            private set
             {
                 if (_isRefreshing != value)
                 {
@@ -44,10 +44,23 @@ namespace IIUWr.ViewModels.Fereol
             }
         }
 
-        public async void Refresh()
+        public RefreshTimes RefreshTimes { get; } = new RefreshTimes();
+
+        public void Refresh()
+        {
+            Refresh(false);
+        }
+
+        public void ForceRefresh()
+        {
+            Refresh(true);
+        }
+
+        private async void Refresh(bool force)
         {
             IsRefreshing = true;
-            var result = await _coursesService.RefreshCourse(Course);
+            var result = await _coursesService.RefreshCourse(Course, force);
+            RefreshTimes.Set(result);
             IsRefreshing = false;
         }
     }

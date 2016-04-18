@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IIUWr.ViewModelInterfaces.Fereol
 {
-    public interface ISemesterViewModel : IRefreshable, INotifyPropertyChanged
+    public interface ISemesterViewModel : IRefreshable, IExpandable, INotifyPropertyChanged
     {
         Semester Semester { get; set; }
 
