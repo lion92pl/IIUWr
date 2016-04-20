@@ -96,7 +96,7 @@
     <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fereol\Model\RefreshTimesTests.cs" />
+    <Compile Include="Utils\Refresh\RefreshTimesTests.cs" />
     <Compile Include="Fereol\HTMLParsing\CoursesServiceTests.cs" />
     <Compile Include="Fereol\Model\CourseTypeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +142,10 @@
     <ProjectReference Include="..\Fereol\Model\Model.csproj">
       <Project>{3ca09b84-c4fe-44d3-9322-b39ba56f3271}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{4e46c133-1c35-4613-93c2-e6f5151168cc}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

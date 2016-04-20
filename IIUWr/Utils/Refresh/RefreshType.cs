@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IIUWr.Fereol.Model.Enums
+namespace IIUWr.Utils.Refresh
 {
     [Flags]
     public enum RefreshType : int

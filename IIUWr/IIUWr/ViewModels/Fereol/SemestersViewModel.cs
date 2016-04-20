@@ -1,6 +1,7 @@
 ﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
 using IIUWr.Fereol.Model.Enums;
+using IIUWr.Utils.Refresh;
 using IIUWr.ViewModelInterfaces.Fereol;
 using LionCub.Patterns.DependencyInjection;
 using System.Collections.Generic;
@@ -13,16 +14,30 @@ namespace IIUWr.ViewModels.Fereol
     public class SemestersViewModel : ISemestersViewModel
     {
         private readonly ICoursesService _coursesService;
+        private readonly RefreshTimesManager _refreshTimesManager;
 
-        public SemestersViewModel(ICoursesService coursesService)
+        public SemestersViewModel(ICoursesService coursesService, RefreshTimesManager refreshTimesManager)
         {
             _coursesService = coursesService;
+            _refreshTimesManager = refreshTimesManager;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
-        public ObservableCollection<ISemesterViewModel> Semesters { get; private set; }
-            = new ObservableCollection<ISemesterViewModel>();
+
+        private ObservableCollection<ISemesterViewModel> _semesters = new ObservableCollection<ISemesterViewModel>();
+        public ObservableCollection<ISemesterViewModel> Semesters
+        {
+            get { return _semesters; }
+            private set
+            {
+                if (_semesters != value)
+                {
+                    _semesters = value;
+                    PropertyChanged.Notify(this);
+                    RefreshTimes = _refreshTimesManager[_semesters];
+                }
+            }
+        }
         
         private bool _isRefreshing;
         public bool IsRefreshing
@@ -38,7 +53,19 @@ namespace IIUWr.ViewModels.Fereol
             }
         }
 
-        public RefreshTimes RefreshTimes { get; } = new RefreshTimes();
+        private RefreshTimes _refreshTimes;
+        public RefreshTimes RefreshTimes
+        {
+            get { return _refreshTimes; }
+            private set
+            {
+                if (_refreshTimes != value)
+                {
+                    _refreshTimes = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
 
         public void Refresh()
         {
@@ -54,10 +81,9 @@ namespace IIUWr.ViewModels.Fereol
         {
             IsRefreshing = true;
             var result = await _coursesService.GetSemesters(force);
-            RefreshTimes.Set(result.Item1);
-            if (result.Item1.IsSuccess && result.Item2 != null)
+            if (result != null)
             {
-                foreach (Semester semester in result.Item2)
+                foreach (Semester semester in result)
                 {
                     var semesterVM = Semesters.FirstOrDefault(vm => vm.Semester == semester);
                     if (semesterVM == null)

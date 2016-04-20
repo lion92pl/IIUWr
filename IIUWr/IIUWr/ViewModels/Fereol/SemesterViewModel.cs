@@ -1,8 +1,8 @@
 ﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
+using IIUWr.Utils.Refresh;
 using IIUWr.ViewModelInterfaces.Fereol;
 using LionCub.Patterns.DependencyInjection;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -12,10 +12,12 @@ namespace IIUWr.ViewModels.Fereol
     public class SemesterViewModel : ISemesterViewModel
     {
         private readonly ICoursesService _coursesService;
+        private readonly RefreshTimesManager _refreshTimesManager;
 
-        public SemesterViewModel(ICoursesService coursesService)
+        public SemesterViewModel(ICoursesService coursesService, RefreshTimesManager refreshTimesManager)
         {
             _coursesService = coursesService;
+            _refreshTimesManager = refreshTimesManager;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -44,6 +46,7 @@ namespace IIUWr.ViewModels.Fereol
                 {
                     _semester = value;
                     PropertyChanged.Notify(this);
+                    RefreshTimes = _refreshTimesManager[_semester];
                 }
             }
         }
@@ -62,7 +65,19 @@ namespace IIUWr.ViewModels.Fereol
             }
         }
 
-        public RefreshTimes RefreshTimes { get; } = new RefreshTimes();
+        private RefreshTimes _refreshTimes;
+        public RefreshTimes RefreshTimes
+        {
+            get { return _refreshTimes; }
+            private set
+            {
+                if (_refreshTimes != value)
+                {
+                    _refreshTimes = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
 
         private bool _isExpanded;
         public bool IsExpanded
@@ -75,6 +90,10 @@ namespace IIUWr.ViewModels.Fereol
                     if (value)
                     {
                         Refresh();
+                    }
+                    else
+                    {
+                        Courses.Clear();
                     }
                     _isExpanded = value;
                     PropertyChanged.Notify(this);
@@ -96,10 +115,9 @@ namespace IIUWr.ViewModels.Fereol
         {
             IsRefreshing = true;
             var result = await _coursesService.GetCourses(Semester, force);
-            RefreshTimes.Set(result.Item1);
-            if (result.Item1.IsSuccess && result.Item2 != null)
+            if (result != null)
             {
-                foreach (Course course in result.Item2)
+                foreach (Course course in result)
                 {
                     var courseVM = Courses.FirstOrDefault(vm => vm.Course == course);
                     if (courseVM == null)
@@ -108,7 +126,6 @@ namespace IIUWr.ViewModels.Fereol
                         Courses.Add(courseVM);
                     }
                     courseVM.Course = course;
-                    courseVM.RefreshTimes.Set(result.Item1);
                 }
             }
             IsRefreshing = false;

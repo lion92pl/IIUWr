@@ -118,6 +118,10 @@
     <EmbeddedResource Include="Properties\HTMLParsing.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Utils\Utils.csproj">
+      <Project>{4e46c133-1c35-4613-93c2-e6f5151168cc}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ViewModelInterfaces\ViewModelInterfaces.csproj">
       <Project>{304363b6-d2c4-409f-8d53-855062c469fa}</Project>
       <Name>ViewModelInterfaces</Name>

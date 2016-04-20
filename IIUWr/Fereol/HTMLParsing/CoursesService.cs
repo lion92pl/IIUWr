@@ -9,12 +9,14 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using IIUWr.Utils.Refresh;
 
 namespace IIUWr.Fereol.HTMLParsing
 {
     public class CoursesService : ICoursesService
     {
-        private IHTTPConnection _connection;
+        private readonly IHTTPConnection _connection;
+        private readonly RefreshTimesManager _refreshTimesManager;
         private const string CoursesPath = @"courses/";
 
         private const string SummerHalf = "letni";
@@ -82,9 +84,10 @@ namespace IIUWr.Fereol.HTMLParsing
 
         #endregion
 
-        public CoursesService(Interface.IHTTPConnection connection)
+        public CoursesService(Interface.IHTTPConnection connection, RefreshTimesManager refreshTimesManager)
         {
             _connection = connection;
+            _refreshTimesManager = refreshTimesManager;
         }
 
         private Dictionary<Semester, List<Course>> Semesters { get; set; }
@@ -125,7 +128,7 @@ namespace IIUWr.Fereol.HTMLParsing
             return true;
         }
 
-        public async Task<RefreshTime> RefreshCourse(Course course, bool forceRefresh = false)
+        public async Task<bool> RefreshCourse(Course course, bool forceRefresh = false)
         {
             string page;
             try
@@ -134,7 +137,7 @@ namespace IIUWr.Fereol.HTMLParsing
             }
             catch
             {
-                return RefreshType.Failed;
+                return false;
             }
 
             Match match = CourseRegex.Match(page);
@@ -142,11 +145,12 @@ namespace IIUWr.Fereol.HTMLParsing
             if (match.Success)
             {
                 ParseCourseFullData(course, match);
-                return RefreshType.Full;
+                _refreshTimesManager.Set(course, RefreshType.Full);
+                return true;
             }
             else
             {
-                return RefreshType.Failed;
+                return false;
             }
         }
 
@@ -173,6 +177,7 @@ namespace IIUWr.Fereol.HTMLParsing
                 YearHalf = yearHalf,
                 Id = int.Parse(match.Groups[RegexGroups.Id].Value)
             };
+            _refreshTimesManager.Set(semester, RefreshType.Full);
             var courses = ParseCourses(semester, match.Groups[RegexGroups.Course].Captures);
 
             return new KeyValuePair<Semester, List<Course>>(semester, courses);
@@ -189,6 +194,7 @@ namespace IIUWr.Fereol.HTMLParsing
                 {
                     course.Semester = semester;
                     courses.Add(course);
+                    _refreshTimesManager.Set(course, RefreshType.Basic);
                 }
             }
             
@@ -230,28 +236,22 @@ namespace IIUWr.Fereol.HTMLParsing
             }
         }
 
-        public async Task<Tuple<RefreshTime, IEnumerable<Course>>> GetCourses(Semester semester, bool forceRefresh = false)
+        public async Task<IEnumerable<Course>> GetCourses(Semester semester, bool forceRefresh = false)
         {
             if (Semesters == null || forceRefresh)
             {
-                if (!await Refresh())
-                {
-                    return new Tuple<RefreshTime, IEnumerable<Course>>(RefreshType.Failed, null);
-                }
+                await Refresh();
             }
-            return new Tuple<RefreshTime, IEnumerable<Course>>(new RefreshTime(RefreshType.Basic, _lastSemestersUpdate), Semesters[semester]);
+            return Semesters?[semester];
         }
 
-        public async Task<Tuple<RefreshTime, IEnumerable<Semester>>> GetSemesters(bool forceRefresh = false)
+        public async Task<IEnumerable<Semester>> GetSemesters(bool forceRefresh = false)
         {
             if (Semesters == null || forceRefresh)
             {
-                if (!await Refresh())
-                {
-                    return new Tuple<RefreshTime, IEnumerable<Semester>>(RefreshType.Failed, null);
-                }
+                await Refresh();
             }
-            return new Tuple<RefreshTime, IEnumerable<Semester>>(new RefreshTime(RefreshType.Full, _lastSemestersUpdate), Semesters.Keys);
+            return Semesters?.Keys;
         }
     }
 }

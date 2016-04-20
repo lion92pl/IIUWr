@@ -1,8 +1,7 @@
-﻿using IIUWr.Fereol.Model.Enums;
-using System;
+﻿using System;
 using System.ComponentModel;
 
-namespace IIUWr.Fereol.Model
+namespace IIUWr.Utils.Refresh
 {
     public class RefreshTime : INotifyPropertyChanged
     {
@@ -12,11 +11,6 @@ namespace IIUWr.Fereol.Model
         {
             Type = type;
             _time = time;
-        }
-
-        public static implicit operator RefreshTime(RefreshType type)
-        {
-            return new RefreshTime(type);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

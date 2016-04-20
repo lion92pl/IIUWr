@@ -1,5 +1,6 @@
 ﻿using IIUWr.Fereol.Common;
 using IIUWr.Fereol.Interface;
+using IIUWr.Utils.Refresh;
 using IIUWr.ViewModelInterfaces.Fereol;
 using IIUWr.ViewModels.Fereol;
 using LionCub.Patterns.DependencyInjection;
@@ -15,6 +16,7 @@ namespace IIUWr
             IoC.AsInstance(new Uri(@"https://zapisy.ii.uni.wroc.pl/"));
 
             ViewModels();
+            Utils();
             Fereol.Common();
             Fereol.HTMLParsing();
         }
@@ -24,6 +26,11 @@ namespace IIUWr
             IoC.AsSingleton<ISemestersViewModel, SemestersViewModel>();
             IoC.PerRequest<ISemesterViewModel, SemesterViewModel>();
             IoC.PerRequest<ICourseViewModel, CourseViewModel>();
+        }
+
+        public static void Utils()
+        {
+            IoC.AsSingleton<RefreshTimesManager>();
         }
 
         public static class Fereol

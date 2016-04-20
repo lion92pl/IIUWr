@@ -8,8 +8,8 @@ namespace IIUWr.Fereol.Interface
 {
     public interface ICoursesService
     {
-        Task<Tuple<RefreshTime, IEnumerable<Semester>>> GetSemesters(bool forceRefresh = false);
-        Task<Tuple<RefreshTime, IEnumerable<Course>>> GetCourses(Semester semester, bool forceRefresh = false);
-        Task<RefreshTime> RefreshCourse(Course course, bool forceRefresh = false);
+        Task<IEnumerable<Semester>> GetSemesters(bool forceRefresh = false);
+        Task<IEnumerable<Course>> GetCourses(Semester semester, bool forceRefresh = false);
+        Task<bool> RefreshCourse(Course course, bool forceRefresh = false);
     }
 }

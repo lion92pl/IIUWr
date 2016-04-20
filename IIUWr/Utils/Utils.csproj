@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{304363B6-D2C4-409F-8D53-855062C469FA}</ProjectGuid>
+    <ProjectGuid>{4E46C133-1C35-4613-93C2-E6F5151168CC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IIUWr.ViewModelInterfaces</RootNamespace>
-    <AssemblyName>IIUWr.ViewModelInterfaces</AssemblyName>
+    <RootNamespace>IIUWr.Utils</RootNamespace>
+    <AssemblyName>IIUWr.Utils</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -107,27 +107,12 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fereol\ICourseViewModel.cs" />
-    <Compile Include="Fereol\ISemestersViewModel.cs" />
-    <Compile Include="Fereol\ISemesterViewModel.cs" />
-    <Compile Include="IExpandable.cs" />
-    <Compile Include="IRefreshable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\ViewModelInterfaces.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fereol\Common\Common.csproj">
-      <Project>{164ab07e-f8d3-4a98-8471-18480b0c56b9}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fereol\Model\Model.csproj">
-      <Project>{3CA09B84-C4FE-44D3-9322-B39BA56F3271}</Project>
-      <Name>Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Utils\Utils.csproj">
-      <Project>{4e46c133-1c35-4613-93c2-e6f5151168cc}</Project>
-      <Name>Utils</Name>
-    </ProjectReference>
+    <Compile Include="Refresh\RefreshTime.cs" />
+    <Compile Include="Refresh\RefreshTimes.cs" />
+    <Compile Include="Refresh\RefreshTimesManager.cs" />
+    <Compile Include="Refresh\RefreshType.cs" />
+    <EmbeddedResource Include="Properties\Utils.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

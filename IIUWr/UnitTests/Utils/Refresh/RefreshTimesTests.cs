@@ -1,12 +1,11 @@
-﻿using IIUWr.Fereol.Model;
-using IIUWr.Fereol.Model.Enums;
+﻿using IIUWr.Utils.Refresh;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
-namespace UnitTests.Fereol.Model
+namespace UnitTests.Utils.Refresh
 {
     [TestClass]
     public class RefreshTimesTests
@@ -187,7 +186,7 @@ namespace UnitTests.Fereol.Model
 
         private void Set(RefreshType type)
         {
-            _times.Set(type);
+            _times.Set(new RefreshTime(type));
         }
 
         private void CheckTime(int index, RefreshType type)

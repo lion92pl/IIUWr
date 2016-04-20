@@ -1,12 +1,13 @@
-﻿using IIUWr.Fereol.Model.Enums;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace IIUWr.Fereol.Model
+namespace IIUWr.Utils.Refresh
 {
     public class RefreshTimes : ObservableCollection<RefreshTime>
     {
+        //TODO Add locking
+        //TODO handle time checking
         public void Set(RefreshTime refreshTime)
         {
             RefreshType type = refreshTime.Type;

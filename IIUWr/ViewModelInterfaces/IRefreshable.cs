@@ -1,4 +1,4 @@
-﻿using IIUWr.Fereol.Model;
+﻿using IIUWr.Utils.Refresh;
 using System;
 using System.ComponentModel;
 
