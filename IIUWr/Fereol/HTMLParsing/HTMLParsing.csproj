@@ -126,6 +126,10 @@
       <Project>{304363b6-d2c4-409f-8d53-855062c469fa}</Project>
       <Name>ViewModelInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{164AB07E-F8D3-4A98-8471-18480B0C56B9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Interface\Interface.csproj">
       <Project>{97d0194c-87bc-4026-a58d-b94d959c540a}</Project>
       <Name>Interface</Name>

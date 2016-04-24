@@ -90,42 +90,22 @@ namespace IIUWr.Fereol.HTMLParsing
             _refreshTimesManager = refreshTimesManager;
         }
 
-        private Dictionary<Semester, List<Course>> Semesters { get; set; }
-
-        private async Task<bool> Refresh()
+        public async Task<IEnumerable<Semester>> GetSemesters(bool forceRefresh = false)
         {
-            var semesters = new Dictionary<Semester, List<Course>>();
-
-            System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Start download");
-
-            string page;
-            try
+            if (Semesters == null || forceRefresh)
             {
-                page = await _connection.GetStringAsync(CoursesPath);
+                await Refresh();
             }
-            catch
+            return Semesters?.Keys;
+        }
+
+        public async Task<IEnumerable<Course>> GetCourses(Semester semester, bool forceRefresh = false)
+        {
+            if (Semesters == null || forceRefresh)
             {
-                return false;
+                await Refresh();
             }
-
-            _lastSemestersUpdate = DateTimeOffset.Now;
-
-            System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished download, start parsing");
-            
-            foreach (Match match in SemestersAndCoursesRegex.Matches(page))
-            {
-                if (match.Success)
-                {
-                    var pair = ParseSemester(match);
-                    semesters.Add(pair.Key, pair.Value);
-                }
-            }
-
-            System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished parsing");
-
-            Semesters = semesters;
-
-            return true;
+            return Semesters?[semester];
         }
 
         public async Task<bool> RefreshCourse(Course course, bool forceRefresh = false)
@@ -144,17 +124,59 @@ namespace IIUWr.Fereol.HTMLParsing
 
             if (match.Success)
             {
+                bool auth = CommonRegexes.ParseAuthenticationStatus(page).Authenticated;
                 ParseCourseFullData(course, match);
-                _refreshTimesManager.Set(course, RefreshType.Full);
+                _refreshTimesManager.Set(course, auth ? RefreshType.LoggedInFull : RefreshType.Full);
                 return true;
             }
             else
             {
+                _refreshTimesManager.Set(course, RefreshType.Failed);
                 return false;
             }
         }
 
-        private KeyValuePair<Semester, List<Course>> ParseSemester(Match match)
+        private Dictionary<Semester, List<Course>> Semesters { get; set; }
+
+        private async Task<bool> Refresh()
+        {
+            var semesters = new Dictionary<Semester, List<Course>>();
+
+            System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Start download");
+
+            string page;
+            try
+            {
+                page = await _connection.GetStringAsync(CoursesPath);
+            }
+            catch
+            {
+                return false;
+            }
+
+            var time = DateTimeOffset.Now;
+            bool auth = CommonRegexes.ParseAuthenticationStatus(page).Authenticated;
+
+            System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished download, start parsing");
+            
+            foreach (Match match in SemestersAndCoursesRegex.Matches(page))
+            {
+                if (match.Success)
+                {
+                    var pair = ParseSemester(match, new RefreshTime(auth ? RefreshType.LoggedInBasic : RefreshType.Basic));
+                    semesters.Add(pair.Key, pair.Value);
+                    _refreshTimesManager.Set(pair.Key, new RefreshTime(auth ? RefreshType.LoggedInFull : RefreshType.Full, time));
+                }
+            }
+
+            System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished parsing");
+
+            Semesters = semesters;
+
+            return true;
+        }
+
+        private KeyValuePair<Semester, List<Course>> ParseSemester(Match match, RefreshTime refreshTime)
         {
             YearHalf yearHalf;
 
@@ -177,13 +199,13 @@ namespace IIUWr.Fereol.HTMLParsing
                 YearHalf = yearHalf,
                 Id = int.Parse(match.Groups[RegexGroups.Id].Value)
             };
-            _refreshTimesManager.Set(semester, RefreshType.Full);
-            var courses = ParseCourses(semester, match.Groups[RegexGroups.Course].Captures);
+            
+            var courses = ParseCourses(semester, match.Groups[RegexGroups.Course].Captures, refreshTime);
 
             return new KeyValuePair<Semester, List<Course>>(semester, courses);
         }
 
-        private List<Course> ParseCourses(Semester semester, CaptureCollection captures)
+        private List<Course> ParseCourses(Semester semester, CaptureCollection captures, RefreshTime refreshTime)
         {
             List<Course> courses = new List<Course>(captures.Count);
 
@@ -194,7 +216,7 @@ namespace IIUWr.Fereol.HTMLParsing
                 {
                     course.Semester = semester;
                     courses.Add(course);
-                    _refreshTimesManager.Set(course, RefreshType.Basic);
+                    _refreshTimesManager.Set(course, refreshTime);
                 }
             }
             
@@ -234,24 +256,6 @@ namespace IIUWr.Fereol.HTMLParsing
             {
                 CourseInfoParser.ParseCourseInfo(course, info);
             }
-        }
-
-        public async Task<IEnumerable<Course>> GetCourses(Semester semester, bool forceRefresh = false)
-        {
-            if (Semesters == null || forceRefresh)
-            {
-                await Refresh();
-            }
-            return Semesters?[semester];
-        }
-
-        public async Task<IEnumerable<Semester>> GetSemesters(bool forceRefresh = false)
-        {
-            if (Semesters == null || forceRefresh)
-            {
-                await Refresh();
-            }
-            return Semesters?.Keys;
         }
     }
 }

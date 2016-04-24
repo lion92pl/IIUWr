@@ -92,10 +92,16 @@
   <ItemGroup>
     <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
     <None Include="project.json" />
-    <SDKReference Include="MSTestFramework.Universal, Version=$(UnitTestPlatformVersion)" />
-    <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
+    <SDKReference Include="MSTestFramework.Universal, Version=15.0">
+      <Name>MSTest for Managed Projects</Name>
+    </SDKReference>
+    <SDKReference Include="TestPlatform.Universal, Version=15.0">
+      <Name>Microsoft Visual Studio Test Core</Name>
+    </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fereol\HTMLParsing\CommonRegexesTests.cs" />
+    <Compile Include="Mocks\Fereol\HTMLParsing\HTTPConnection.cs" />
     <Compile Include="Utils\Refresh\RefreshTimesTests.cs" />
     <Compile Include="Fereol\HTMLParsing\CoursesServiceTests.cs" />
     <Compile Include="Fereol\Model\CourseTypeTests.cs" />
@@ -117,6 +123,11 @@
     <None Include="UnitTests_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fereol\HTMLParsing\Pages\Authentication\NotAuthenticated.html" />
+    <Content Include="Fereol\HTMLParsing\Pages\Authentication\Student.html" />
+    <Content Include="Fereol\HTMLParsing\Pages\Courses\algebra_1516.html" />
+    <Content Include="Fereol\HTMLParsing\Pages\Courses\kurs_practical_c_enterpirse_software_development.html" />
+    <Content Include="Fereol\HTMLParsing\Pages\Courses\List.html" />
     <Content Include="Properties\UnitTestApp.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

@@ -11,6 +11,7 @@ namespace IIUWr.Fereol.Model
         //TODO move to HTMLParsing as implementation specific (here create interface, same with other types)
         public string Path { get; set; }
 
+        //TODO remove or change to Id only
         /// <summary>Semester in which this course taken place</summary>
         public Semester Semester { get; set; }
 

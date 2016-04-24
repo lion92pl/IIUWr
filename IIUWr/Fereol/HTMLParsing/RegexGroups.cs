@@ -12,5 +12,7 @@
         public const string Description = "description";
         public const string CourseInfo = "courseInfo";
         public const string HiddenInput = "hiddenInput";
+        public const string IsAuthenticated = "isAuthenticated";
+        public const string IsStudent = "isStudent";
     }
 }
