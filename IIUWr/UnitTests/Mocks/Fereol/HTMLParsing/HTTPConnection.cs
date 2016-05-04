@@ -14,9 +14,7 @@ namespace UnitTests.Mocks.Fereol.HTMLParsing
         {
             _result = System.IO.File.ReadAllText(htmlFilePath);
         }
-
-        public Uri FereolBaseUri { get; set; }
-
+        
         public Task<bool> CheckConnection()
         {
             throw new NotImplementedException();
@@ -24,7 +22,7 @@ namespace UnitTests.Mocks.Fereol.HTMLParsing
 
         public async Task<string> GetStringAsync(string relativeUri)
         {
-            return _result;
+            return await Task.FromResult(_result);
         }
 
         public Task<bool> Login(string username, string password)

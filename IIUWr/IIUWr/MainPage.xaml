@@ -75,7 +75,8 @@
                     <TextBlock Text="{Binding Semester.Year}" Margin="0,0,7,0" />
                     <TextBlock Text="{Binding Semester.YearHalf, Converter={StaticResource LocaleTextConverter}}" />
                 </StackPanel>
-                <ProgressBar Grid.Row="1" VerticalAlignment="Stretch" IsIndeterminate="True" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanConverter}}"/>
+                <ProgressBar Grid.Row="1" VerticalAlignment="Stretch" IsIndeterminate="True"
+                             Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanConverter}}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>

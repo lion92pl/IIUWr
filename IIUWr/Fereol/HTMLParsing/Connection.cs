@@ -11,29 +11,29 @@ namespace IIUWr.Fereol.HTMLParsing
 {
     public class Connection : IHTTPConnection, IDisposable
     {
-        private Uri Endpoint { get; }
+        private const string LoginPath = @"users/login/";
 
-        public Uri FereolBaseUri { get; set; }
-
-        private HttpBaseProtocolFilter httpFilter;
-        private HttpClient httpClient;
+        private readonly Uri _endpoint;
+        
+        private readonly HttpBaseProtocolFilter _httpFilter;
+        private readonly HttpClient _httpClient;
 
         public Connection(Uri uri, ICredentialsManager credentialsManager)
         {
-            Endpoint = uri;
+            _endpoint = uri;
 
-            httpFilter = new HttpBaseProtocolFilter();
+            _httpFilter = new HttpBaseProtocolFilter();
             // Fereol certificate is not updated frequently, so ...
-            httpFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
+            _httpFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
 
-            httpClient = new HttpClient(httpFilter);
+            _httpClient = new HttpClient(_httpFilter);
         }
 
         public async Task<string> GetStringAsync(string relativeUri)
         {
             try
             {
-                return await httpClient.GetStringAsync(new Uri(Endpoint, relativeUri)).AsTask(new HttpProgressHandler(relativeUri));
+                return await _httpClient.GetStringAsync(new Uri(_endpoint, relativeUri)).AsTask(new HttpProgressHandler(relativeUri));
             }
             catch
             {
@@ -44,18 +44,26 @@ namespace IIUWr.Fereol.HTMLParsing
         
         public void Dispose()
         {
-            httpClient.Dispose();
-            httpFilter.Dispose();
+            _httpClient.Dispose();
+            _httpFilter.Dispose();
         }
         
         public async Task<bool> CheckConnection()
         {
-            var response = await httpClient.GetAsync(Endpoint);
+            var response = await _httpClient.GetAsync(_endpoint);
             return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> Login(string username, string password)
+        public async Task<bool> Login(string username, string password)
         {
+            var formData = new System.Collections.Generic.Dictionary<string, string>
+            {
+                ["id_login"] = username,
+                ["id_password"] = password
+            };
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(_endpoint, LoginPath));
+            request.Content = new HttpFormUrlEncodedContent(formData);
+            var response = await _httpClient.SendRequestAsync(request);
             throw new NotImplementedException();
         }
     }
