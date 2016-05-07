@@ -134,6 +134,13 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <CommandBar x:Name="commandBar">
+                <AppBarButton Label="Log in" x:Uid="LogInAppBarButton" Icon="Account">
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="Click">
+                            <Core:CallMethodAction MethodName="LogIn" TargetObject="{Binding}" />
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </AppBarButton>
                 <AppBarButton Label="Refresh" x:Uid="RefreshAppBarButton" Icon="Refresh" FlyoutBase.AttachedFlyout="{StaticResource RefreshFlyout}">
                     <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="Click">

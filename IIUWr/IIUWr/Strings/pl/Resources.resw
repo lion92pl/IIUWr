@@ -135,6 +135,10 @@
     <value>Instytut Informatyki</value>
     <comment>Name of Computer Science faculty</comment>
   </data>
+  <data name="LogInAppBarButton.Label" xml:space="preserve">
+    <value>Zaloguj</value>
+    <comment>Log in</comment>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>Odśwież</value>
     <comment>Refresh</comment>
