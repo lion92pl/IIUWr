@@ -6,6 +6,7 @@ namespace UnitTests.Fereol.HTMLParsing
     [TestClass]
     public class CommonRegexesTests
     {
+        [TestCategory(Categories.Parsing)]
         [DataTestMethod]
         [DataRow("NotAuthenticated", false, false)]
         [DataRow("Student", true, true)]

@@ -6,7 +6,24 @@
     RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Colors.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--#region ProgressRing-->
+            
+            <Style TargetType="ProgressRing" x:Key="ProgressRingDefaultStyle">
+                <Setter Property="Width" Value="50" />
+                <Setter Property="Height" Value="50" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="ProgressRing" BasedOn="{StaticResource ProgressRingDefaultStyle}" />
+            
+            <!--#endregion-->
+            
             <!--#region FontIcon-->
+            
             <Style TargetType="FontIcon" x:Key="FontIconDefaultStyle">
                 <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
             </Style>
@@ -24,7 +41,9 @@
                 <Setter Property="Glyph" Value="" />
                 <Setter Property="Margin" Value="0,0,5,0" />
             </Style>
+            
             <!--#endregion-->
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

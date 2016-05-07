@@ -1,7 +1,6 @@
 ﻿using IIUWr.ViewModelInterfaces.Fereol;
 using LionCub.Patterns.DependencyInjection;
 using System;
-using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -22,7 +21,7 @@ namespace IIUWr
         {
             InitializeComponent();
             Suspending += OnSuspending;
-
+            
             ConfigureIoC.All();
         }
 

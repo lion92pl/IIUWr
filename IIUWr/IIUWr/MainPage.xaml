@@ -87,12 +87,12 @@
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900" />
+                        <AdaptiveTrigger MinWindowWidth="1008" />
                     </VisualState.StateTriggers>
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <AdaptiveTrigger MinWindowWidth="641" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="semesters.(Grid.RowSpan)" Value="2" />
@@ -181,7 +181,7 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Padding="10,5" HorizontalAlignment="Stretch" Background="Transparent" FlyoutBase.AttachedFlyout="{StaticResource RefreshFlyout}">
+                        <Grid Padding="10,5" HorizontalAlignment="Stretch" FlyoutBase.AttachedFlyout="{StaticResource RefreshFlyout}">
                             <Interactivity:Interaction.Behaviors>
                                 <Core:EventTriggerBehavior EventName="RightTapped">
                                     <behaviors:FlyoutAction />
@@ -199,10 +199,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ProgressRing IsActive="{Binding IsRefreshing}"
-                          Width="50" Height="50"
-                          VerticalAlignment="Center" HorizontalAlignment="Center"
-                          Grid.Row="1" />
+            <ProgressRing IsActive="{Binding IsRefreshing}" Grid.Row="1" />
         </Grid>
         <StackPanel x:Name="courseInfo" Grid.Column="1" Margin="10"
                     d:DataContext="{d:DesignData /SampleData/CourseViewModel.xaml}"
@@ -210,28 +207,26 @@
                     Visibility="{Binding Course, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
             <TextBlock TextWrapping="Wrap" Text="{Binding Course.Name}" />
             <TextBlock TextWrapping="Wrap" Text="{Binding Course.Type.NameKey, Converter={StaticResource CourseTypeNameConverter}}" />
-            <StackPanel Orientation="Horizontal" DataContext="{Binding Course.ECTS}" Visibility="{Binding Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
-                <TextBlock x:Uid="/Course/ECTSLabel" Margin="0,0,10,0" Text="ECTS:" />
-                <TextBlock Text="{Binding}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding Course.Exam}" Visibility="{Binding Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
-                <TextBlock x:Uid="/Course/ExamLabel" Margin="0,0,10,0" Text="Egzamin:" />
-                <TextBlock Text="{Binding Converter={StaticResource PascalCaseLocaleTextConverter}}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding Course.English}" Visibility="{Binding Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
-                <TextBlock x:Uid="/Course/EnglishLabel" Margin="0,0,10,0" />
-                <TextBlock Text="{Binding Converter={StaticResource PascalCaseLocaleTextConverter}}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding Course.SuggestedFor1Year}" Visibility="{Binding Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
-                <TextBlock x:Uid="/Course/ForFirstYearLabel" Margin="0,0,10,0" />
-                <TextBlock Text="{Binding Converter={StaticResource PascalCaseLocaleTextConverter}}" />
-            </StackPanel>
+            <TextBlock Visibility="{Binding Course.ECTS, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" TextWrapping="WrapWholeWords">
+                <Run x:Uid="/Course/ECTSLabel" />
+                <Run Text="{Binding Course.ECTS}" />
+            </TextBlock>
+            <TextBlock Visibility="{Binding Course.Exam, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" TextWrapping="WrapWholeWords">
+                <Run x:Uid="/Course/ExamLabel" />
+                <Run Text="{Binding Course.Exam, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
+            </TextBlock>
+            <TextBlock Visibility="{Binding Course.English, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" TextWrapping="WrapWholeWords">
+                <Run x:Uid="/Course/EnglishLabel" />
+                <Run Text="{Binding Course.English, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
+            </TextBlock>
+            <TextBlock Visibility="{Binding Course.SuggestedFor1Year, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" TextWrapping="WrapWholeWords">
+                <Run x:Uid="/Course/ForFirstYearLabel" />
+                <Run Text="{Binding Course.SuggestedFor1Year, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
+            </TextBlock>
         </StackPanel>
         <Grid x:Name="description" DataContext="{Binding CurrentItem, Source={StaticResource CoursesPerSemesterCollection}}" Grid.Column="2">
-            <WebView  webView:Extensions.HTMLString="{Binding Course.Description}" />
-            <ProgressRing IsActive="{Binding IsRefreshing}"
-                          Width="50" Height="50"
-                          VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <WebView webView:Extensions.HTMLString="{Binding Course.Description}" />
+            <ProgressRing IsActive="{Binding IsRefreshing}" />
         </Grid>
     </Grid>
 </Page>

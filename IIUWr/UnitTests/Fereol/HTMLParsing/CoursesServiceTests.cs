@@ -13,13 +13,13 @@ namespace UnitTests.Fereol.HTMLParsing
     [TestClass]
     public class CoursesServiceTests
     {
+        [TestCategory(Categories.Parsing)]
         [TestMethod]
         public void SemestersTest()
         {
-            IHTTPConnection connection = new HTTPConnection("Fereol/HTMLParsing/Pages/Courses/List.html");
-            var coursesService = new CoursesService(connection, new RefreshTimesManager());
+            var coursesService = GetCoursesService("List.html");
             var actual = coursesService.GetSemesters().Result;
-            
+
             CollectionAssert.AreEqual(new Semester[]
             {
                 new Semester { Id = 334, Year = "2015/16", YearHalf = YearHalf.Summer },
@@ -33,16 +33,17 @@ namespace UnitTests.Fereol.HTMLParsing
                 new Semester { Id = 239, Year = "2011/12", YearHalf = YearHalf.Summer }
             }, actual.ToList(), new SemesterComparer());
         }
-
+        
+        [TestCategory(Categories.Parsing)]
         [TestMethod]
         public void CoursesTest()
         {
-            IHTTPConnection connection = new HTTPConnection("Fereol/HTMLParsing/Pages/Courses/List.html");
-            var coursesService = new CoursesService(connection, new RefreshTimesManager());
+            var coursesService = GetCoursesService("List.html");
             var actual = coursesService.
                 GetCourses(new Semester { Id = 334, Year = "2015/16", YearHalf = YearHalf.Summer }).
                 Result;
 
+            //TODO extend compared courses to at least 10
             Assert.AreEqual(55, actual.Count());
             CollectionAssert.AreEqual(new Course[]
             {
@@ -50,11 +51,12 @@ namespace UnitTests.Fereol.HTMLParsing
             }, actual.Take(1).ToList(), new CourseComparer());
         }
 
+        [TestCategory(Categories.PassingCourses)]
+        [TestCategory(Categories.Parsing)]
         [TestMethod]
         public void Algebra1516Test()
         {
-            IHTTPConnection connection = new HTTPConnection("Fereol/HTMLParsing/Pages/Courses/algebra_1516.html");
-            var coursesService = new CoursesService(connection, new RefreshTimesManager());
+            var coursesService = GetCoursesService("algebra_1516.html");
             var course = new Course { Id = 3457, Name = "Algebra", Path = "algebra_1516", Type = CourseType.Find(8), WasEnrolled = false, English = false, Exam = true, SuggestedFor1Year = true };
             var actual = coursesService.
                 RefreshCourse(course).
@@ -62,17 +64,18 @@ namespace UnitTests.Fereol.HTMLParsing
 
             Assert.AreEqual(true, actual);
             Assert.AreEqual("Algebra", course.Name);
+            //TODO add checking part of description HTML
             Assert.AreEqual(778, course.Description.Length);
             Assert.AreEqual(7, course.ECTS);
         }
-
-        // This particular page is broken, no filter pane, all semesters visible
+        
         [Ignore]
+        [TestCategory(Categories.FailingCourses)]
+        [TestCategory(Categories.Parsing)]
         [TestMethod]
         public void PracticalCSharp1415Test()
         {
-            IHTTPConnection connection = new HTTPConnection("Fereol/HTMLParsing/Pages/Courses/kurs_practical_c_enterpirse_software_development.html");
-            var coursesService = new CoursesService(connection, new RefreshTimesManager());
+            var coursesService = GetCoursesService("kurs_practical_c_enterpirse_software_development.html");
             var course = new Course
             {
                 Id = 3343,
@@ -85,9 +88,7 @@ namespace UnitTests.Fereol.HTMLParsing
                 SuggestedFor1Year = false
             };
 
-            var actual = coursesService.
-                RefreshCourse(course).
-                Result;
+            var actual = coursesService.RefreshCourse(course).Result;
             
             Assert.AreEqual(true, actual);
             Assert.AreEqual("Kurs: Practical C# Enterprise Software Development", course.Name);
@@ -95,6 +96,14 @@ namespace UnitTests.Fereol.HTMLParsing
             Assert.AreEqual(778, course.Description.Length);
             Assert.AreEqual(4, course.ECTS);
         }
+
+        private static CoursesService GetCoursesService(string path)
+        {
+            IHTTPConnection connection = new HTTPConnection("Fereol/HTMLParsing/Pages/Courses/" + path);
+            return new CoursesService(connection, new RefreshTimesManager());
+        }
+
+        #region Comparers
 
         private class SemesterComparer : System.Collections.IComparer
         {
@@ -140,5 +149,8 @@ namespace UnitTests.Fereol.HTMLParsing
                 return -1;
             }
         }
+
+        #endregion
+
     }
 }
