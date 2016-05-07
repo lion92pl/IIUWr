@@ -22,7 +22,6 @@ namespace IIUWr.Fereol.HTMLParsing
         private const string SummerHalf = "letni";
         private const string WinterHalf = "zimowy";
         private const string DescriptionForParseError = "<h1>Cannot parse!<h1>";
-        private DateTimeOffset _lastSemestersUpdate;
 
         #region Patterns
 

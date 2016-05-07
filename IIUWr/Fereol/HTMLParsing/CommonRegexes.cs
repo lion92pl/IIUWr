@@ -11,16 +11,17 @@ namespace IIUWr.Fereol.HTMLParsing
         public const string TagsPattern =
             @"(?>
                 <!-- .*? -->                                 |
-                <     [^>]*/>                                |
-                <hr   [^>]* >                                |
-                <br   [^>]* >                                |
-                <img  [^>]* >                                |
+                <       [^>]*/>                              |
+                <hr     [^>]* >                              |
+                <br     [^>]* >                              |
+                <img    [^>]* >                              |
+                <input  [^>]* >                              |
                 (?<opentag>          <(?!/) [^>]* [^/]>)     |
                 (?<closetag-opentag> </     [^>]* [^/]>)     |
                 [^<>]*
             )*
             (?(opentag)(?!))";
-
+        
         private static readonly string AuthenticatedPattern =
             $@"(?snx)
             (?:<script\s+type=""text/javascript""[^>]*>\s*
@@ -28,12 +29,12 @@ namespace IIUWr.Fereol.HTMLParsing
                 user_is_student\s*=\s*(?<{RegexGroups.IsStudent}>{BooleanPattern});\s*
             </script>)";
 
-        private static readonly string HiddenInputPatern =
-            $@"<input(?:\s*type=""hidden""|\s*name=""(?<{RegexGroups.Name}>[^""]*)""|\s*value=""(?<{RegexGroups.Value}>[^""]*)""){{3}}\s*/>";
+        private static readonly string HiddenInputPattern =
+            $@"<input(?:\s*type=(""|')hidden(""|')|\s*name=(""|')(?<{RegexGroups.Name}>[^""']*)(""|')|\s*value=(""|')(?<{RegexGroups.Value}>[^""']*)(""|')){{3}}[^>]*>";
 
         private static readonly Regex AuthenticatedRegex = new Regex(AuthenticatedPattern, RegexOptions.Compiled);
 
-        private static readonly Regex HiddenInputRegex = new Regex(HiddenInputPatern, RegexOptions.Compiled);
+        private static readonly Regex HiddenInputRegex = new Regex(HiddenInputPattern, RegexOptions.Compiled);
 
         public static Tuple<string, string> ParseHiddenInput(Capture capture)
         {
@@ -44,7 +45,7 @@ namespace IIUWr.Fereol.HTMLParsing
             }
             return null;
         }
-
+        
         public static AuthenticationStatus ParseAuthenticationStatus(string page)
         {
             Match match = AuthenticatedRegex.Match(page);

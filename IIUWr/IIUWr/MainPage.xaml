@@ -162,11 +162,6 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             </Style>
                         </GroupStyle.HeaderContainerStyle>
-                        <GroupStyle.Panel>
-                            <ItemsPanelTemplate>
-                                <ItemsStackPanel Visibility="{Binding IsExpanded, Converter={StaticResource BooleanConverter}}" />
-                            </ItemsPanelTemplate>
-                        </GroupStyle.Panel>
                     </GroupStyle>
                 </ListView.GroupStyle>
                 <Interactivity:Interaction.Behaviors>

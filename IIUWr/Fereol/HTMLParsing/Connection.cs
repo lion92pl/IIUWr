@@ -23,17 +23,26 @@ namespace IIUWr.Fereol.HTMLParsing
             _endpoint = uri;
 
             _httpFilter = new HttpBaseProtocolFilter();
-            // Fereol certificate is not updated frequently, so ...
-            _httpFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
-
             _httpClient = new HttpClient(_httpFilter);
+
+            // Fereol certificate is not updated frequently, so ...
+            //TODO uncomment if certificate expires again
+            //_httpFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
         }
 
         public async Task<string> GetStringAsync(string relativeUri)
         {
             try
             {
-                return await _httpClient.GetStringAsync(new Uri(_endpoint, relativeUri)).AsTask(new HttpProgressHandler(relativeUri));
+                string page;
+                //var task = _httpClient.GetAsync(new Uri(_endpoint, relativeUri));
+                //task.Progress = (a,b) => System.Diagnostics.Debug.WriteLine($"Download progress: {b.BytesReceived}/{b.TotalBytesToReceive} of {relativeUri}");
+                //var result = await task;
+                //page = await result.Content.ReadAsStringAsync();
+
+                page = await _httpClient.GetStringAsync(new Uri(_endpoint, relativeUri)).AsTask(new HttpProgressHandler(relativeUri));
+
+                return page;
             }
             catch
             {
