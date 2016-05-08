@@ -230,6 +230,10 @@
                 <Run x:Uid="/Course/ForFirstYearLabel" />
                 <Run Text="{Binding Course.SuggestedFor1Year, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
             </TextBlock>
+            <TextBlock Visibility="{Binding Course.WasEnrolled, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" TextWrapping="WrapWholeWords">
+                <Run x:Uid="/Course/WasEnrolledLabel" />
+                <Run Text="{Binding Course.WasEnrolled, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
+            </TextBlock>
         </StackPanel>
         <Grid x:Name="description" DataContext="{Binding CurrentItem, Source={StaticResource CoursesPerSemesterCollection}}" Grid.Column="2">
             <WebView webView:Extensions.HTMLString="{Binding Course.Description}" />

@@ -124,7 +124,7 @@ namespace IIUWr.Fereol.HTMLParsing
 
             if (match.Success)
             {
-                bool auth = CommonRegexes.ParseAuthenticationStatus(page).Authenticated;
+                bool auth = CommonRegexes.ParseAuthenticationStatus(page)?.Authenticated ?? false;
                 ParseCourseFullData(course, match);
                 _refreshTimesManager.Set(course, auth ? RefreshType.LoggedInFull : RefreshType.Full);
                 return true;
@@ -155,7 +155,7 @@ namespace IIUWr.Fereol.HTMLParsing
             }
 
             var time = DateTimeOffset.Now;
-            bool auth = CommonRegexes.ParseAuthenticationStatus(page).Authenticated;
+            bool auth = CommonRegexes.ParseAuthenticationStatus(page)?.Authenticated ?? false;
 
             System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished download, start parsing");
             
