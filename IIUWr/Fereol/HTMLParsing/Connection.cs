@@ -26,8 +26,10 @@ namespace IIUWr.Fereol.HTMLParsing
 
             _httpFilter = new HttpBaseProtocolFilter();
             // Fereol certificate is not updated frequently, so ...
-            httpFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
+            _httpFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
 
+            //TODO handle redirects by myself to avoid SSL to not SSL redirect exception
+            //_httpFilter.AllowAutoRedirect = false;
             _httpClient = new HttpClient(_httpFilter);
         }
 
@@ -65,15 +67,20 @@ namespace IIUWr.Fereol.HTMLParsing
             }
             var formData = new Dictionary<string, string>
             {
-                ["id_login"] = username,
-                ["id_password"] = password,
+                ["username"] = username,
+                ["password"] = password,
                 ["csrfmiddlewaretoken"] = cookie.Value
             };
             var request = new HttpRequestMessage(HttpMethod.Post, new Uri(_endpoint, LoginPath));
             request.Content = new HttpFormUrlEncodedContent(formData);
             //request.Headers.Cookie.Add(new Windows.Web.Http.Headers.HttpCookiePairHeaderValue(c[0].Name, c[0].Value));
+            // Exception due to SSL to not SSL redirect
             var response = await _httpClient.SendRequestAsync(request);
-            return false;
+
+            var page = await response.Content.ReadAsStringAsync();
+            var authStatus = CommonRegexes.ParseAuthenticationStatus(page);
+
+            return authStatus?.Authenticated ?? false;
         }
 
         private HttpCookie GetSecurityCookie()
