@@ -18,6 +18,7 @@ namespace IIUWr
             ViewModels();
             Utils();
             Fereol.Common();
+
             Fereol.HTMLParsing();
         }
 
