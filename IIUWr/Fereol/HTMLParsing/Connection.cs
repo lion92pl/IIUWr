@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Security.Cryptography.Certificates;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 
@@ -14,23 +15,45 @@ namespace IIUWr.Fereol.HTMLParsing
     {
         private const string LoginPath = @"users/login/";
         private const string SecurityCookieName = "csrftoken";
+        private const string SessionCookieName = "sessionid";
 
         private readonly Uri _endpoint;
         
         private readonly HttpBaseProtocolFilter _httpFilter;
         private readonly HttpClient _httpClient;
 
-        public Connection(Uri uri, ICredentialsManager credentialsManager)
+        private readonly HttpBaseProtocolFilter _httpFilterForLogin;
+        private readonly HttpClient _httpClientForLogin;
+
+        private readonly ICredentialsManager _credentialsManager;
+        private readonly ISessionManager _sessionManager;
+
+        public Connection(Uri uri, ICredentialsManager credentialsManager, ISessionManager sessionManager)
         {
             _endpoint = uri;
-
+            _credentialsManager = credentialsManager;
+            _sessionManager = sessionManager;
+            
             _httpFilter = new HttpBaseProtocolFilter();
-            // Fereol certificate is not updated frequently, so ...
-            _httpFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
+            _httpFilter.IgnorableServerCertificateErrors.Add(ChainValidationResult.Expired);
 
-            //TODO handle redirects by myself to avoid SSL to not SSL redirect exception
-            //_httpFilter.AllowAutoRedirect = false;
+            _httpFilterForLogin = new HttpBaseProtocolFilter
+            {
+                AllowAutoRedirect = false
+            };
+            _httpFilterForLogin.IgnorableServerCertificateErrors.Add(ChainValidationResult.Expired);
+
             _httpClient = new HttpClient(_httpFilter);
+            _httpClientForLogin = new HttpClient(_httpFilterForLogin);
+
+            if (_sessionManager.SessionIdentifier != null)
+            {
+                _httpFilter.CookieManager.SetCookie(new HttpCookie(SessionCookieName, _endpoint.Host, "/") { Value = _sessionManager.SessionIdentifier } );
+            }
+            if (_sessionManager.MiddlewareToken != null)
+            {
+                _httpFilter.CookieManager.SetCookie(new HttpCookie(SecurityCookieName, _endpoint.Host, "/") { Value = _sessionManager.MiddlewareToken });
+            }
         }
 
         public async Task<string> GetStringAsync(string relativeUri)
@@ -52,13 +75,13 @@ namespace IIUWr.Fereol.HTMLParsing
             _httpFilter.Dispose();
         }
         
-        public async Task<bool> CheckConnection()
+        public async Task<bool> CheckConnectionAsync()
         {
             var response = await _httpClient.GetAsync(_endpoint);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> Login(string username, string password)
+        public async Task<bool> LoginAsync(string username, string password)
         {
             var cookie = GetSecurityCookie();
             if (cookie == null)
@@ -71,11 +94,37 @@ namespace IIUWr.Fereol.HTMLParsing
                 ["password"] = password,
                 ["csrfmiddlewaretoken"] = cookie.Value
             };
-            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(_endpoint, LoginPath));
-            request.Content = new HttpFormUrlEncodedContent(formData);
-            //request.Headers.Cookie.Add(new Windows.Web.Http.Headers.HttpCookiePairHeaderValue(c[0].Name, c[0].Value));
-            // Exception due to SSL to not SSL redirect
-            var response = await _httpClient.SendRequestAsync(request);
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(_endpoint, LoginPath))
+            {
+                Content = new HttpFormUrlEncodedContent(formData)
+            };
+
+            _httpFilterForLogin.CookieManager.SetCookie(cookie);
+
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await _httpClientForLogin.SendRequestAsync(request);
+
+                foreach (HttpCookie loginCookie in _httpFilterForLogin.CookieManager.GetCookies(_endpoint))
+                {
+                    switch (loginCookie.Name)
+                    {
+                        case SecurityCookieName:
+                            _sessionManager.MiddlewareToken = loginCookie.Value;
+                            break;
+                        case SessionCookieName:
+                            _sessionManager.SessionIdentifier = loginCookie.Value;
+                            break;
+                    }
+                    _httpFilter.CookieManager.SetCookie(loginCookie);
+                }
+                response = await _httpClient.SendRequestAsync(new HttpRequestMessage(HttpMethod.Get, new Uri(_endpoint, LoginPath)));
+            }
+            catch
+            {
+                return false;
+            }
 
             var page = await response.Content.ReadAsStringAsync();
             var authStatus = CommonRegexes.ParseAuthenticationStatus(page);

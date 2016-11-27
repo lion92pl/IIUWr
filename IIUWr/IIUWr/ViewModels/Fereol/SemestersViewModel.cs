@@ -79,7 +79,7 @@ namespace IIUWr.ViewModels.Fereol
 
         public void LogIn()
         {
-            //IoC.Get<IConnection>().Login("111111", "testtest");
+            //IoC.Get<IConnection>().LoginAsync("111111", "testtest");
         }
 
         private async void Refresh(bool force)

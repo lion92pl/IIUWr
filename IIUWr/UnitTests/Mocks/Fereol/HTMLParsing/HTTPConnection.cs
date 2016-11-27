@@ -15,7 +15,7 @@ namespace UnitTests.Mocks.Fereol.HTMLParsing
             _result = System.IO.File.ReadAllText(htmlFilePath);
         }
         
-        public Task<bool> CheckConnection()
+        public Task<bool> CheckConnectionAsync()
         {
             throw new NotImplementedException();
         }
@@ -25,9 +25,9 @@ namespace UnitTests.Mocks.Fereol.HTMLParsing
             return await Task.FromResult(_result);
         }
 
-        public Task<bool> Login(string username, string password)
+        public Task<bool> LoginAsync(string username, string password)
         {
-            throw new NotImplementedException();
+            return Task<bool>.FromResult(username == "test" && password == "mock");
         }
     }
 }
