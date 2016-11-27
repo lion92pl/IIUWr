@@ -134,6 +134,13 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <CommandBar x:Name="commandBar">
+                <AppBarButton Label="Log in" x:Uid="LogInAppBarButton" Icon="Account">
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="Click">
+                            <Core:CallMethodAction MethodName="LogIn" TargetObject="{Binding}" />
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </AppBarButton>
                 <AppBarButton Label="Refresh" x:Uid="RefreshAppBarButton" Icon="Refresh" FlyoutBase.AttachedFlyout="{StaticResource RefreshFlyout}">
                     <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="Click">
@@ -217,6 +224,10 @@
             <TextBlock Visibility="{Binding Course.SuggestedFor1Year, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" TextWrapping="WrapWholeWords">
                 <Run x:Uid="/Course/ForFirstYearLabel" />
                 <Run Text="{Binding Course.SuggestedFor1Year, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
+            </TextBlock>
+            <TextBlock Visibility="{Binding Course.WasEnrolled, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" TextWrapping="WrapWholeWords">
+                <Run x:Uid="/Course/WasEnrolledLabel" />
+                <Run Text="{Binding Course.WasEnrolled, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
             </TextBlock>
         </StackPanel>
         <Grid x:Name="description" DataContext="{Binding CurrentItem, Source={StaticResource CoursesPerSemesterCollection}}" Grid.Column="2">

@@ -33,7 +33,19 @@ namespace IIUWr.Fereol.Model
             }
         }
 
-        public bool? CanEnroll { get; set; }
+        private bool? _canEnroll;
+        public bool? CanEnroll
+        {
+            get { return _canEnroll; }
+            set
+            {
+                if (_canEnroll != value)
+                {
+                    _canEnroll = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
 
         public DateTimeOffset? CanEnrollFrom { get; set; }
 
@@ -57,7 +69,19 @@ namespace IIUWr.Fereol.Model
 
         public bool? SuggestedFor1Year { get; set; }
 
-        public bool? WasEnrolled { get; set; }
+        private bool? _wasEnrolled;
+        public bool? WasEnrolled
+        {
+            get { return _wasEnrolled; }
+            set
+            {
+                if (_wasEnrolled != value)
+                {
+                    _wasEnrolled = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
 
         //TODO hours per tutorial type
         //TODO grupy efektów kształcenia (EffectTypes), tagi, percentage?

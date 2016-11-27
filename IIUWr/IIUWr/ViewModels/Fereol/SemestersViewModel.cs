@@ -77,6 +77,11 @@ namespace IIUWr.ViewModels.Fereol
             Refresh(true);
         }
 
+        public void LogIn()
+        {
+            //IoC.Get<IConnection>().LoginAsync("111111", "testtest");
+        }
+
         private async void Refresh(bool force)
         {
             IsRefreshing = true;

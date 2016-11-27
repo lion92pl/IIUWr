@@ -9,6 +9,7 @@ namespace IIUWr.Fereol.Interface
 {
     public interface ISessionManager
     {
+        string MiddlewareToken { get; set; }
         string SessionIdentifier { get; set; }
     }
 }
