@@ -132,10 +132,6 @@
       <Project>{3CA09B84-C4FE-44D3-9322-B39BA56F3271}</Project>
       <Name>Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Utils\Utils.csproj">
-      <Project>{4e46c133-1c35-4613-93c2-e6f5151168cc}</Project>
-      <Name>Utils</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

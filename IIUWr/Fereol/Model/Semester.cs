@@ -1,5 +1,4 @@
 ﻿using IIUWr.Fereol.Model.Enums;
-using System.Collections.Generic;
 
 namespace IIUWr.Fereol.Model
 {

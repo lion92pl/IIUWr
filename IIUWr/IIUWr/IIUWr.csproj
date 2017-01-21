@@ -106,6 +106,7 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <PRIResource Include="Strings\en\Account.resw" />
     <PRIResource Include="Strings\en\Enums\RefreshType.resw" />
     <PRIResource Include="Strings\pl\Enums\RefreshType.resw" />
     <PRIResource Include="Strings\en\Enums\YearHalf.resw" />
@@ -135,6 +136,12 @@
     <Compile Include="ViewModels\Fereol\CourseViewModel.cs" />
     <Compile Include="ViewModels\Fereol\SemestersViewModel.cs" />
     <Compile Include="ViewModels\Fereol\SemesterViewModel.cs" />
+    <Compile Include="Views\CourseDetailsView.xaml.cs">
+      <DependentUpon>CourseDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -184,6 +191,14 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Views\CourseDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <XliffResource Include="MultilingualResources\IIUWr.en.xlf" />
@@ -205,17 +220,10 @@
       <Project>{3ca09b84-c4fe-44d3-9322-b39ba56f3271}</Project>
       <Name>Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Utils\Utils.csproj">
-      <Project>{4e46c133-1c35-4613-93c2-e6f5151168cc}</Project>
-      <Name>Utils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ViewModelInterfaces\ViewModelInterfaces.csproj">
       <Project>{304363b6-d2c4-409f-8d53-855062c469fa}</Project>
       <Name>ViewModelInterfaces</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

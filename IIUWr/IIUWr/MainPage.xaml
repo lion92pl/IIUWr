@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IIUWr"
     xmlns:webView="using:LionCub.UI.Xaml.WebView"
-    xmlns:conv="using:LionCub.UI.Xaml.Data.Converters"
+    xmlns:views="using:IIUWr.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
@@ -23,30 +23,16 @@
                               Source="{Binding Semesters}"
                               ItemsPath="Courses"
                               IsSourceGrouped="True" />
-        <conv:LocaleTextConverter x:Key="CourseTypeNameConverter" Map="CourseType" />
-        <conv:LocaleTextConverter x:Key="LocaleTextConverter" />
-        <conv:LocaleTextConverter x:Key="PascalCaseLocaleTextConverter" Format="Pascal" />
-        <conv:BooleanConverter x:Key="BooleanConverter" />
 
         <Flyout x:Key="RefreshFlyout">
             <StackPanel>
                 <Button Content="Force refresh">
                     <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="Click">
-                            <Core:CallMethodAction MethodName="ForceRefresh" TargetObject="{Binding}" />
+                            <Core:CallMethodAction MethodName="Refresh" TargetObject="{Binding}" />
                         </Core:EventTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </Button>
-                <ListView ItemsSource="{Binding RefreshTimes}" SelectionMode="None">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Type, Converter={StaticResource LocaleTextConverter}}" Margin="0,0,5,0" />
-                                <TextBlock Text="{Binding Time}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
             </StackPanel>
         </Flyout>
 
@@ -92,47 +78,27 @@
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="641" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="semesters.(Grid.RowSpan)" Value="2" />
-                        <Setter Target="root.RowDefinitions[1].Height" Value="2*" />
-                        <Setter Target="root.ColumnDefinitions[1].Width" Value="2*" />
-                        <Setter Target="root.ColumnDefinitions[2].Width" Value="0" />
-                        <Setter Target="description.(Grid.Column)" Value="1" />
-                        <Setter Target="description.(Grid.Row)" Value="1" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="semesters.(Grid.RowSpan)" Value="2" />
-                        <Setter Target="root.RowDefinitions[1].Height" Value="2*" />
-                        <Setter Target="root.ColumnDefinitions[2].Width" Value="0" />
-                        <Setter Target="description.(Grid.Column)" Value="1" />
-                        <Setter Target="description.(Grid.Row)" Value="1" />
-                        <Setter Target="commandBar.(AppBar.ClosedDisplayMode)" Value="Minimal"/>
+                        <Setter Target="commandBar.(AppBar.ClosedDisplayMode)" Value="Minimal" />
+                        <Setter Target="commandBar.(Grid.Row)" Value="2" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="0" />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="250"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition MaxWidth="250" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid x:Name="semesters">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            
             <CommandBar x:Name="commandBar">
                 <AppBarButton Label="Log in" x:Uid="LogInAppBarButton" Icon="Account">
                     <Interactivity:Interaction.Behaviors>
@@ -141,13 +107,10 @@
                         </Core:EventTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </AppBarButton>
-                <AppBarButton Label="Refresh" x:Uid="RefreshAppBarButton" Icon="Refresh" FlyoutBase.AttachedFlyout="{StaticResource RefreshFlyout}">
+                <AppBarButton Label="Refresh" x:Uid="RefreshAppBarButton" Icon="Refresh">
                     <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="Click">
                             <Core:CallMethodAction MethodName="Refresh" TargetObject="{Binding}" />
-                        </Core:EventTriggerBehavior>
-                        <Core:EventTriggerBehavior EventName="RightTapped">
-                            <behaviors:FlyoutAction />
                         </Core:EventTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </AppBarButton>
@@ -203,7 +166,12 @@
             </ListView>
             <ProgressRing IsActive="{Binding IsRefreshing}" Grid.Row="1" />
         </Grid>
-        <StackPanel x:Name="courseInfo" Grid.Column="1" Margin="10"
+
+        <views:CourseDetailsView Grid.Column="1"
+                                 DataContext="{Binding CurrentItem, Source={StaticResource CoursesPerSemesterCollection}}"
+                                 Visibility="{Binding Course, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" />
+
+        <!--<StackPanel x:Name="courseInfo" Grid.Column="1" Margin="10"
                     d:DataContext="{d:DesignData /SampleData/CourseViewModel.xaml}"
                     DataContext="{Binding CurrentItem, Source={StaticResource CoursesPerSemesterCollection}}"
                     Visibility="{Binding Course, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
@@ -233,6 +201,6 @@
         <Grid x:Name="description" DataContext="{Binding CurrentItem, Source={StaticResource CoursesPerSemesterCollection}}" Grid.Column="2">
             <WebView webView:Extensions.HTMLString="{Binding Course.Description}" />
             <ProgressRing IsActive="{Binding IsRefreshing}" />
-        </Grid>
+        </Grid>-->
     </Grid>
 </Page>

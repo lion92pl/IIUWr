@@ -1,6 +1,5 @@
 ﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
-using IIUWr.Utils.Refresh;
 using IIUWr.ViewModelInterfaces.Fereol;
 using LionCub.Patterns.DependencyInjection;
 using System.Collections.ObjectModel;
@@ -12,12 +11,10 @@ namespace IIUWr.ViewModels.Fereol
     public class SemesterViewModel : ISemesterViewModel
     {
         private readonly ICoursesService _coursesService;
-        private readonly RefreshTimesManager _refreshTimesManager;
 
-        public SemesterViewModel(ICoursesService coursesService, RefreshTimesManager refreshTimesManager)
+        public SemesterViewModel(ICoursesService coursesService)
         {
             _coursesService = coursesService;
-            _refreshTimesManager = refreshTimesManager;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -46,7 +43,6 @@ namespace IIUWr.ViewModels.Fereol
                 {
                     _semester = value;
                     PropertyChanged.Notify(this);
-                    RefreshTimes = _refreshTimesManager[_semester];
                 }
             }
         }
@@ -64,21 +60,7 @@ namespace IIUWr.ViewModels.Fereol
                 }
             }
         }
-
-        private RefreshTimes _refreshTimes;
-        public RefreshTimes RefreshTimes
-        {
-            get { return _refreshTimes; }
-            private set
-            {
-                if (_refreshTimes != value)
-                {
-                    _refreshTimes = value;
-                    PropertyChanged.Notify(this);
-                }
-            }
-        }
-
+        
         private bool _isExpanded;
         public bool IsExpanded
         {
@@ -100,21 +82,11 @@ namespace IIUWr.ViewModels.Fereol
                 }
             }
         }
-
-        public void Refresh()
-        {
-            Refresh(false);
-        }
-
-        public void ForceRefresh()
-        {
-            Refresh(true);
-        }
-
-        private async void Refresh(bool force)
+        
+        public async void Refresh()
         {
             IsRefreshing = true;
-            var result = await _coursesService.GetCourses(Semester, force);
+            var result = await _coursesService.GetCourses(Semester);
             if (result != null)
             {
                 foreach (Course course in result)

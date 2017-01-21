@@ -1,7 +1,6 @@
 ﻿using IIUWr.Fereol.HTMLParsing;
 using IIUWr.Fereol.HTMLParsing.Interface;
 using IIUWr.Fereol.Model;
-using IIUWr.Utils.Refresh;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System.Linq;
 using UnitTests.Mocks.Fereol.HTMLParsing;
@@ -100,7 +99,7 @@ namespace UnitTests.Fereol.HTMLParsing
         private static CoursesService GetCoursesService(string path)
         {
             IHTTPConnection connection = new HTTPConnection("Fereol/HTMLParsing/Pages/Courses/" + path);
-            return new CoursesService(connection, new RefreshTimesManager());
+            return new CoursesService(connection);
         }
 
         #region Comparers

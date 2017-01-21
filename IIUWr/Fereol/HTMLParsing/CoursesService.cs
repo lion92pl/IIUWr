@@ -9,14 +9,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
-using IIUWr.Utils.Refresh;
 
 namespace IIUWr.Fereol.HTMLParsing
 {
     public class CoursesService : ICoursesService
     {
         private readonly IHTTPConnection _connection;
-        private readonly RefreshTimesManager _refreshTimesManager;
         private const string CoursesPath = @"courses/";
 
         private const string SummerHalf = "letni";
@@ -83,31 +81,24 @@ namespace IIUWr.Fereol.HTMLParsing
 
         #endregion
 
-        public CoursesService(Interface.IHTTPConnection connection, RefreshTimesManager refreshTimesManager)
+        public CoursesService(Interface.IHTTPConnection connection)
         {
             _connection = connection;
-            _refreshTimesManager = refreshTimesManager;
         }
 
-        public async Task<IEnumerable<Semester>> GetSemesters(bool forceRefresh = false)
+        public async Task<IEnumerable<Semester>> GetSemesters()
         {
-            if (Semesters == null || forceRefresh)
-            {
-                await Refresh();
-            }
-            return Semesters?.Keys;
+            var semesters = await Refresh();
+            return semesters?.Keys;
         }
 
-        public async Task<IEnumerable<Course>> GetCourses(Semester semester, bool forceRefresh = false)
+        public async Task<IEnumerable<Course>> GetCourses(Semester semester)
         {
-            if (Semesters == null || forceRefresh)
-            {
-                await Refresh();
-            }
-            return Semesters?[semester];
+            var semesters = await Refresh();
+            return semesters?[semester];
         }
 
-        public async Task<bool> RefreshCourse(Course course, bool forceRefresh = false)
+        public async Task<bool> RefreshCourse(Course course)
         {
             string page;
             try
@@ -123,21 +114,17 @@ namespace IIUWr.Fereol.HTMLParsing
 
             if (match.Success)
             {
-                bool auth = CommonRegexes.ParseAuthenticationStatus(page)?.Authenticated ?? false;
+                //TODO after downloading each page I should check if user is still logged in
                 ParseCourseFullData(course, match);
-                _refreshTimesManager.Set(course, auth ? RefreshType.LoggedInFull : RefreshType.Full);
                 return true;
             }
             else
             {
-                _refreshTimesManager.Set(course, RefreshType.Failed);
                 return false;
             }
         }
-
-        private Dictionary<Semester, List<Course>> Semesters { get; set; }
-
-        private async Task<bool> Refresh()
+        
+        private async Task<Dictionary<Semester, List<Course>>> Refresh()
         {
             var semesters = new Dictionary<Semester, List<Course>>();
 
@@ -150,32 +137,26 @@ namespace IIUWr.Fereol.HTMLParsing
             }
             catch
             {
-                return false;
+                return null;
             }
-
-            var time = DateTimeOffset.Now;
-            bool auth = CommonRegexes.ParseAuthenticationStatus(page)?.Authenticated ?? false;
-
+            
             System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished download, start parsing");
             
             foreach (Match match in SemestersAndCoursesRegex.Matches(page))
             {
                 if (match.Success)
                 {
-                    var pair = ParseSemester(match, new RefreshTime(auth ? RefreshType.LoggedInBasic : RefreshType.Basic));
+                    var pair = ParseSemester(match);
                     semesters.Add(pair.Key, pair.Value);
-                    _refreshTimesManager.Set(pair.Key, new RefreshTime(auth ? RefreshType.LoggedInFull : RefreshType.Full, time));
                 }
             }
 
             System.Diagnostics.Debug.WriteLine($"{nameof(Refresh)}: Finished parsing");
-
-            Semesters = semesters;
-
-            return true;
+            
+            return semesters;
         }
 
-        private KeyValuePair<Semester, List<Course>> ParseSemester(Match match, RefreshTime refreshTime)
+        private KeyValuePair<Semester, List<Course>> ParseSemester(Match match)
         {
             YearHalf yearHalf;
 
@@ -199,12 +180,12 @@ namespace IIUWr.Fereol.HTMLParsing
                 Id = int.Parse(match.Groups[RegexGroups.Id].Value)
             };
             
-            var courses = ParseCourses(semester, match.Groups[RegexGroups.Course].Captures, refreshTime);
+            var courses = ParseCourses(semester, match.Groups[RegexGroups.Course].Captures);
 
             return new KeyValuePair<Semester, List<Course>>(semester, courses);
         }
 
-        private List<Course> ParseCourses(Semester semester, CaptureCollection captures, RefreshTime refreshTime)
+        private List<Course> ParseCourses(Semester semester, CaptureCollection captures)
         {
             List<Course> courses = new List<Course>(captures.Count);
 
@@ -215,7 +196,6 @@ namespace IIUWr.Fereol.HTMLParsing
                 {
                     course.Semester = semester;
                     courses.Add(course);
-                    _refreshTimesManager.Set(course, refreshTime);
                 }
             }
             
