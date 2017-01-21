@@ -1,12 +1,4 @@
-﻿using IIUWr.Fereol.Interface;
-using IIUWr.Fereol.Model;
-using IIUWr.ViewModelInterfaces.Fereol;
-using LionCub.Patterns.DependencyInjection;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace IIUWr

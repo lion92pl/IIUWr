@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace IIUWr.ViewModelInterfaces
+namespace IIUWr.ViewModels.Interfaces
 {
     public interface IRefreshable : INotifyPropertyChanged
     {

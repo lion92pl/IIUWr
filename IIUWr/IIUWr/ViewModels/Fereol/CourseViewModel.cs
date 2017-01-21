@@ -1,11 +1,11 @@
 ﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
-using IIUWr.ViewModelInterfaces.Fereol;
+using IIUWr.ViewModels.Interfaces;
 using System.ComponentModel;
 
 namespace IIUWr.ViewModels.Fereol
 {
-    public class CourseViewModel : ICourseViewModel
+    public class CourseViewModel : IRefreshable, INotifyPropertyChanged
     {
         private readonly ICoursesService _coursesService;
 

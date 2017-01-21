@@ -1,4 +1,4 @@
-﻿namespace IIUWr.ViewModelInterfaces
+﻿namespace IIUWr.ViewModels.Interfaces
 {
     public interface IExpandable
     {

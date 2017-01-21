@@ -136,6 +136,8 @@
     <Compile Include="ViewModels\Fereol\CourseViewModel.cs" />
     <Compile Include="ViewModels\Fereol\SemestersViewModel.cs" />
     <Compile Include="ViewModels\Fereol\SemesterViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IExpandable.cs" />
+    <Compile Include="ViewModels\Interfaces\IRefreshable.cs" />
     <Compile Include="Views\CourseDetailsView.xaml.cs">
       <DependentUpon>CourseDetailsView.xaml</DependentUpon>
     </Compile>
@@ -219,10 +221,6 @@
     <ProjectReference Include="..\Fereol\Model\Model.csproj">
       <Project>{3ca09b84-c4fe-44d3-9322-b39ba56f3271}</Project>
       <Name>Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewModelInterfaces\ViewModelInterfaces.csproj">
-      <Project>{304363b6-d2c4-409f-8d53-855062c469fa}</Project>
-      <Name>ViewModelInterfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

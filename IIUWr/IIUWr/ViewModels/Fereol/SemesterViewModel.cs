@@ -1,6 +1,6 @@
 ﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
-using IIUWr.ViewModelInterfaces.Fereol;
+using IIUWr.ViewModels.Interfaces;
 using LionCub.Patterns.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace IIUWr.ViewModels.Fereol
 {
-    public class SemesterViewModel : ISemesterViewModel
+    public class SemesterViewModel : IRefreshable, IExpandable, INotifyPropertyChanged
     {
         private readonly ICoursesService _coursesService;
 
@@ -19,8 +19,8 @@ namespace IIUWr.ViewModels.Fereol
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<ICourseViewModel> _courses = new ObservableCollection<ICourseViewModel>();
-        public ObservableCollection<ICourseViewModel> Courses
+        private ObservableCollection<CourseViewModel> _courses = new ObservableCollection<CourseViewModel>();
+        public ObservableCollection<CourseViewModel> Courses
         {
             get { return _courses; }
             private set
@@ -94,7 +94,7 @@ namespace IIUWr.ViewModels.Fereol
                     var courseVM = Courses.FirstOrDefault(vm => vm.Course == course);
                     if (courseVM == null)
                     {
-                        courseVM = IoC.Get<ICourseViewModel>();
+                        courseVM = IoC.Get<CourseViewModel>();
                         Courses.Add(courseVM);
                     }
                     courseVM.Course = course;

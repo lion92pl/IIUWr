@@ -1,6 +1,5 @@
 ﻿using IIUWr.Fereol.Common;
 using IIUWr.Fereol.Interface;
-using IIUWr.ViewModelInterfaces.Fereol;
 using IIUWr.ViewModels.Fereol;
 using LionCub.Patterns.DependencyInjection;
 using System;
@@ -22,9 +21,9 @@ namespace IIUWr
 
         public static void ViewModels()
         {
-            IoC.AsSingleton<ISemestersViewModel, SemestersViewModel>();
-            IoC.PerRequest<ISemesterViewModel, SemesterViewModel>();
-            IoC.PerRequest<ICourseViewModel, CourseViewModel>();
+            IoC.AsSingleton<SemestersViewModel>();
+            IoC.PerRequest<SemesterViewModel>();
+            IoC.PerRequest<CourseViewModel>();
         }
         
         public static class Fereol

@@ -1,4 +1,4 @@
-﻿using IIUWr.ViewModelInterfaces.Fereol;
+﻿using IIUWr.ViewModels.Fereol;
 using LionCub.Patterns.DependencyInjection;
 using System;
 using Windows.ApplicationModel;
@@ -62,7 +62,7 @@ namespace IIUWr
 
             if (rootFrame.Content == null)
             {
-                rootFrame.Navigate(typeof(MainPage), IoC.Get<ISemestersViewModel>());
+                rootFrame.Navigate(typeof(MainPage), IoC.Get<SemestersViewModel>());
             }
 
             Window.Current.Activate();
