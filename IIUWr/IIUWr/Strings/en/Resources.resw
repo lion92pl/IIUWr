@@ -32,4 +32,28 @@
     <value>Refresh</value>
     <comment>Refresh</comment>
   </data>
+  <data name="False" xml:space="preserve">
+    <value>no</value>
+  </data>
+  <data name="False@Pascal" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>yes</value>
+  </data>
+  <data name="True@Pascal" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="RefreshAppBarButton.Label" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>Refresh</comment>
+  </data>
+  <data name="FilterAppBarButton.Label" xml:space="preserve">
+    <value>Filter</value>
+    <comment>Filter</comment>
+  </data>
+  <data name="LogInAppBarButton.Label" xml:space="preserve">
+    <value>Log in</value>
+    <comment>Log in</comment>
+  </data>
 </root>

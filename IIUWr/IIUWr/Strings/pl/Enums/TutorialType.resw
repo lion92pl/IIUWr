@@ -117,19 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Basic" xml:space="preserve">
-    <value>Podstawowe</value>
+  <data name="Class" xml:space="preserve">
+    <value>Ćwiczenia</value>
   </data>
-  <data name="Failed" xml:space="preserve">
-    <value>Nieudane</value>
+  <data name="Class_Lab" xml:space="preserve">
+    <value>Ćwiczenia + Pracownia</value>
   </data>
-  <data name="Full" xml:space="preserve">
-    <value>Pełne</value>
+  <data name="ForeignLanguageClasses" xml:space="preserve">
+    <value>Lektorat</value>
   </data>
-  <data name="LoggedInBasic" xml:space="preserve">
-    <value>Podstawowe (zalogowany)</value>
+  <data name="Lab" xml:space="preserve">
+    <value>Pracownia</value>
   </data>
-  <data name="LoggedInFull" xml:space="preserve">
-    <value>Pełne (zalogowany)</value>
+  <data name="Lecture" xml:space="preserve">
+    <value>Wykład</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Nieznany</value>
+  </data>
+  <data name="PE" xml:space="preserve">
+    <value>WF</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Projekt</value>
+  </data>
+  <data name="Revision" xml:space="preserve">
+    <value>Repetytorium</value>
+  </data>
+  <data name="Seminar" xml:space="preserve">
+    <value>Seminarium</value>
   </data>
 </root>

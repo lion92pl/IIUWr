@@ -42,7 +42,7 @@ namespace IIUWr.Fereol.HTMLParsing
                 <a(?:href=""/courses/(?<{RegexGroups.Path}>(?:\w|\-)+)""|id=""course\-(?<{RegexGroups.Id}>\d+)""|\s*)+>
                     (?<{RegexGroups.Name}>[^<]*)
                 </a>
-                (?<{RegexGroups.HiddenInput}><input(?:\s*type=""hidden""|\s*name=""[^<]*""|\s*value=""[^<]*""){{3}}\s*/>)*
+                (?<{RegexGroups.HiddenInput}>{CommonRegexes.HiddenInputPattern})*
                 {CommonRegexes.TagsPattern}
             </li>)";
 
@@ -66,7 +66,12 @@ namespace IIUWr.Fereol.HTMLParsing
                         </div>
                         {CommonRegexes.TagsPattern}
                     </div>
-                    {CommonRegexes.TagsPattern}
+                    <hr>
+                    (?<{RegexGroups.Tutorial}>
+                    <div\s+class=""tutorial"">
+                        <h2>[^<]*</h2>
+                        {CommonRegexes.TagsPattern}
+                    </div>)*
                 </div>
                 {CommonRegexes.TagsPattern}
             </div>)";
@@ -81,7 +86,7 @@ namespace IIUWr.Fereol.HTMLParsing
 
         #endregion
 
-        public CoursesService(Interface.IHTTPConnection connection)
+        public CoursesService(IHTTPConnection connection)
         {
             _connection = connection;
         }
@@ -123,7 +128,31 @@ namespace IIUWr.Fereol.HTMLParsing
                 return false;
             }
         }
-        
+
+        public async Task<IEnumerable<Tutorial>> GetTutorials(Course course)
+        {
+            string page;
+            try
+            {
+                page = await _connection.GetStringAsync(CoursesPath + course.Path);
+            }
+            catch
+            {
+                return null;
+            }
+
+            Match match = CourseRegex.Match(page);
+
+            if (match.Success)
+            {
+                return ParseTutorials(course, match.Groups[RegexGroups.Tutorial].Captures);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private async Task<Dictionary<Semester, List<Course>>> Refresh()
         {
             var semesters = new Dictionary<Semester, List<Course>>();
@@ -200,6 +229,27 @@ namespace IIUWr.Fereol.HTMLParsing
             }
             
             return courses;
+        }
+
+        private List<Tutorial> ParseTutorials(Course course, CaptureCollection captures)
+        {
+            List<Tutorial> tutorials = new List<Tutorial>();
+
+            foreach (Capture capture in captures)
+            {
+                var tutorialsPerType = TutorialParser.ParseTutorials(capture);
+                if (tutorialsPerType != null)
+                {
+                    tutorials.AddRange(tutorialsPerType);
+                }
+            }
+
+            foreach (var tutorial in tutorials)
+            {
+                tutorial.Course = course;
+            }
+
+            return tutorials;
         }
 
         private Course ParseCourseBasicData(Capture capture)

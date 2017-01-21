@@ -15,4 +15,22 @@
   <data name="ECTSLabel.Text" xml:space="preserve">
     <value>ECTS:</value>
   </data>
+  <data name="CanEnrollLabel.Text" xml:space="preserve">
+    <value>Can enroll:</value>
+  </data>
+  <data name="EnglishLabel.Text" xml:space="preserve">
+    <value>English:</value>
+  </data>
+  <data name="ExamLabel.Text" xml:space="preserve">
+    <value>Exam:</value>
+  </data>
+  <data name="ForFirstYearLabel.Text" xml:space="preserve">
+    <value>Suggested for first year:</value>
+  </data>
+  <data name="TypeLabel.Text" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="WasEnrolledLabel.Text" xml:space="preserve">
+    <value>Was enrolled:</value>
+  </data>
 </root>

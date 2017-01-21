@@ -33,29 +33,34 @@
         </trans-unit>
         <trans-unit id="False" translate="yes" xml:space="preserve">
           <source>nie</source>
-          <target state="new">nie</target>
+          <target state="translated">no</target>
         </trans-unit>
         <trans-unit id="False@Pascal" translate="yes" xml:space="preserve">
           <source>Nie</source>
-          <target state="new">Nie</target>
+          <target state="translated">No</target>
         </trans-unit>
         <trans-unit id="True" translate="yes" xml:space="preserve">
           <source>tak</source>
-          <target state="new">tak</target>
+          <target state="translated">yes</target>
         </trans-unit>
         <trans-unit id="True@Pascal" translate="yes" xml:space="preserve">
           <source>Tak</source>
-          <target state="new">Tak</target>
+          <target state="translated">Yes</target>
         </trans-unit>
         <trans-unit id="RefreshAppBarButton.Label" translate="yes" xml:space="preserve">
           <source>Odśwież</source>
-          <target state="new">Odśwież</target>
+          <target state="translated">Refresh</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Refresh</note>
         </trans-unit>
         <trans-unit id="FilterAppBarButton.Label" translate="yes" xml:space="preserve">
           <source>Filtr</source>
-          <target state="new">Filtr</target>
+          <target state="translated">Filter</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Filter</note>
+        </trans-unit>
+        <trans-unit id="LogInAppBarButton.Label" translate="yes" xml:space="preserve">
+          <source>Zaloguj</source>
+          <target state="translated">Log in</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Log in</note>
         </trans-unit>
       </group>
     </body>
@@ -182,7 +187,7 @@
         </trans-unit>
         <trans-unit id="Seminarium" translate="yes" xml:space="preserve">
           <source>Seminarium</source>
-          <target state="new">Seminarium</target>
+          <target state="translated">Seminar</target>
         </trans-unit>
         <trans-unit id="WF" translate="yes" xml:space="preserve">
           <source>Wychowanie fizyczne</source>
@@ -203,27 +208,27 @@
         </trans-unit>
         <trans-unit id="CanEnrollLabel.Text" translate="yes" xml:space="preserve">
           <source>Zapis możliwy:</source>
-          <target state="new">Zapis możliwy:</target>
+          <target state="translated">Can enroll:</target>
         </trans-unit>
         <trans-unit id="EnglishLabel.Text" translate="yes" xml:space="preserve">
           <source>Po angielsku:</source>
-          <target state="new">Po angielsku:</target>
+          <target state="translated">English:</target>
         </trans-unit>
         <trans-unit id="ExamLabel.Text" translate="yes" xml:space="preserve">
           <source>Egzamin:</source>
-          <target state="new">Egzamin:</target>
+          <target state="translated">Exam:</target>
         </trans-unit>
         <trans-unit id="ForFirstYearLabel.Text" translate="yes" xml:space="preserve">
           <source>Polecane dla pierwszego roku:</source>
-          <target state="new">Polecane dla pierwszego roku:</target>
+          <target state="translated">Suggested for first year:</target>
         </trans-unit>
         <trans-unit id="TypeLabel.Text" translate="yes" xml:space="preserve">
           <source>Typ:</source>
-          <target state="new">Typ:</target>
+          <target state="translated">Type:</target>
         </trans-unit>
         <trans-unit id="WasEnrolledLabel.Text" translate="yes" xml:space="preserve">
           <source>Byłeś/aś zapisany/na:</source>
-          <target state="new">Byłeś/aś zapisany/na:</target>
+          <target state="translated">Was enrolled:</target>
         </trans-unit>
       </group>
     </body>
@@ -245,31 +250,72 @@
       </group>
     </body>
   </file>
-  <file datatype="xml" source-language="pl" target-language="en" original="IIUWR/STRINGS/PL/ENUMS/REFRESHTYPE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+  <file datatype="xml" source-language="pl" target-language="en" original="IIUWR/STRINGS/PL/ENUMS/TUTORIALTYPE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
     <header>
-      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1605.0" tool-company="Microsoft" />
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1795.0" tool-company="Microsoft" />
     </header>
     <body>
-      <group id="IIUWR/STRINGS/PL/ENUMS/REFRESHTYPE.RESW" datatype="resx">
-        <trans-unit id="Basic" translate="yes" xml:space="preserve">
-          <source>Podstawowe</source>
-          <target state="new">Podstawowe</target>
+      <group id="IIUWR/STRINGS/PL/ENUMS/TUTORIALTYPE.RESW" datatype="resx">
+        <trans-unit id="Class" translate="yes" xml:space="preserve">
+          <source>Ćwiczenia</source>
+          <target state="translated">Class</target>
         </trans-unit>
-        <trans-unit id="Failed" translate="yes" xml:space="preserve">
-          <source>Nieudane</source>
-          <target state="new">Nieudane</target>
+        <trans-unit id="Class_Lab" translate="yes" xml:space="preserve">
+          <source>Ćwiczenia + Pracownia</source>
+          <target state="translated">Class + Lab</target>
         </trans-unit>
-        <trans-unit id="Full" translate="yes" xml:space="preserve">
-          <source>Pełne</source>
-          <target state="new">Pełne</target>
+        <trans-unit id="ForeignLanguageClasses" translate="yes" xml:space="preserve">
+          <source>Lektorat</source>
+          <target state="translated">Foreign language class</target>
         </trans-unit>
-        <trans-unit id="LoggedInBasic" translate="yes" xml:space="preserve">
-          <source>Podstawowe (zalogowany)</source>
-          <target state="new">Podstawowe (zalogowany)</target>
+        <trans-unit id="Lab" translate="yes" xml:space="preserve">
+          <source>Pracownia</source>
+          <target state="translated">Lab</target>
         </trans-unit>
-        <trans-unit id="LoggedInFull" translate="yes" xml:space="preserve">
-          <source>Pełne (zalogowany)</source>
-          <target state="new">Pełne (zalogowany)</target>
+        <trans-unit id="Lecture" translate="yes" xml:space="preserve">
+          <source>Wykład</source>
+          <target state="translated">Lecture</target>
+        </trans-unit>
+        <trans-unit id="None" translate="yes" xml:space="preserve">
+          <source>Nieznany</source>
+          <target state="translated">Unknown</target>
+        </trans-unit>
+        <trans-unit id="PE" translate="yes" xml:space="preserve">
+          <source>WF</source>
+          <target state="translated">Physical education</target>
+        </trans-unit>
+        <trans-unit id="Project" translate="yes" xml:space="preserve">
+          <source>Projekt</source>
+          <target state="translated">Project</target>
+        </trans-unit>
+        <trans-unit id="Revision" translate="yes" xml:space="preserve">
+          <source>Repetytorium</source>
+          <target state="translated">Revision</target>
+        </trans-unit>
+        <trans-unit id="Seminar" translate="yes" xml:space="preserve">
+          <source>Seminarium</source>
+          <target state="translated">Seminar</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="pl" target-language="en" original="IIUWR/STRINGS/PL/ACCOUNT.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1795.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="IIUWR/STRINGS/PL/ACCOUNT.RESW" datatype="resx">
+        <trans-unit id="IndexNumber" translate="yes" xml:space="preserve">
+          <source>Numer indeksu</source>
+          <target state="translated">Index number</target>
+        </trans-unit>
+        <trans-unit id="InvalidCredentials" translate="yes" xml:space="preserve">
+          <source>Niepoprawny numer indeksu i/lub hasło</source>
+          <target state="translated">Invalid index number and/or password</target>
+        </trans-unit>
+        <trans-unit id="Password" translate="yes" xml:space="preserve">
+          <source>Hasło</source>
+          <target state="translated">Password</target>
         </trans-unit>
       </group>
     </body>

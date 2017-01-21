@@ -28,7 +28,7 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             </tr>";
 
         private static readonly string HoursPattern =
-            $@"";
+            $@"((?<{RegexGroups.Value}>\d+)\s+\((?<{RegexGroups.Name}>[^\)]+)\)(\s+\+\s+)?)";
 
         private static readonly Regex CourseInfoRegex = new Regex(CourseInfoPattern, RegexOptions.Compiled);
         private static readonly Regex HoursRegex = new Regex(HoursPattern, RegexOptions.Compiled);

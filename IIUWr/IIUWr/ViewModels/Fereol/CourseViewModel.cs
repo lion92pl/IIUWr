@@ -2,6 +2,7 @@
 using IIUWr.Fereol.Model;
 using IIUWr.ViewModels.Interfaces;
 using System.ComponentModel;
+using System.Linq;
 
 namespace IIUWr.ViewModels.Fereol
 {
@@ -48,6 +49,8 @@ namespace IIUWr.ViewModels.Fereol
         {
             IsRefreshing = true;
             var result = await _coursesService.RefreshCourse(Course);
+            var tutorials = await _coursesService.GetTutorials(Course);
+            tutorials.Count();
             IsRefreshing = false;
         }
     }

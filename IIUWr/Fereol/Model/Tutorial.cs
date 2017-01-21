@@ -12,8 +12,7 @@ namespace IIUWr.Fereol.Model
 
         public TutorialType Type { get; set; }
         
-        //TODO english name?
-        public Employee Prowadzący { get; set; }
+        public Employee Teacher { get; set; }
 
         //TODO right spelling?
         #region Enrollment

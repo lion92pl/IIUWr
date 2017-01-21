@@ -18,4 +18,7 @@
   <data name="Projekt" xml:space="preserve">
     <value>Project</value>
   </data>
+  <data name="Seminarium" xml:space="preserve">
+    <value>Seminar</value>
+  </data>
 </root>
