@@ -28,6 +28,7 @@
                         <Setter Target="description.(Grid.Row)" Value="2" />
                         <Setter Target="row0.Height" Value="Auto" />
                         <Setter Target="row1.Height" Value="*" />
+                        <Setter Target="row2.Height" Value="*" />
                         <Setter Target="column1.Width" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
