@@ -49,7 +49,7 @@
             
             <converters:LocaleTextConverter x:Key="LocaleTextConverter" />
             <converters:BooleanConverter x:Key="BooleanConverter" />
-            
+
             <converters:LocaleTextConverter x:Key="CourseTypeNameConverter" Map="CourseType" />
             <converters:LocaleTextConverter x:Key="PascalCaseLocaleTextConverter" Format="Pascal" />
             

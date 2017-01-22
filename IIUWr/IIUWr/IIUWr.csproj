@@ -137,6 +137,7 @@
     <Compile Include="ViewModels\Fereol\CourseViewModel.cs" />
     <Compile Include="ViewModels\Fereol\SemestersViewModel.cs" />
     <Compile Include="ViewModels\Fereol\SemesterViewModel.cs" />
+    <Compile Include="ViewModels\Fereol\TutorialViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IExpandable.cs" />
     <Compile Include="ViewModels\Interfaces\IRefreshable.cs" />
     <Compile Include="Views\CourseDetailsView.xaml.cs">
@@ -144,6 +145,9 @@
     </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TutorialsView.xaml.cs">
+      <DependentUpon>TutorialsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TutorialsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,7 +14,8 @@ namespace IIUWr.Fereol.Model
         
         public Employee Teacher { get; set; }
 
-        //TODO right spelling?
+        public bool AdvancedGroup { get; set; }
+        
         #region Enrollment
 
         public int Limit { get; set; }

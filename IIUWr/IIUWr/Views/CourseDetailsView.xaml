@@ -25,7 +25,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="description.(Grid.Column)" Value="0" />
-                        <Setter Target="description.(Grid.Row)" Value="1" />
+                        <Setter Target="description.(Grid.Row)" Value="2" />
                         <Setter Target="row0.Height" Value="Auto" />
                         <Setter Target="row1.Height" Value="*" />
                         <Setter Target="column1.Width" Value="0" />
@@ -39,8 +39,9 @@
             <ColumnDefinition x:Name="column1" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="row0" Height="*" />
-            <RowDefinition x:Name="row1" Height="0" />
+            <RowDefinition x:Name="row0" Height="Auto" />
+            <RowDefinition x:Name="row1" Height="*" />
+            <RowDefinition x:Name="row2" Height="0" />
         </Grid.RowDefinitions>
         
         <StackPanel x:Name="courseInfo"
@@ -70,7 +71,8 @@
                 <Run Text="{Binding Course.WasEnrolled, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
             </TextBlock>
         </StackPanel>
-        <Grid x:Name="description" Grid.Column="1">
+        <local:TutorialsView DataContext="{Binding Tutorials}" Grid.Row="1" />
+        <Grid x:Name="description" Grid.Column="1" Grid.RowSpan="2">
             <WebView webView:Extensions.HTMLString="{Binding Course.Description}" />
             <ProgressRing IsActive="{Binding IsRefreshing}" />
         </Grid>

@@ -1,6 +1,8 @@
 ﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
 using IIUWr.ViewModels.Interfaces;
+using LionCub.Patterns.DependencyInjection;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -31,6 +33,20 @@ namespace IIUWr.ViewModels.Fereol
             }
         }
 
+        private IEnumerable<TutorialViewModel> _tutorials;
+        public IEnumerable<TutorialViewModel> Tutorials
+        {
+            get { return _tutorials; }
+            set
+            {
+                if (_tutorials != value)
+                {
+                    _tutorials = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
+
         private bool _isRefreshing;
         public bool IsRefreshing
         {
@@ -50,7 +66,12 @@ namespace IIUWr.ViewModels.Fereol
             IsRefreshing = true;
             var result = await _coursesService.RefreshCourse(Course);
             var tutorials = await _coursesService.GetTutorials(Course);
-            tutorials.Count();
+            Tutorials = tutorials.Select(t =>
+            {
+                var vm = IoC.Get<TutorialViewModel>();
+                vm.Tutorial = t;
+                return vm;
+            });
             IsRefreshing = false;
         }
     }
