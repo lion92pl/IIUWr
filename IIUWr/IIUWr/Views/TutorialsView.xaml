@@ -10,7 +10,7 @@
     d:DesignWidth="400">
 
     <Grid>
-        <ListView ItemsSource="{Binding}">
+        <ListView ItemsSource="{Binding}" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="10,5" HorizontalAlignment="Stretch">
