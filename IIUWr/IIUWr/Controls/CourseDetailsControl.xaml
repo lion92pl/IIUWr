@@ -1,8 +1,8 @@
 ﻿<UserControl
-    x:Class="IIUWr.Views.CourseDetailsView"
+    x:Class="IIUWr.Controls.CourseDetailsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:IIUWr.Views"
+    xmlns:local="using:IIUWr.Controls"
     xmlns:webView="using:LionCub.UI.Xaml.WebView"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -72,7 +72,7 @@
                 <Run Text="{Binding Course.WasEnrolled, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
             </TextBlock>
         </StackPanel>
-        <local:TutorialsView DataContext="{Binding Tutorials}" Grid.Row="1" />
+        <local:TutorialsControl DataContext="{Binding Tutorials}" Grid.Row="1" />
         <Grid x:Name="description" Grid.Column="1" Grid.RowSpan="2">
             <WebView webView:Extensions.HTMLString="{Binding Course.Description}" />
             <ProgressRing IsActive="{Binding IsRefreshing}" />

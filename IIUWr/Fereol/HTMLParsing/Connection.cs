@@ -68,11 +68,34 @@ namespace IIUWr.Fereol.HTMLParsing
                 return string.Empty;
             }
         }
-        
+
+        public async Task<string> Post(string relativeUri, Dictionary<string, string> formData, bool addMiddlewareToken = true)
+        {
+            if (addMiddlewareToken)
+            {
+                var cookie = GetSecurityCookie();
+                if (cookie != null)
+                {
+                    formData.Add("csrfmiddlewaretoken", cookie.Value);
+                }
+            }
+
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(_endpoint, relativeUri))
+            {
+                Content = new HttpFormUrlEncodedContent(formData)
+            };
+
+            var response = await _httpClient.SendRequestAsync(request).AsTask(new HttpProgressHandler(relativeUri));
+            return await response.Content.ReadAsStringAsync();
+        }
+
         public void Dispose()
         {
             _httpClient.Dispose();
             _httpFilter.Dispose();
+
+            _httpClientForLogin.Dispose();
+            _httpFilterForLogin.Dispose();
         }
         
         public async Task<bool> CheckConnectionAsync()
@@ -86,7 +109,12 @@ namespace IIUWr.Fereol.HTMLParsing
             var cookie = GetSecurityCookie();
             if (cookie == null)
             {
-                return false;
+                await _httpClient.SendRequestAsync(new HttpRequestMessage(HttpMethod.Get, new Uri(_endpoint, LoginPath)));
+                cookie = GetSecurityCookie();
+                if (cookie == null)
+                {
+                    return false;
+                }
             }
             var formData = new Dictionary<string, string>
             {
@@ -105,20 +133,7 @@ namespace IIUWr.Fereol.HTMLParsing
             try
             {
                 response = await _httpClientForLogin.SendRequestAsync(request);
-
-                foreach (HttpCookie loginCookie in _httpFilterForLogin.CookieManager.GetCookies(_endpoint))
-                {
-                    switch (loginCookie.Name)
-                    {
-                        case SecurityCookieName:
-                            _sessionManager.MiddlewareToken = loginCookie.Value;
-                            break;
-                        case SessionCookieName:
-                            _sessionManager.SessionIdentifier = loginCookie.Value;
-                            break;
-                    }
-                    _httpFilter.CookieManager.SetCookie(loginCookie);
-                }
+                SaveCookiesAfterLogin();
                 response = await _httpClient.SendRequestAsync(new HttpRequestMessage(HttpMethod.Get, new Uri(_endpoint, LoginPath)));
             }
             catch
@@ -130,6 +145,23 @@ namespace IIUWr.Fereol.HTMLParsing
             var authStatus = CommonRegexes.ParseAuthenticationStatus(page);
 
             return authStatus?.Authenticated ?? false;
+        }
+
+        private void SaveCookiesAfterLogin()
+        {
+            foreach (HttpCookie loginCookie in _httpFilterForLogin.CookieManager.GetCookies(_endpoint))
+            {
+                switch (loginCookie.Name)
+                {
+                    case SecurityCookieName:
+                        _sessionManager.MiddlewareToken = loginCookie.Value;
+                        break;
+                    case SessionCookieName:
+                        _sessionManager.SessionIdentifier = loginCookie.Value;
+                        break;
+                }
+                _httpFilter.CookieManager.SetCookie(loginCookie);
+            }
         }
 
         private HttpCookie GetSecurityCookie()

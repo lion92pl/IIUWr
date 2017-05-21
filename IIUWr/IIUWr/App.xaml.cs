@@ -1,4 +1,6 @@
-﻿using IIUWr.ViewModels.Fereol;
+﻿using IIUWr.ViewModels;
+using IIUWr.ViewModels.Fereol;
+using IIUWr.Views;
 using LionCub.Patterns.DependencyInjection;
 using System;
 using Windows.ApplicationModel;
@@ -35,7 +37,8 @@ namespace IIUWr
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                //DebugSettings.EnableFrameRateCounter = true;
+                DebugSettings.IsBindingTracingEnabled = true;
             }
 #endif
 
@@ -44,26 +47,71 @@ namespace IIUWr
                 //TODO handle prelaunch
             }
 
-            Frame rootFrame = Window.Current.Content as Frame;
-            
-            if (rootFrame == null)
+            //Frame rootFrame = Window.Current.Content as Frame;
+
+            //if (rootFrame == null)
+            //{
+            //    rootFrame = new Frame();
+
+            //    rootFrame.NavigationFailed += OnNavigationFailed;
+
+            //    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            //    {
+            //        //TODO: Load state from previously suspended application
+            //    }
+
+            //    Window.Current.Content = rootFrame;
+            //}
+
+            //if (rootFrame.Content == null)
+            //{
+            //    //rootFrame.Navigate(typeof(MainPage), IoC.Get<SemestersViewModel>());
+            //    rootFrame.Navigate(typeof(MainView), IoC.Get<MainViewModel>());
+            //}
+
+            MainView rootView = Window.Current.Content as MainView;
+
+            if (rootView == null)
             {
-                rootFrame = new Frame();
-
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
+                rootView = new MainView()
+                {
+                    DataContext = IoC.Get<MainViewModel>()
+                };
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
-                
-                Window.Current.Content = rootFrame;
+
+                Window.Current.Content = rootView;
             }
 
-            if (rootFrame.Content == null)
-            {
-                rootFrame.Navigate(typeof(MainPage), IoC.Get<SemestersViewModel>());
-            }
+            //Frame rootFrame = Window.Current.Content as Frame;
+
+            //if (rootFrame == null)
+            //{
+            //    rootFrame = new Frame();
+
+            //    rootFrame.NavigationFailed += OnNavigationFailed;
+
+            //    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            //    {
+            //        //TODO: Load state from previously suspended application
+            //    }
+
+            //    Window.Current.Content = rootFrame;
+            //}
+
+            //if (rootFrame.Content == null)
+            //{
+            //    //rootFrame.Navigate(typeof(MainPage), IoC.Get<SemestersViewModel>());
+            //    rootFrame.Navigate(typeof(MainView), IoC.Get<MainViewModel>());
+            //}
+
+            //if (rootFrame.Content == null)
+            //{
+            //    //rootFrame.Navigate(typeof(MainPage), IoC.Get<SemestersViewModel>());
+            //    rootFrame.Navigate(typeof(MainView), IoC.Get<MainViewModel>());
+            //}
 
             Window.Current.Activate();
         }

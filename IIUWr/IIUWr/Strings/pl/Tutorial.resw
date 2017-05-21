@@ -117,19 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IndexNumberLabel.Text" xml:space="preserve">
-    <value>Numer indeksu</value>
+  <data name="AdvancedGroupLabel.Text" xml:space="preserve">
+    <value>Grupa zaawansowana</value>
   </data>
-  <data name="InvalidCredentialsLabel.Text" xml:space="preserve">
-    <value>Niepoprawny numer indeksu i/lub hasło</value>
+  <data name="EnrolledLabel.Text" xml:space="preserve">
+    <value>Zapisani</value>
   </data>
-  <data name="LoginButton.Content" xml:space="preserve">
-    <value>Zaloguj</value>
+  <data name="InterdisciplinaryEnrolledLabel.Text" xml:space="preserve">
+    <value>Zapisani ISIM</value>
   </data>
-  <data name="NotLoggedIn" xml:space="preserve">
-    <value>Niezalogowany</value>
+  <data name="InterdisciplinaryGroupLabel.Text" xml:space="preserve">
+    <value>Grupa dla ISIM</value>
   </data>
-  <data name="PasswordLabel.Text" xml:space="preserve">
-    <value>Hasło</value>
+  <data name="InterdisciplinaryLimitLabel.Text" xml:space="preserve">
+    <value>Limit ISIM</value>
+  </data>
+  <data name="LimitLabel.Text" xml:space="preserve">
+    <value>Limit</value>
+  </data>
+  <data name="QueueLabel.Text" xml:space="preserve">
+    <value>Kolejka</value>
+  </data>
+  <data name="TeacherLabel.Text" xml:space="preserve">
+    <value>Prowadzący</value>
   </data>
 </root>

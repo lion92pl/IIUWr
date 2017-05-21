@@ -2,9 +2,9 @@
 
 namespace IIUWr.Controls
 {
-    public sealed partial class CourseTypeFilter : UserControl
+    public sealed partial class CourseTypeFilterControl : UserControl
     {
-        public CourseTypeFilter()
+        public CourseTypeFilterControl()
         {
             InitializeComponent();
         }

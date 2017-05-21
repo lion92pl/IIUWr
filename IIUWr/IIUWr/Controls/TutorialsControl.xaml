@@ -1,0 +1,54 @@
+﻿<UserControl
+    x:Class="IIUWr.Controls.TutorialsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:IIUWr.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="DetailsLabel" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="10" />
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <ListView ItemsSource="{Binding}" SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Padding="10,5" HorizontalAlignment="Stretch">
+                        <TextBlock Text="{Binding Tutorial.Teacher.Name}" TextWrapping="Wrap" Padding="0,0,0,3" />
+                        <TextBlock Text="{Binding Tutorial.Type, Converter={StaticResource LocaleTextConverter}}" Style="{StaticResource DetailsLabel}" />
+                        <TextBlock x:Uid="/Tutorial/AdvancedGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.AdvancedGroup, Converter={StaticResource BooleanConverter}}" />
+                        <TextBlock x:Uid="/Tutorial/InterdisciplinaryGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}" />
+                        <TextBlock Style="{StaticResource DetailsLabel}">
+                            <Run x:Uid="/Tutorial/EnrolledLabel" />:
+                            <Run Text="{Binding Tutorial.Enrolled}" />
+                            ,
+                            <Run x:Uid="/Tutorial/LimitLabel" />:
+                            <Run Text="{Binding Tutorial.Limit}" />
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}">
+                            <Run x:Uid="/Tutorial/InterdisciplinaryEnrolledLabel" />:
+                            <Run Text="{Binding Tutorial.EnrolledInterdisciplinary}" />
+                            ,
+                            <Run x:Uid="/Tutorial/InterdisciplinaryLimitLabel" />:
+                            <Run Text="{Binding Tutorial.LimitInterdisciplinary}" />
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource DetailsLabel}">
+                            <Run x:Uid="/Tutorial/QueueLabel" />:
+                            <Run Text="{Binding Tutorial.Queue}" />
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>

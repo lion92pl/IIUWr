@@ -12,5 +12,7 @@ namespace IIUWr.Fereol.Interface
         Task<IEnumerable<Course>> GetCourses(Semester semester);
         Task<bool> RefreshCourse(Course course);
         Task<IEnumerable<Tutorial>> GetTutorials(Course course);
+
+        Task<bool> Enroll(Tutorial tutorial, bool enroll);
     }
 }

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdvancedGroupLabel.Text" xml:space="preserve">
+    <value>Advanced group</value>
+  </data>
+  <data name="EnrolledLabel.Text" xml:space="preserve">
+    <value>Enrolled</value>
+  </data>
+  <data name="InterdisciplinaryEnrolledLabel.Text" xml:space="preserve">
+    <value>Enrolled ISIM</value>
+  </data>
+  <data name="InterdisciplinaryGroupLabel.Text" xml:space="preserve">
+    <value>Group for ISIM</value>
+  </data>
+  <data name="InterdisciplinaryLimitLabel.Text" xml:space="preserve">
+    <value>Limit ISIM</value>
+  </data>
+  <data name="LimitLabel.Text" xml:space="preserve">
+    <value>Limit</value>
+  </data>
+  <data name="QueueLabel.Text" xml:space="preserve">
+    <value>Queue</value>
+  </data>
+  <data name="TeacherLabel.Text" xml:space="preserve">
+    <value>Teacher</value>
+  </data>
+</root>

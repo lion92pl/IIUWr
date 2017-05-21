@@ -11,5 +11,7 @@ namespace IIUWr.Fereol.HTMLParsing.Interface
     public interface IHTTPConnection : Fereol.Interface.IConnection
     {
         Task<string> GetStringAsync(string relativeUri);
+
+        Task<string> Post(string relativeUri, Dictionary<string, string> formData, bool addMiddlewareToken = true);
     }
 }

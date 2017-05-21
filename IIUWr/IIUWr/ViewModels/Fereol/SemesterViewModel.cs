@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace IIUWr.ViewModels.Fereol
 {
-    public class SemesterViewModel : IRefreshable, IExpandable, INotifyPropertyChanged
+    public class SemesterViewModel : IRefreshable, INotifyPropertyChanged
     {
         private readonly ICoursesService _coursesService;
 
@@ -28,6 +28,20 @@ namespace IIUWr.ViewModels.Fereol
                 if (_courses != value)
                 {
                     _courses = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
+
+        private CourseViewModel _selectedCourse;
+        public CourseViewModel SelectedCourse
+        {
+            get { return _selectedCourse; }
+            set
+            {
+                if (_selectedCourse != value)
+                {
+                    _selectedCourse = value;
                     PropertyChanged.Notify(this);
                 }
             }
@@ -56,28 +70,6 @@ namespace IIUWr.ViewModels.Fereol
                 if (_isRefreshing != value)
                 {
                     _isRefreshing = value;
-                    PropertyChanged.Notify(this);
-                }
-            }
-        }
-        
-        private bool _isExpanded;
-        public bool IsExpanded
-        {
-            get { return _isExpanded; }
-            set
-            {
-                if (_isExpanded != value)
-                {
-                    if (value)
-                    {
-                        Refresh();
-                    }
-                    else
-                    {
-                        Courses.Clear();
-                    }
-                    _isExpanded = value;
                     PropertyChanged.Notify(this);
                 }
             }

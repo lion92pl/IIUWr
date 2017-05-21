@@ -16,6 +16,7 @@ namespace IIUWr.Fereol.HTMLParsing
     {
         private readonly IHTTPConnection _connection;
         private const string CoursesPath = @"courses/";
+        private const string EnrollPath = @"records/set-enrolled";
 
         private const string SummerHalf = "letni";
         private const string WinterHalf = "zimowy";
@@ -151,6 +152,18 @@ namespace IIUWr.Fereol.HTMLParsing
             {
                 return null;
             }
+        }
+
+        public async Task<bool> Enroll(Tutorial tutorial, bool enroll)
+        {
+            var formData = new Dictionary<string, string>
+            {
+                ["group"] = tutorial.Id.ToString(),
+                ["enroll"] = enroll.ToString().ToLower()
+            };
+
+            var response = await _connection.Post(EnrollPath, formData);
+            return response != null;
         }
 
         private async Task<Dictionary<Semester, List<Course>>> Refresh()

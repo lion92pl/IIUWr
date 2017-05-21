@@ -40,14 +40,17 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 (<span>[^<]*</span>)+
             </td>
             <td\s+class=""number\s+termLimit"">
-                (?<{nameof(Tutorial.Limit)}>[^<]*)
+                ((?<{nameof(Tutorial.LimitInterdisciplinary)}>[^<]*)\+)?(?<{nameof(Tutorial.Limit)}>[^<]*)
             </td>
             <td\s+class=""number\s+termEnrolledCount"">
-                (?<{nameof(Tutorial.Enrolled)}>[^<]*)
+                ((?<{nameof(Tutorial.EnrolledInterdisciplinary)}>[^<]*)\+)?(?<{nameof(Tutorial.Enrolled)}>[^<]*)
             </td>
             <td\s+class=""number\s+termQueuedCount"">
                 (?<{nameof(Tutorial.Queue)}>[^<]*)
             </td>";
+            //<td class=""controls"">
+            //    (?<{nameof(Tutorial.Id)}>{CommonRegexes.HiddenInputPattern})
+            //</td>";
 
         private static readonly Regex TutorialsRegex = new Regex(TutorialsPattern, RegexOptions.Compiled);
         private static readonly Regex TutorialRegex = new Regex(TutorialPattern, RegexOptions.Compiled);
@@ -86,6 +89,10 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             if (match.Success)
             {
                 var tutorial = new Tutorial();
+
+                //var idHiddenInput = CommonRegexes.ParseHiddenInput(match.Groups[nameof(Tutorial.Id)]);
+                //tutorial.Id = int.Parse(idHiddenInput.Item2);
+
                 var teacherName = match.Groups[RegexGroups.TeacherName].Value.Trim();
                 var teacherId = int.Parse(match.Groups[RegexGroups.TeacherId].Value);
                 tutorial.Teacher = new Employee
@@ -98,6 +105,16 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 tutorial.Limit = int.Parse(match.Groups[nameof(Tutorial.Limit)].Value.Trim());
                 tutorial.Enrolled = int.Parse(match.Groups[nameof(Tutorial.Enrolled)].Value.Trim());
                 tutorial.Queue = int.Parse(match.Groups[nameof(Tutorial.Queue)].Value.Trim());
+
+                if (match.Groups[nameof(Tutorial.LimitInterdisciplinary)].Success)
+                {
+                    tutorial.LimitInterdisciplinary = int.Parse(match.Groups[nameof(Tutorial.LimitInterdisciplinary)].Value.Trim());
+                }
+
+                if (match.Groups[nameof(Tutorial.EnrolledInterdisciplinary)].Success)
+                {
+                    tutorial.EnrolledInterdisciplinary = int.Parse(match.Groups[nameof(Tutorial.EnrolledInterdisciplinary)].Value.Trim());
+                }
 
                 return tutorial;
             }

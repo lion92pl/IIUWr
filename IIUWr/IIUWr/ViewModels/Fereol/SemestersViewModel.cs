@@ -15,9 +15,12 @@ namespace IIUWr.ViewModels.Fereol
         public SemestersViewModel(ICoursesService coursesService)
         {
             _coursesService = coursesService;
+            Filters = IoC.Get<FiltersViewModel>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public FiltersViewModel Filters { get; set; }
 
         private ObservableCollection<SemesterViewModel> _semesters = new ObservableCollection<SemesterViewModel>();
         public ObservableCollection<SemesterViewModel> Semesters
@@ -32,7 +35,21 @@ namespace IIUWr.ViewModels.Fereol
                 }
             }
         }
-        
+
+        private SemesterViewModel _selectedSemester;
+        public SemesterViewModel SelectedSemester
+        {
+            get { return _selectedSemester; }
+            set
+            {
+                if (_selectedSemester != value)
+                {
+                    _selectedSemester = value;
+                    PropertyChanged.Notify(this);
+                }
+            }
+        }
+
         private bool _isRefreshing;
         public bool IsRefreshing
         {
@@ -74,6 +91,12 @@ namespace IIUWr.ViewModels.Fereol
                 }
             }
             IsRefreshing = false;
+
+            if (SelectedSemester == null || !Semesters.Contains(SelectedSemester))
+            {
+                SelectedSemester = Semesters[0];
+            }
+            SelectedSemester.Refresh();
         }
     }
 }

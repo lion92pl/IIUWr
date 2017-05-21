@@ -33,4 +33,11 @@
             </VM:SemesterViewModel.Semester>
         </VM:SemesterViewModel>
     </VM:SemestersViewModel.Semesters>
+    <VM:SemestersViewModel.SelectedSemester>
+        <VM:SemesterViewModel IsRefreshing="True">
+            <VM:SemesterViewModel.Semester>
+                <M:Semester Year="2015/16" YearHalf="Winter" />
+            </VM:SemesterViewModel.Semester>
+        </VM:SemesterViewModel>
+    </VM:SemestersViewModel.SelectedSemester>
 </VM:SemestersViewModel>

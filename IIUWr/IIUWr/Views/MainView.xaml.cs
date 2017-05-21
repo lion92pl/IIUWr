@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LionCub.Patterns.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -20,11 +20,20 @@ namespace IIUWr.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class LoginPage : Page
+    public sealed partial class MainView : Page
     {
-        public LoginPage()
+        public MainView()
         {
             this.InitializeComponent();
+            IoC.AsInstance(rootFrame);
+            rootFrame.Navigate(typeof(MainPage), IoC.Get<ViewModels.Fereol.SemestersViewModel>());
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            DataContext = e.Parameter;
         }
     }
 }

@@ -305,17 +305,66 @@
     </header>
     <body>
       <group id="IIUWR/STRINGS/PL/ACCOUNT.RESW" datatype="resx">
-        <trans-unit id="IndexNumber" translate="yes" xml:space="preserve">
+        <trans-unit id="LoginButton.Content" translate="yes" xml:space="preserve">
+          <source>Zaloguj</source>
+          <target state="new">Zaloguj</target>
+        </trans-unit>
+        <trans-unit id="IndexNumberLabel.Text" translate="yes" xml:space="preserve">
           <source>Numer indeksu</source>
-          <target state="translated">Index number</target>
+          <target state="new">Numer indeksu</target>
         </trans-unit>
-        <trans-unit id="InvalidCredentials" translate="yes" xml:space="preserve">
+        <trans-unit id="InvalidCredentialsLabel.Text" translate="yes" xml:space="preserve">
           <source>Niepoprawny numer indeksu i/lub hasło</source>
-          <target state="translated">Invalid index number and/or password</target>
+          <target state="new">Niepoprawny numer indeksu i/lub hasło</target>
         </trans-unit>
-        <trans-unit id="Password" translate="yes" xml:space="preserve">
+        <trans-unit id="PasswordLabel.Text" translate="yes" xml:space="preserve">
           <source>Hasło</source>
-          <target state="translated">Password</target>
+          <target state="new">Hasło</target>
+        </trans-unit>
+        <trans-unit id="NotLoggedIn" translate="yes" xml:space="preserve">
+          <source>Niezalogowany</source>
+          <target state="new">Niezalogowany</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="pl" target-language="en" original="IIUWR/STRINGS/PL/TUTORIAL.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.1795.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="IIUWR/STRINGS/PL/TUTORIAL.RESW" datatype="resx">
+        <trans-unit id="AdvancedGroupLabel.Text" translate="yes" xml:space="preserve">
+          <source>Grupa zaawansowana</source>
+          <target state="translated">Advanced group</target>
+        </trans-unit>
+        <trans-unit id="EnrolledLabel.Text" translate="yes" xml:space="preserve">
+          <source>Zapisani</source>
+          <target state="translated">Enrolled</target>
+        </trans-unit>
+        <trans-unit id="InterdisciplinaryEnrolledLabel.Text" translate="yes" xml:space="preserve">
+          <source>Zapisani ISIM</source>
+          <target state="translated">Enrolled ISIM</target>
+        </trans-unit>
+        <trans-unit id="InterdisciplinaryGroupLabel.Text" translate="yes" xml:space="preserve">
+          <source>Grupa dla ISIM</source>
+          <target state="translated">Group for ISIM</target>
+        </trans-unit>
+        <trans-unit id="InterdisciplinaryLimitLabel.Text" translate="yes" xml:space="preserve">
+          <source>Limit ISIM</source>
+          <target state="translated">Limit ISIM</target>
+        </trans-unit>
+        <trans-unit id="LimitLabel.Text" translate="yes" xml:space="preserve">
+          <source>Limit</source>
+          <target state="translated">Limit</target>
+        </trans-unit>
+        <trans-unit id="QueueLabel.Text" translate="yes" xml:space="preserve">
+          <source>Kolejka</source>
+          <target state="translated">Queue</target>
+        </trans-unit>
+        <trans-unit id="TeacherLabel.Text" translate="yes" xml:space="preserve">
+          <source>Prowadzący</source>
+          <target state="translated">Teacher</target>
         </trans-unit>
       </group>
     </body>

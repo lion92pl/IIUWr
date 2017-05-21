@@ -52,6 +52,26 @@
 
             <converters:LocaleTextConverter x:Key="CourseTypeNameConverter" Map="CourseType" />
             <converters:LocaleTextConverter x:Key="PascalCaseLocaleTextConverter" Format="Pascal" />
+
+            <!--#endregion-->
+            
+            <!--#region HamburgerMenu-->
+
+            <x:Double x:Key="HamburgerSize">48</x:Double>
+
+            <Style x:Key="HamburgerMenuIcon" TargetType="IconElement">
+                <Setter Property="Width" Value="{StaticResource HamburgerSize}" />
+                <Setter Property="Height" Value="{StaticResource HamburgerSize}" />
+            </Style>
+
+            <!--#endregion-->
+            
+            <!--#region Visual State breakpoints-->
+
+            <x:Double x:Key="NarrowVisualState">0</x:Double>
+            <x:Double x:Key="MediumVisualState">641</x:Double>
+            <x:Double x:Key="WideVisualState">1008</x:Double>
+            <x:Double x:Key="VeryWideVisualState">1500</x:Double>
             
             <!--#endregion-->
             

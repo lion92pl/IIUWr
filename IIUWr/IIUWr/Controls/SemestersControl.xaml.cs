@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IIUWr.ViewModels.Fereol;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,11 +16,11 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace IIUWr.Views
+namespace IIUWr.Controls
 {
-    public sealed partial class CourseDetailsView : UserControl
+    public sealed partial class SemestersControl : UserControl
     {
-        public CourseDetailsView()
+        public SemestersControl()
         {
             this.InitializeComponent();
         }
