@@ -47,10 +47,11 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             </td>
             <td\s+class=""number\s+termQueuedCount"">
                 (?<{nameof(Tutorial.Queue)}>[^<]*)
+            </td>
+            <td\s+class=""controls"">
+                (?<{nameof(Tutorial.Id)}>{CommonRegexes.HiddenInputPattern})
+                {CommonRegexes.TagsPattern}
             </td>";
-            //<td class=""controls"">
-            //    (?<{nameof(Tutorial.Id)}>{CommonRegexes.HiddenInputPattern})
-            //</td>";
 
         private static readonly Regex TutorialsRegex = new Regex(TutorialsPattern, RegexOptions.Compiled);
         private static readonly Regex TutorialRegex = new Regex(TutorialPattern, RegexOptions.Compiled);
@@ -90,8 +91,8 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             {
                 var tutorial = new Tutorial();
 
-                //var idHiddenInput = CommonRegexes.ParseHiddenInput(match.Groups[nameof(Tutorial.Id)]);
-                //tutorial.Id = int.Parse(idHiddenInput.Item2);
+                var idHiddenInput = CommonRegexes.ParseHiddenInput(match.Groups[nameof(Tutorial.Id)]);
+                tutorial.Id = int.Parse(idHiddenInput.Item2);
 
                 var teacherName = match.Groups[RegexGroups.TeacherName].Value.Trim();
                 var teacherId = int.Parse(match.Groups[RegexGroups.TeacherId].Value);
