@@ -34,6 +34,8 @@ namespace IIUWr.Fereol.Model
 
         public IEnumerable<string> Students { get; set; }
 
+        public bool IsEnrolled { get; set; }
+
         #endregion
     }
 }

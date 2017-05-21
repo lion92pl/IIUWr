@@ -50,6 +50,8 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             </td>
             <td\s+class=""controls"">
                 (?<{nameof(Tutorial.Id)}>{CommonRegexes.HiddenInputPattern})
+                {CommonRegexes.HiddenInputPattern}
+                (?<{nameof(Tutorial.IsEnrolled)}>{CommonRegexes.HiddenInputPattern})
                 {CommonRegexes.TagsPattern}
             </td>";
 
@@ -115,6 +117,12 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 if (match.Groups[nameof(Tutorial.EnrolledInterdisciplinary)].Success)
                 {
                     tutorial.EnrolledInterdisciplinary = int.Parse(match.Groups[nameof(Tutorial.EnrolledInterdisciplinary)].Value.Trim());
+                }
+
+                if (match.Groups[nameof(Tutorial.IsEnrolled)].Success)
+                {
+                    var isEnrolledHiddenInput = CommonRegexes.ParseHiddenInput(match.Groups[nameof(Tutorial.IsEnrolled)]);
+                    tutorial.IsEnrolled = bool.Parse(isEnrolledHiddenInput.Item2);
                 }
 
                 return tutorial;
