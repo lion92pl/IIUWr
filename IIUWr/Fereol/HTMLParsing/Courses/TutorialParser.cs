@@ -22,7 +22,7 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                         {CommonRegexes.TagsPattern}
                     </thead>
                     <tbody>
-                        (<tr\s*>
+                        (<tr\s*(class=""signed"")?\s*>
                             (?<{RegexGroups.Tutorial}>{CommonRegexes.TagsPattern})
                         </tr>)*
                     </tbody>
