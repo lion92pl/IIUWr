@@ -94,11 +94,6 @@
                     <Core:CallMethodAction MethodName="Refresh" TargetObject="{Binding SelectedItem, ElementName=courseList}" />
                 </Core:EventTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="10,5" HorizontalAlignment="Stretch">

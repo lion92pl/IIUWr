@@ -75,6 +75,14 @@
             
             <!--#endregion-->
             
+            <!--#region List style-->
+
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            </Style>
+
+            <!--#endregion-->
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
