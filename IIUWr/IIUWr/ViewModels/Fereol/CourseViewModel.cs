@@ -33,8 +33,8 @@ namespace IIUWr.ViewModels.Fereol
             }
         }
 
-        private IEnumerable<TutorialViewModel> _tutorials;
-        public IEnumerable<TutorialViewModel> Tutorials
+        private IList<TutorialViewModel> _tutorials;
+        public IList<TutorialViewModel> Tutorials
         {
             get { return _tutorials; }
             set
@@ -71,7 +71,7 @@ namespace IIUWr.ViewModels.Fereol
                 var vm = IoC.Get<TutorialViewModel>();
                 vm.Tutorial = t;
                 return vm;
-            });
+            }).ToList();
             IsRefreshing = false;
         }
     }

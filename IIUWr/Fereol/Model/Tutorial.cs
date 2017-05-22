@@ -32,7 +32,7 @@ namespace IIUWr.Fereol.Model
 
         public int Queue { get; set; }
 
-        public IEnumerable<string> Students { get; set; }
+        public IList<string> Students { get; set; }
 
         public bool IsEnrolled { get; set; }
 
