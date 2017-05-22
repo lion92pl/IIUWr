@@ -20,14 +20,19 @@ namespace UnitTests.Mocks.Fereol.HTMLParsing
             throw new NotImplementedException();
         }
 
-        public async Task<string> GetStringAsync(string relativeUri)
+        public Task<string> GetStringAsync(string relativeUri)
         {
-            return await Task.FromResult(_result);
+            return Task.FromResult(_result);
+        }
+
+        public Task<string> Post(string relativeUri, Dictionary<string, string> formData, bool addMiddlewareToken = true)
+        {
+            return Task.FromResult(_result);
         }
 
         public Task<bool> LoginAsync(string username, string password)
         {
-            return Task<bool>.FromResult(username == "test" && password == "mock");
+            return Task.FromResult(username == "test" && password == "mock");
         }
     }
 }
