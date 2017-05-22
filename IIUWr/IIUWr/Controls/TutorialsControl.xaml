@@ -5,6 +5,8 @@
     xmlns:local="using:IIUWr.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -24,6 +26,11 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Padding="10,5" HorizontalAlignment="Stretch">
+                        <Interactivity:Interaction.Behaviors>
+                            <Core:DataTriggerBehavior Binding="{Binding Tutorial.IsEnrolled}" Value="True">
+                                <Core:ChangePropertyAction PropertyName="Background" Value="{StaticResource AccentColor}" />
+                            </Core:DataTriggerBehavior>
+                        </Interactivity:Interaction.Behaviors>
                         <TextBlock Text="{Binding Tutorial.Teacher.Name}" TextWrapping="Wrap" Padding="0,0,0,3" />
                         <TextBlock Text="{Binding Tutorial.Type, Converter={StaticResource LocaleTextConverter}}" Style="{StaticResource DetailsLabel}" />
                         <TextBlock x:Uid="/Tutorial/AdvancedGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.AdvancedGroup, Converter={StaticResource BooleanConverter}}" />
