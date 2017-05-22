@@ -9,7 +9,8 @@
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignWidth="400"
+    d:DataContext="{Binding Tutorials, Source={d:DesignData /SampleData/CourseViewModel.xaml}}">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -18,44 +19,44 @@
                 <Setter Property="Foreground" Value="Gray" />
                 <Setter Property="TextWrapping" Value="Wrap" />
             </Style>
-        </ResourceDictionary>
-    </UserControl.Resources>
 
-    <Grid>
-        <ListView ItemsSource="{Binding}" SelectionMode="None">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Padding="10,5" HorizontalAlignment="Stretch">
-                        <Interactivity:Interaction.Behaviors>
-                            <Core:DataTriggerBehavior Binding="{Binding Tutorial.IsEnrolled}" Value="True">
-                                <Core:ChangePropertyAction PropertyName="Background" Value="{StaticResource AccentColor}" />
-                            </Core:DataTriggerBehavior>
-                        </Interactivity:Interaction.Behaviors>
-                        <TextBlock Text="{Binding Tutorial.Teacher.Name}" TextWrapping="Wrap" Padding="0,0,0,3" />
-                        <TextBlock Text="{Binding Tutorial.Type, Converter={StaticResource LocaleTextConverter}}" Style="{StaticResource DetailsLabel}" />
-                        <TextBlock x:Uid="/Tutorial/AdvancedGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.AdvancedGroup, Converter={StaticResource BooleanConverter}}" />
-                        <TextBlock x:Uid="/Tutorial/InterdisciplinaryGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}" />
-                        <TextBlock Style="{StaticResource DetailsLabel}">
+            <DataTemplate x:Key="TutorialTemplate">
+                <StackPanel Padding="10,5">
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:DataTriggerBehavior Binding="{Binding Tutorial.IsEnrolled}" Value="True">
+                            <Core:ChangePropertyAction PropertyName="Background" Value="{StaticResource AccentColor}" />
+                        </Core:DataTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                    <TextBlock Text="{Binding Tutorial.Teacher.Name}" TextWrapping="Wrap" Padding="0,0,0,3" />
+                    <TextBlock Text="{Binding Tutorial.Type, Converter={StaticResource LocaleTextConverter}}" Style="{StaticResource DetailsLabel}" />
+                    <TextBlock x:Uid="/Tutorial/AdvancedGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.AdvancedGroup, Converter={StaticResource BooleanConverter}}" />
+                    <TextBlock x:Uid="/Tutorial/InterdisciplinaryGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}" />
+                    <TextBlock Style="{StaticResource DetailsLabel}">
                             <Run x:Uid="/Tutorial/EnrolledLabel" />:
                             <Run Text="{Binding Tutorial.Enrolled}" />
                             ,
                             <Run x:Uid="/Tutorial/LimitLabel" />:
                             <Run Text="{Binding Tutorial.Limit}" />
-                        </TextBlock>
-                        <TextBlock Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}">
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource DetailsLabel}" Visibility="{Binding Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}">
                             <Run x:Uid="/Tutorial/InterdisciplinaryEnrolledLabel" />:
                             <Run Text="{Binding Tutorial.EnrolledInterdisciplinary}" />
                             ,
                             <Run x:Uid="/Tutorial/InterdisciplinaryLimitLabel" />:
                             <Run Text="{Binding Tutorial.LimitInterdisciplinary}" />
-                        </TextBlock>
-                        <TextBlock Style="{StaticResource DetailsLabel}">
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource DetailsLabel}">
                             <Run x:Uid="/Tutorial/QueueLabel" />:
                             <Run Text="{Binding Tutorial.Queue}" />
-                        </TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </TextBlock>
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <ListView ItemsSource="{Binding}"
+                  ItemTemplate="{StaticResource TutorialTemplate}"
+                  SelectionMode="None" />
     </Grid>
 </UserControl>

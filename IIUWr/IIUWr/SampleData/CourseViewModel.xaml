@@ -1,5 +1,7 @@
 ﻿<VM:CourseViewModel xmlns:VM="using:IIUWr.ViewModels.Fereol"
                     xmlns:M="using:IIUWr.Fereol.Model"
+                    xmlns:mEnums="using:IIUWr.Fereol.Model.Enums"
+                    xmlns:system="using:System.Collections.Generic"
                     IsRefreshing="False">
     <VM:CourseViewModel.Course>
         <M:Course Name="Algebra" Exam="True" ECTS="7" English="False" SuggestedFor1Year="False" WasEnrolled="True" CanEnroll="True" CanEnrollFrom="2016/10/23" Description="Description">
@@ -8,4 +10,24 @@
             </M:Course.Type>
         </M:Course>
     </VM:CourseViewModel.Course>
+    <VM:CourseViewModel.Tutorials>
+        <VM:TutorialViewModel>
+            <VM:TutorialViewModel.Tutorial>
+                <M:Tutorial Type="Lecture" Enrolled="60" Limit="120">
+                    <M:Tutorial.Teacher>
+                        <M:Employee Name="Wiktor Zychla" />
+                    </M:Tutorial.Teacher>
+                </M:Tutorial>
+            </VM:TutorialViewModel.Tutorial>
+        </VM:TutorialViewModel>
+        <VM:TutorialViewModel>
+            <VM:TutorialViewModel.Tutorial>
+                <M:Tutorial Type="Lab" Enrolled="30" Limit="30" IsEnrolled="True">
+                    <M:Tutorial.Teacher>
+                        <M:Employee Name="Wiktor Zychla" />
+                    </M:Tutorial.Teacher>
+                </M:Tutorial>
+            </VM:TutorialViewModel.Tutorial>
+        </VM:TutorialViewModel>
+    </VM:CourseViewModel.Tutorials>
 </VM:CourseViewModel>
