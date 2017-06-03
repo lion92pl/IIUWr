@@ -50,6 +50,7 @@ namespace IIUWr.Fereol.HTMLParsing
         private static readonly string CoursePattern =
             $@"(?snx)
             (?:<div\s+id=""main\-content"">
+                (?<{RegexGroups.HiddenInput}>{CommonRegexes.HiddenInputPattern})*
                 {CommonRegexes.TagsPattern}
                 <div\s+id=""enr\-course\-view"">
                     <h2>(?<{RegexGroups.Name}>[^<]*)</h2>
@@ -293,6 +294,22 @@ namespace IIUWr.Fereol.HTMLParsing
         {
             course.Name = match.Groups[RegexGroups.Name].Value;
             course.Description = match.Groups[RegexGroups.Description].Value;
+
+            foreach (Capture hiddenInput in match.Groups[RegexGroups.HiddenInput].Captures)
+            {
+                var parsed = CommonRegexes.ParseHiddenInput(hiddenInput);
+                if (parsed.Item1 == "ajax-course-data")
+                {
+                    if (parsed.Item2.Contains("is_recording_open&quot;: true"))
+                    {
+                        course.CanEnroll = true;
+                    }
+                    if (parsed.Item2.Contains("is_recording_open&quot;: false"))
+                    {
+                        course.CanEnroll = false;
+                    }
+                }
+            }
             
             foreach (Capture info in match.Groups[RegexGroups.CourseInfo].Captures)
             {

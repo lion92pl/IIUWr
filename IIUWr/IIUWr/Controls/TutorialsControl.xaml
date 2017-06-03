@@ -50,20 +50,22 @@
                             <Run x:Uid="/Tutorial/QueueLabel" />:
                             <Run Text="{x:Bind Tutorial.Queue}" />
                     </TextBlock>
-                    <Button x:Uid="/Tutorial/EnrollButton" Visibility="{x:Bind Tutorial.IsEnrolled, Converter={StaticResource BooleanConverter}, ConverterParameter=Negate}">
-                        <Interactivity:Interaction.Behaviors>
-                            <Core:EventTriggerBehavior EventName="Click">
-                                <Core:CallMethodAction MethodName="Enroll" TargetObject="{x:Bind}" />
-                            </Core:EventTriggerBehavior>
-                        </Interactivity:Interaction.Behaviors>
-                    </Button>
-                    <Button x:Uid="/Tutorial/UnEnrollButton" Visibility="{x:Bind Tutorial.IsEnrolled, Converter={StaticResource BooleanConverter}}">
-                        <Interactivity:Interaction.Behaviors>
-                            <Core:EventTriggerBehavior EventName="Click">
-                                <Core:CallMethodAction MethodName="UnEnroll" TargetObject="{x:Bind}" />
-                            </Core:EventTriggerBehavior>
-                        </Interactivity:Interaction.Behaviors>
-                    </Button>
+                    <StackPanel Visibility="{x:Bind Tutorial.Course.CanEnroll, Converter={StaticResource BooleanConverter}}">
+                        <Button x:Uid="/Tutorial/EnrollButton" Visibility="{x:Bind Tutorial.IsEnrolled, Converter={StaticResource BooleanConverter}, ConverterParameter=Negate}">
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="Click">
+                                    <Core:CallMethodAction MethodName="Enroll" TargetObject="{x:Bind}" />
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </Button>
+                        <Button x:Uid="/Tutorial/UnEnrollButton" Visibility="{x:Bind Tutorial.IsEnrolled, Converter={StaticResource BooleanConverter}}">
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="Click">
+                                    <Core:CallMethodAction MethodName="UnEnroll" TargetObject="{x:Bind}" />
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </DataTemplate>
         </ResourceDictionary>
