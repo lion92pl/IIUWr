@@ -26,9 +26,6 @@ namespace IIUWr
         public static void ViewModels()
         {
             IoC.AsSingleton<SemestersViewModel>();
-            IoC.PerRequest<SemesterViewModel>();
-            IoC.PerRequest<CourseViewModel>();
-            IoC.PerRequest<TutorialViewModel>();
         }
         
         public static class Fereol
