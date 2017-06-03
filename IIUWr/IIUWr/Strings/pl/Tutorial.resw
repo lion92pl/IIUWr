@@ -120,6 +120,9 @@
   <data name="AdvancedGroupLabel.Text" xml:space="preserve">
     <value>Grupa zaawansowana</value>
   </data>
+  <data name="EnrollButton.Content" xml:space="preserve">
+    <value>Zapisz</value>
+  </data>
   <data name="EnrolledLabel.Text" xml:space="preserve">
     <value>Zapisani</value>
   </data>
@@ -140,5 +143,8 @@
   </data>
   <data name="TeacherLabel.Text" xml:space="preserve">
     <value>Prowadzący</value>
+  </data>
+  <data name="UnEnrollButton.Content" xml:space="preserve">
+    <value>Wypisz</value>
   </data>
 </root>

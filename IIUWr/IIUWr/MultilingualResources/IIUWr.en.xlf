@@ -374,6 +374,14 @@
           <source>Prowadzący</source>
           <target state="translated">Teacher</target>
         </trans-unit>
+        <trans-unit id="EnrollButton.Content" translate="yes" xml:space="preserve">
+          <source>Zapisz</source>
+          <target state="new">Zapisz</target>
+        </trans-unit>
+        <trans-unit id="UnEnrollButton.Content" translate="yes" xml:space="preserve">
+          <source>Wypisz</source>
+          <target state="new">Wypisz</target>
+        </trans-unit>
       </group>
     </body>
   </file>

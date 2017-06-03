@@ -49,6 +49,16 @@ namespace IIUWr.ViewModels.Fereol
             }
         }
 
+        public async void Enroll()
+        {
+            await _coursesService.Enroll(Tutorial, true);
+        }
+
+        public async void UnEnroll()
+        {
+            await _coursesService.Enroll(Tutorial, false);
+        }
+
         public async void Refresh()
         {
             IsRefreshing = true;
