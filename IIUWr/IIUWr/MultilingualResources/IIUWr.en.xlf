@@ -325,6 +325,14 @@
           <source>Niezalogowany</source>
           <target state="new">Niezalogowany</target>
         </trans-unit>
+        <trans-unit id="LogoutButton.Content" translate="yes" xml:space="preserve">
+          <source>Wyloguj</source>
+          <target state="new">Wyloguj</target>
+        </trans-unit>
+        <trans-unit id="LoggedInAsLabel.Text" translate="yes" xml:space="preserve">
+          <source>Zalogowany jako: </source>
+          <target state="new">Zalogowany jako: </target>
+        </trans-unit>
       </group>
     </body>
   </file>

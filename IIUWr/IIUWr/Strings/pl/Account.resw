@@ -123,8 +123,14 @@
   <data name="InvalidCredentialsLabel.Text" xml:space="preserve">
     <value>Niepoprawny numer indeksu i/lub hasło</value>
   </data>
+  <data name="LoggedInAsLabel.Text" xml:space="preserve">
+    <value>Zalogowany jako: </value>
+  </data>
   <data name="LoginButton.Content" xml:space="preserve">
     <value>Zaloguj</value>
+  </data>
+  <data name="LogoutButton.Content" xml:space="preserve">
+    <value>Wyloguj</value>
   </data>
   <data name="NotLoggedIn" xml:space="preserve">
     <value>Niezalogowany</value>

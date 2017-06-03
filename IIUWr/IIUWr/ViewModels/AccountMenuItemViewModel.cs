@@ -1,4 +1,5 @@
 ﻿using IIUWr.Fereol.Interface;
+using IIUWr.Utils;
 using LionCub.Patterns.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace IIUWr.ViewModels
         
         public override void OnSelected()
         {
-            IoC.Get<Windows.UI.Xaml.Controls.Frame>().Navigate(typeof(Views.LoginView), IoC.Get<LoginViewModel>());
+            NavigationService.Navigate<Views.AccountView, AccountViewModel>();
         }
     }
 }
