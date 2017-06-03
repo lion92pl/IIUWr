@@ -17,21 +17,18 @@ namespace IIUWr.ViewModels
         public AccountMenuItemViewModel(IConnection connection)
         {
             _connection = connection;
-            _connection.PropertyChanged += ConnectionPropertyChanged;
+            _connection.AuthStatusChanged += AuthStatusChanged;
 
             Symbol = Windows.UI.Xaml.Controls.Symbol.Contact;
 
             SetItemName();
         }
 
-        private void ConnectionPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void AuthStatusChanged(object sender, EventArgs e)
         {
-            if (e.PropertyName == nameof(IConnection.AuthStatus))
-            {
-                SetItemName();
-            }
+            SetItemName();
         }
-
+        
         private void SetItemName()
         {
             if (_connection.AuthStatus?.Authenticated ?? false)

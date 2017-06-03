@@ -31,7 +31,7 @@ namespace IIUWr.Fereol.HTMLParsing
         private readonly ICredentialsManager _credentialsManager;
         private readonly ISessionManager _sessionManager;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler AuthStatusChanged;
 
         public Connection(Uri uri, ICredentialsManager credentialsManager, ISessionManager sessionManager)
         {
@@ -70,7 +70,7 @@ namespace IIUWr.Fereol.HTMLParsing
                 if (_authStatus != value)
                 {
                     _authStatus = value;
-                    PropertyChanged.Notify(this);
+                    AuthStatusChanged.Invoke(this, EventArgs.Empty);
                 }
             }
         }
