@@ -92,11 +92,11 @@ namespace IIUWr.ViewModels.Fereol
             }
             IsRefreshing = false;
 
-            if (SelectedSemester == null || !Semesters.Contains(SelectedSemester))
+            if (Semesters.Any() && (SelectedSemester == null || !Semesters.Contains(SelectedSemester)))
             {
                 SelectedSemester = Semesters[0];
             }
-            SelectedSemester.Refresh();
+            SelectedSemester?.Refresh();
         }
     }
 }

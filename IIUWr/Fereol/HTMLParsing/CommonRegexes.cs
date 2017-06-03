@@ -1,4 +1,4 @@
-﻿using IIUWr.Fereol.Common;
+﻿using IIUWr.Fereol.Model;
 using System;
 using System.Text.RegularExpressions;
 
@@ -28,14 +28,24 @@ namespace IIUWr.Fereol.HTMLParsing
         private static readonly string AuthenticatedPattern =
             $@"(?snx)
             (?:<script\s+type=""text/javascript""[^>]*>\s*
-                var\s+user_is_authenticated\s*=\s*(?<{RegexGroups.IsAuthenticated}>{BooleanPattern}),\s*
-                user_is_student\s*=\s*(?<{RegexGroups.IsStudent}>{BooleanPattern});\s*
+                var\s+user_is_authenticated\s*=\s*(?<{nameof(AuthenticationStatus.Authenticated)}>{BooleanPattern}),\s*
+                user_is_student\s*=\s*(?<{nameof(AuthenticationStatus.IsStudent)}>{BooleanPattern});\s*
             </script>)";
+
+        private static readonly string UserNamePattern =
+            $@"(?snx)
+            (?:<div\s+class=""user-panel""[^>]*>\s*
+                [^<]*
+                <strong>(?<{nameof(AuthenticationStatus.Name)}>[^<]+)</strong>
+                {TagsPattern}
+            </div>)";
 
         private static readonly string InternalHiddenInputPattern =
             $@"<input(?:\s*(type=(""|')hidden(""|')|name=(""|')(?<{RegexGroups.Name}>[^""']*)(""|')|value=(""|')(?<{RegexGroups.Value}>[^""']*)(""|'))){{3}}[^>]*>";
 
         private static readonly Regex AuthenticatedRegex = new Regex(AuthenticatedPattern, RegexOptions.Compiled);
+
+        private static readonly Regex UserNameRegex = new Regex(UserNamePattern, RegexOptions.Compiled);
 
         private static readonly Regex HiddenInputRegex = new Regex(InternalHiddenInputPattern, RegexOptions.Compiled);
 
@@ -51,14 +61,21 @@ namespace IIUWr.Fereol.HTMLParsing
         
         public static AuthenticationStatus ParseAuthenticationStatus(string page)
         {
+            AuthenticationStatus result = null;
             Match match = AuthenticatedRegex.Match(page);
             if (match.Success)
             {
-                bool authenticated = bool.Parse(match.Groups[RegexGroups.IsAuthenticated].Value);
-                bool student = bool.Parse(match.Groups[RegexGroups.IsStudent].Value);
-                return new AuthenticationStatus { Authenticated = authenticated, IsStudent = student };
+                var authenticated = bool.Parse(match.Groups[nameof(AuthenticationStatus.Authenticated)].Value);
+                var isStudent = bool.Parse(match.Groups[nameof(AuthenticationStatus.IsStudent)].Value);
+                result = new AuthenticationStatus { Authenticated = authenticated, IsStudent = isStudent };
+
+                match = UserNameRegex.Match(page);
+                if (match.Success)
+                {
+                    result.Name = match.Groups[nameof(AuthenticationStatus.Name)].Value;
+                }
             }
-            return null;
+            return result;
         }
     }
 }

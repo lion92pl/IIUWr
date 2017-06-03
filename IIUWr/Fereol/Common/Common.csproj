@@ -115,7 +115,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationStatus.cs" />
     <Compile Include="CredentialsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Common.rd.xml" />
