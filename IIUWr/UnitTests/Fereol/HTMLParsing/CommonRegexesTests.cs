@@ -8,9 +8,9 @@ namespace UnitTests.Fereol.HTMLParsing
     {
         [TestCategory(Categories.Parsing)]
         [DataTestMethod]
-        [DataRow("NotAuthenticated", false, false)]
-        [DataRow("Student", true, true)]
-        public void AuthenticationStatusTest(string htmlFileName, bool authenticated, bool student)
+        [DataRow("NotAuthenticated", false, false, null, DisplayName = "Not authenticated")]
+        [DataRow("Student", true, true, "Tomasz Sołtysik", DisplayName = "Student")]
+        public void AuthenticationStatusTest(string htmlFileName, bool authenticated, bool student, string name)
         {
             string htmlPage = System.IO.File.ReadAllText($"Fereol/HTMLParsing/Pages/Authentication/{htmlFileName}.html");
             var actual = CommonRegexes.ParseAuthenticationStatus(htmlPage);
@@ -18,6 +18,7 @@ namespace UnitTests.Fereol.HTMLParsing
             Assert.IsNotNull(actual);
             Assert.AreEqual(authenticated, actual.Authenticated);
             Assert.AreEqual(student, actual.IsStudent);
+            Assert.AreEqual(name, actual.Name);
         }
     }
 }
