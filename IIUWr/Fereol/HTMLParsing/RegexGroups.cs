@@ -16,5 +16,6 @@
         public const string TeacherId = "teacherId";
         public const string TeacherName = "teacherName";
         public const string HiddenInput = "hiddenInput";
+        public const string JSON = "json";
     }
 }

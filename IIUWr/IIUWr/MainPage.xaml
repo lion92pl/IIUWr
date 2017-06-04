@@ -73,7 +73,7 @@
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1008" />
+                        <AdaptiveTrigger MinWindowWidth="1008" /> 
                     </VisualState.StateTriggers>
                 </VisualState>
                 <VisualState>
@@ -89,7 +89,7 @@
         </VisualStateManager.VisualStateGroups>-->
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="250" />
+            <ColumnDefinition MaxWidth="350" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <!--<Grid x:Name="semesters">

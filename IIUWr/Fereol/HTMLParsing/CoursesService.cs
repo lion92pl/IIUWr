@@ -15,8 +15,9 @@ namespace IIUWr.Fereol.HTMLParsing
     public class CoursesService : ICoursesService
     {
         private readonly IHTTPConnection _connection;
-        private const string CoursesPath = @"courses/";
-        private const string EnrollPath = @"records/set-enrolled";
+        private const string CoursesPath = "courses/";
+        private const string EnrollPath = "records/set-enrolled";
+        private const string SetPriorityPath = "records/set-queue-priority";
 
         private const string SummerHalf = "letni";
         private const string WinterHalf = "zimowy";
@@ -164,6 +165,18 @@ namespace IIUWr.Fereol.HTMLParsing
             };
 
             var response = await _connection.Post(EnrollPath, formData);
+            return response != null;
+        }
+
+        public async Task<bool> SetPriority(Tutorial tutorial, int priority)
+        {
+            var formData = new Dictionary<string, string>
+            {
+                ["group"] = tutorial.Id.ToString(),
+                ["priority"] = priority.ToString()
+            };
+
+            var response = await _connection.Post(SetPriorityPath, formData);
             return response != null;
         }
 

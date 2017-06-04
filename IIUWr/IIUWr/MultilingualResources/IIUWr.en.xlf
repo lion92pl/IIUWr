@@ -382,6 +382,14 @@
           <source>Wypisz</source>
           <target state="new">Wypisz</target>
         </trans-unit>
+        <trans-unit id="QueueButton.Content" translate="yes" xml:space="preserve">
+          <source>Zapisz do kolejki</source>
+          <target state="new">Zapisz do kolejki</target>
+        </trans-unit>
+        <trans-unit id="UnQueueButton.Content" translate="yes" xml:space="preserve">
+          <source>Wypisz z kolejki</source>
+          <target state="new">Wypisz z kolejki</target>
+        </trans-unit>
       </group>
     </body>
   </file>

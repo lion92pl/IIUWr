@@ -14,5 +14,6 @@ namespace IIUWr.Fereol.Interface
         Task<IEnumerable<Tutorial>> GetTutorials(Course course);
 
         Task<bool> Enroll(Tutorial tutorial, bool enroll);
+        Task<bool> SetPriority(Tutorial tutorial, int priority);
     }
 }

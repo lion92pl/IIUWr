@@ -138,6 +138,9 @@
   <data name="LimitLabel.Text" xml:space="preserve">
     <value>Limit</value>
   </data>
+  <data name="QueueButton.Content" xml:space="preserve">
+    <value>Zapisz do kolejki</value>
+  </data>
   <data name="QueueLabel.Text" xml:space="preserve">
     <value>Kolejka</value>
   </data>
@@ -146,5 +149,8 @@
   </data>
   <data name="UnEnrollButton.Content" xml:space="preserve">
     <value>Wypisz</value>
+  </data>
+  <data name="UnQueueButton.Content" xml:space="preserve">
+    <value>Wypisz z kolejki</value>
   </data>
 </root>

@@ -36,6 +36,10 @@ namespace IIUWr.Fereol.Model
 
         public bool IsEnrolled { get; set; }
 
+        public bool IsQueued { get; set; }
+
+        public int Priority { get; set; }
+
         #endregion
     }
 }

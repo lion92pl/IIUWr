@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IIUWr.Fereol.HTMLParsing.Courses
 {
-    public class TutorialParser
+    public static class TutorialParser
     {
         private static readonly string TutorialsPattern =
             $@"(?x)
@@ -50,11 +50,18 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             </td>
             <td\s+class=""controls"">
                 (?<{nameof(Tutorial.Id)}>{CommonRegexes.HiddenInputPattern})
-                {CommonRegexes.HiddenInputPattern}
+                (?<{RegexGroups.JSON}>{CommonRegexes.HiddenInputPattern})
                 (?<{nameof(Tutorial.IsEnrolled)}>{CommonRegexes.HiddenInputPattern})
                 {CommonRegexes.TagsPattern}
+            </td>
+            <td\s+class=""priority"">
+            (
+                {CommonRegexes.TagsPattern}
+                <span>(?<{nameof(Tutorial.Priority)}>\d)</span>
+                {CommonRegexes.TagsPattern}
+            )?
             </td>";
-
+        
         private static readonly Regex TutorialsRegex = new Regex(TutorialsPattern, RegexOptions.Compiled);
         private static readonly Regex TutorialRegex = new Regex(TutorialPattern, RegexOptions.Compiled);
 
@@ -103,7 +110,7 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                     Id = teacherId,
                     Name = teacherName
                 };
-
+                
                 tutorial.AdvancedGroup = match.Groups[nameof(Tutorial.AdvancedGroup)].Success;
                 tutorial.Limit = int.Parse(match.Groups[nameof(Tutorial.Limit)].Value.Trim());
                 tutorial.Enrolled = int.Parse(match.Groups[nameof(Tutorial.Enrolled)].Value.Trim());
@@ -123,6 +130,12 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 {
                     var isEnrolledHiddenInput = CommonRegexes.ParseHiddenInput(match.Groups[nameof(Tutorial.IsEnrolled)]);
                     tutorial.IsEnrolled = bool.Parse(isEnrolledHiddenInput.Item2);
+                }
+
+                if (match.Groups[nameof(Tutorial.Priority)].Success)
+                {
+                    tutorial.IsQueued = true;
+                    tutorial.Priority = int.Parse(match.Groups[nameof(Tutorial.Priority)].Value.Trim());
                 }
 
                 return tutorial;
