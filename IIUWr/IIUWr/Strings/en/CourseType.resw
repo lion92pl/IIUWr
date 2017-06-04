@@ -12,13 +12,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="O1" xml:space="preserve">
+    <value>Mandatory 1</value>
+  </data>
+  <data name="I1" xml:space="preserve">
+    <value>CS 1</value>
+  </data>
+  <data name="I2" xml:space="preserve">
+    <value>CS 2</value>
+  </data>
+  <data name="I2T" xml:space="preserve">
+    <value>CS 2 - teory</value>
+  </data>
+  <data name="I2Z" xml:space="preserve">
+    <value>CS 2 - application</value>
+  </data>
+  <data name="Iinż" xml:space="preserve">
+    <value>CS for engineers</value>
+  </data>
+  <data name="Inf" xml:space="preserve">
+    <value>CS</value>
+  </data>
   <data name="Inne" xml:space="preserve">
     <value>Other</value>
+  </data>
+  <data name="K1" xml:space="preserve">
+    <value>Course 1</value>
+  </data>
+  <data name="K2" xml:space="preserve">
+    <value>Course 2</value>
+  </data>
+  <data name="Kinż" xml:space="preserve">
+    <value>Engineer courses</value>
+  </data>
+  <data name="Kurs" xml:space="preserve">
+    <value>Courses</value>
+  </data>
+  <data name="KursySeminaria" xml:space="preserve">
+    <value>Courses and seminars</value>
+  </data>
+  <data name="Lektorat" xml:space="preserve">
+    <value>Foreign language classes</value>
+  </data>
+  <data name="Nieinformatyczny" xml:space="preserve">
+    <value>Humanistic</value>
+  </data>
+  <data name="O" xml:space="preserve">
+    <value>Mandatory</value>
+  </data>
+  <data name="O2" xml:space="preserve">
+    <value>Mandatory 2</value>
+  </data>
+  <data name="O3" xml:space="preserve">
+    <value>Mandatory 3</value>
+  </data>
+  <data name="Oinż" xml:space="preserve">
+    <value>Mandatory for engineers</value>
   </data>
   <data name="Projekt" xml:space="preserve">
     <value>Project</value>
   </data>
   <data name="Seminarium" xml:space="preserve">
     <value>Seminar</value>
+  </data>
+  <data name="WF" xml:space="preserve">
+    <value>PE</value>
   </data>
 </root>

@@ -56,4 +56,7 @@
     <value>Log in</value>
     <comment>Log in</comment>
   </data>
+  <data name="DemoModeToggled" xml:space="preserve">
+    <value>Dome mode toggled. Restart app to change server.</value>
+  </data>
 </root>

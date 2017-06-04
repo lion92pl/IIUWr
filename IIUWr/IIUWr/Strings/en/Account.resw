@@ -12,4 +12,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LoginButton.Content" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="IndexNumberLabel.Text" xml:space="preserve">
+    <value>Student Id</value>
+  </data>
+  <data name="InvalidCredentialsLabel.Text" xml:space="preserve">
+    <value>Invalid student Id or password</value>
+  </data>
+  <data name="PasswordLabel.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="NotLoggedIn" xml:space="preserve">
+    <value>Not logged in</value>
+  </data>
+  <data name="LogoutButton.Content" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="LoggedInAsLabel.Text" xml:space="preserve">
+    <value>Logged in as: </value>
+  </data>
 </root>

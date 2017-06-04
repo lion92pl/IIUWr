@@ -36,4 +36,16 @@
   <data name="TeacherLabel.Text" xml:space="preserve">
     <value>Teacher</value>
   </data>
+  <data name="EnrollButton.Content" xml:space="preserve">
+    <value>Enroll</value>
+  </data>
+  <data name="UnEnrollButton.Content" xml:space="preserve">
+    <value>Unenroll</value>
+  </data>
+  <data name="QueueButton.Content" xml:space="preserve">
+    <value>Enroll to queue</value>
+  </data>
+  <data name="UnQueueButton.Content" xml:space="preserve">
+    <value>Unenroll from queue</value>
+  </data>
 </root>

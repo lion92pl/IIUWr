@@ -64,7 +64,7 @@
         </trans-unit>
         <trans-unit id="DemoModeToggled" translate="yes" xml:space="preserve">
           <source>Przełączono tryb demo. Uruchom ponownie, aby zmienić server.</source>
-          <target state="new">Przełączono tryb demo. Uruchom ponownie, aby zmienić server.</target>
+          <target state="translated">Dome mode toggled. Restart app to change server.</target>
         </trans-unit>
       </group>
     </body>
@@ -111,31 +111,31 @@
       <group id="IIUWR/STRINGS/PL/COURSETYPE.RESW" datatype="resx">
         <trans-unit id="O1" translate="yes" xml:space="preserve">
           <source>Obowiązkowy 1</source>
-          <target state="new">Obowiązkowy 1</target>
+          <target state="translated">Mandatory 1</target>
         </trans-unit>
         <trans-unit id="I1" translate="yes" xml:space="preserve">
           <source>Informatyczny 1</source>
-          <target state="new">Informatyczny 1</target>
+          <target state="translated">CS 1</target>
         </trans-unit>
         <trans-unit id="I2" translate="yes" xml:space="preserve">
           <source>Informatyczny 2</source>
-          <target state="new">Informatyczny 2</target>
+          <target state="translated">CS 2</target>
         </trans-unit>
         <trans-unit id="I2T" translate="yes" xml:space="preserve">
           <source>Informatyczny 2 - teoria</source>
-          <target state="new">Informatyczny 2 - teoria</target>
+          <target state="translated">CS 2 - teory</target>
         </trans-unit>
         <trans-unit id="I2Z" translate="yes" xml:space="preserve">
           <source>Informatyczny 2 - zastosowania</source>
-          <target state="new">Informatyczny 2 - zastosowania</target>
+          <target state="translated">CS 2 - application</target>
         </trans-unit>
         <trans-unit id="Iinż" translate="yes" xml:space="preserve">
           <source>Informatyczny inżynierski</source>
-          <target state="new">Informatyczny inżynierski</target>
+          <target state="translated">CS for engineers</target>
         </trans-unit>
         <trans-unit id="Inf" translate="yes" xml:space="preserve">
           <source>Informatyczny</source>
-          <target state="new">Informatyczny</target>
+          <target state="translated">CS</target>
         </trans-unit>
         <trans-unit id="Inne" translate="yes" xml:space="preserve">
           <source>Inne</source>
@@ -143,47 +143,47 @@
         </trans-unit>
         <trans-unit id="K1" translate="yes" xml:space="preserve">
           <source>Kurs 1</source>
-          <target state="new">Kurs 1</target>
+          <target state="translated">Course 1</target>
         </trans-unit>
         <trans-unit id="K2" translate="yes" xml:space="preserve">
           <source>Kurs 2</source>
-          <target state="new">Kurs 2</target>
+          <target state="translated">Course 2</target>
         </trans-unit>
         <trans-unit id="Kinż" translate="yes" xml:space="preserve">
           <source>Kurs inżynierski</source>
-          <target state="new">Kurs inżynierski</target>
+          <target state="translated">Engineer courses</target>
         </trans-unit>
         <trans-unit id="Kurs" translate="yes" xml:space="preserve">
           <source>Kurs</source>
-          <target state="new">Kurs</target>
+          <target state="translated">Courses</target>
         </trans-unit>
         <trans-unit id="KursySeminaria" translate="yes" xml:space="preserve">
           <source>Kursy i seminaria</source>
-          <target state="new">Kursy i seminaria</target>
+          <target state="translated">Courses and seminars</target>
         </trans-unit>
         <trans-unit id="Lektorat" translate="yes" xml:space="preserve">
           <source>Lektorat</source>
-          <target state="new">Lektorat</target>
+          <target state="translated">Foreign language classes</target>
         </trans-unit>
         <trans-unit id="Nieinformatyczny" translate="yes" xml:space="preserve">
           <source>Nieinformatyczny</source>
-          <target state="new">Nieinformatyczny</target>
+          <target state="translated">Humanistic</target>
         </trans-unit>
         <trans-unit id="O" translate="yes" xml:space="preserve">
           <source>Obowiązkowy</source>
-          <target state="new">Obowiązkowy</target>
+          <target state="translated">Mandatory</target>
         </trans-unit>
         <trans-unit id="O2" translate="yes" xml:space="preserve">
           <source>Obowiązkowy 2</source>
-          <target state="new">Obowiązkowy 2</target>
+          <target state="translated">Mandatory 2</target>
         </trans-unit>
         <trans-unit id="O3" translate="yes" xml:space="preserve">
           <source>Obowiązkowy 3</source>
-          <target state="new">Obowiązkowy 3</target>
+          <target state="translated">Mandatory 3</target>
         </trans-unit>
         <trans-unit id="Oinż" translate="yes" xml:space="preserve">
           <source>Obowiązkowy inżynierski</source>
-          <target state="new">Obowiązkowy inżynierski</target>
+          <target state="translated">Mandatory for engineers</target>
         </trans-unit>
         <trans-unit id="Projekt" translate="yes" xml:space="preserve">
           <source>Projekt</source>
@@ -195,7 +195,7 @@
         </trans-unit>
         <trans-unit id="WF" translate="yes" xml:space="preserve">
           <source>Wychowanie fizyczne</source>
-          <target state="new">Wychowanie fizyczne</target>
+          <target state="translated">PE</target>
         </trans-unit>
       </group>
     </body>
@@ -311,31 +311,31 @@
       <group id="IIUWR/STRINGS/PL/ACCOUNT.RESW" datatype="resx">
         <trans-unit id="LoginButton.Content" translate="yes" xml:space="preserve">
           <source>Zaloguj</source>
-          <target state="new">Zaloguj</target>
+          <target state="translated">Log in</target>
         </trans-unit>
         <trans-unit id="IndexNumberLabel.Text" translate="yes" xml:space="preserve">
           <source>Numer indeksu</source>
-          <target state="new">Numer indeksu</target>
+          <target state="translated">Student Id</target>
         </trans-unit>
         <trans-unit id="InvalidCredentialsLabel.Text" translate="yes" xml:space="preserve">
           <source>Niepoprawny numer indeksu i/lub hasło</source>
-          <target state="new">Niepoprawny numer indeksu i/lub hasło</target>
+          <target state="translated">Invalid student Id or password</target>
         </trans-unit>
         <trans-unit id="PasswordLabel.Text" translate="yes" xml:space="preserve">
           <source>Hasło</source>
-          <target state="new">Hasło</target>
+          <target state="translated">Password</target>
         </trans-unit>
         <trans-unit id="NotLoggedIn" translate="yes" xml:space="preserve">
           <source>Niezalogowany</source>
-          <target state="new">Niezalogowany</target>
+          <target state="translated">Not logged in</target>
         </trans-unit>
         <trans-unit id="LogoutButton.Content" translate="yes" xml:space="preserve">
           <source>Wyloguj</source>
-          <target state="new">Wyloguj</target>
+          <target state="translated">Log out</target>
         </trans-unit>
         <trans-unit id="LoggedInAsLabel.Text" translate="yes" xml:space="preserve">
           <source>Zalogowany jako: </source>
-          <target state="new">Zalogowany jako: </target>
+          <target state="translated">Logged in as: </target>
         </trans-unit>
       </group>
     </body>
@@ -380,19 +380,19 @@
         </trans-unit>
         <trans-unit id="EnrollButton.Content" translate="yes" xml:space="preserve">
           <source>Zapisz</source>
-          <target state="new">Zapisz</target>
+          <target state="translated">Enroll</target>
         </trans-unit>
         <trans-unit id="UnEnrollButton.Content" translate="yes" xml:space="preserve">
           <source>Wypisz</source>
-          <target state="new">Wypisz</target>
+          <target state="translated">Unenroll</target>
         </trans-unit>
         <trans-unit id="QueueButton.Content" translate="yes" xml:space="preserve">
           <source>Zapisz do kolejki</source>
-          <target state="new">Zapisz do kolejki</target>
+          <target state="translated">Enroll to queue</target>
         </trans-unit>
         <trans-unit id="UnQueueButton.Content" translate="yes" xml:space="preserve">
           <source>Wypisz z kolejki</source>
-          <target state="new">Wypisz z kolejki</target>
+          <target state="translated">Unenroll from queue</target>
         </trans-unit>
       </group>
     </body>
