@@ -38,6 +38,7 @@ namespace IIUWr.ViewModels.Fereol
                     PropertyChanged.Notify(this);
                     PropertyChanged.Notify(this, nameof(CanEnroll));
                     PropertyChanged.Notify(this, nameof(CanQueue));
+                    PropertyChanged.Notify(this, nameof(IsFull));
                 }
             }
         }

@@ -12,7 +12,7 @@ namespace IIUWr
         public static void All()
         {
 #if DEBUG
-            IoC.AsInstance(new Uri(@"http://192.168.1.150:8002/"));
+            IoC.AsInstance(new Uri(@"http://soltysik.net.pl:8002/"));
 #else
             IoC.AsInstance(new Uri(@"https://zapisy.ii.uni.wroc.pl/"));
 #endif
