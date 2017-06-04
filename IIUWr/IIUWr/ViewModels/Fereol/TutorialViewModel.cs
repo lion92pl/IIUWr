@@ -21,6 +21,8 @@ namespace IIUWr.ViewModels.Fereol
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event EventHandler EnrollmentStatusChanged;
+
         private Tutorial _tutorial;
         public Tutorial Tutorial
         {
@@ -52,11 +54,13 @@ namespace IIUWr.ViewModels.Fereol
         public async void Enroll()
         {
             await _coursesService.Enroll(Tutorial, true);
+            EnrollmentStatusChanged.Invoke(this, EventArgs.Empty);
         }
 
         public async void UnEnroll()
         {
             await _coursesService.Enroll(Tutorial, false);
+            EnrollmentStatusChanged.Invoke(this, EventArgs.Empty);
         }
 
         public async void Refresh()

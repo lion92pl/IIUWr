@@ -2,6 +2,7 @@
 using IIUWr.Fereol.Model;
 using IIUWr.ViewModels.Interfaces;
 using LionCub.Patterns.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -70,9 +71,19 @@ namespace IIUWr.ViewModels.Fereol
             {
                 var vm = IoC.Get<TutorialViewModel>();
                 vm.Tutorial = t;
+                vm.EnrollmentStatusChanged += TutorialsEnrollmentStatusChanged;
                 return vm;
             }).ToList();
             IsRefreshing = false;
+        }
+
+        private void TutorialsEnrollmentStatusChanged(object sender, EventArgs args)
+        {
+            foreach (var vm in Tutorials)
+            {
+                vm.EnrollmentStatusChanged -= TutorialsEnrollmentStatusChanged;
+            }
+            Refresh();
         }
     }
 }
