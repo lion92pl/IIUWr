@@ -54,13 +54,11 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 (?<{nameof(Tutorial.IsEnrolled)}>{CommonRegexes.HiddenInputPattern})
                 {CommonRegexes.TagsPattern}
             </td>
-            <td\s+class=""priority"">
-            (
+            (<td\s+class=""priority"">
                 {CommonRegexes.TagsPattern}
                 <span>(?<{nameof(Tutorial.Priority)}>\d)</span>
                 {CommonRegexes.TagsPattern}
-            )?
-            </td>";
+            </td>)?";
         
         private static readonly Regex TutorialsRegex = new Regex(TutorialsPattern, RegexOptions.Compiled);
         private static readonly Regex TutorialRegex = new Regex(TutorialPattern, RegexOptions.Compiled);

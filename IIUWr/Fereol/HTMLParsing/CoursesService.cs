@@ -75,6 +75,9 @@ namespace IIUWr.Fereol.HTMLParsing
                         <h2>[^<]*</h2>
                         {CommonRegexes.TagsPattern}
                     </div>)*
+                    (<div\s+class=""row"">
+                        {CommonRegexes.TagsPattern}
+                    </div>)?
                 </div>
                 {CommonRegexes.TagsPattern}
             </div>)";
