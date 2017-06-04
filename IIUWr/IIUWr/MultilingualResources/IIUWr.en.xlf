@@ -62,6 +62,10 @@
           <target state="translated">Log in</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Log in</note>
         </trans-unit>
+        <trans-unit id="DemoModeToggled" translate="yes" xml:space="preserve">
+          <source>Przełączono tryb demo. Uruchom ponownie, aby zmienić server.</source>
+          <target state="new">Przełączono tryb demo. Uruchom ponownie, aby zmienić server.</target>
+        </trans-unit>
       </group>
     </body>
   </file>

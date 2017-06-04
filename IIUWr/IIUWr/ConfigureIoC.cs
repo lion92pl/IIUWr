@@ -3,19 +3,62 @@ using IIUWr.Fereol.Interface;
 using IIUWr.ViewModels.Fereol;
 using LionCub.Patterns.DependencyInjection;
 using System;
+using Windows.Storage;
 using HTMLParsing = IIUWr.Fereol.HTMLParsing;
 
 namespace IIUWr
 {
+    public static class DemoModeHelper
+    {
+        private const string Key = "demo-mode";
+
+        public static bool IsDemoMode
+        {
+            get
+            {
+                object demoMode;
+                ApplicationData.Current.LocalSettings.Values.TryGetValue(Key, out demoMode);
+                return demoMode != null && demoMode is bool demo && demo;
+            }
+            set
+            {
+                //if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Key))
+                {
+                    ApplicationData.Current.LocalSettings.Values[Key] = value;
+                }
+                //ApplicationData.Current.LocalSettings.Values.Add(Key, value);
+            }
+        }
+
+        public static bool ToggleModeByLogin(string login)
+        {
+            if (login == "demo" && !IsDemoMode)
+            {
+                IsDemoMode = true;
+                return true;
+            }
+            if (login == "notDemo" && IsDemoMode)
+            {
+                IsDemoMode = false;
+                return true;
+            }
+            return false;
+        }
+    }
+
     public static class ConfigureIoC
     {
         public static void All()
         {
-#if DEBUG
-            IoC.AsInstance(new Uri(@"http://soltysik.net.pl:8002/"));
-#else
-            IoC.AsInstance(new Uri(@"https://zapisy.ii.uni.wroc.pl/"));
-#endif
+            if (DemoModeHelper.IsDemoMode)
+            {
+                IoC.AsInstance(new Uri(@"http://soltysik.net.pl:8002/"));
+
+            }
+            else
+            {
+                IoC.AsInstance(new Uri(@"https://zapisy.ii.uni.wroc.pl/"));
+            }
 
             ViewModels();
             Fereol.Common();

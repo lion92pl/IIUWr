@@ -12,7 +12,7 @@
     <StackPanel>
         <TextBlock x:Name="IndexNumberLabel" x:Uid="/Account/IndexNumberLabel" />
         <TextBox AutomationProperties.LabeledBy="{Binding ElementName=IndexNumberLabel}"
-                 Text="{Binding Login, Mode=TwoWay}">
+                 Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="KeyUp">
                     <Core:CallMethodAction MethodName="TryLoginByEnter" TargetObject="{Binding}" />
@@ -22,7 +22,7 @@
 
         <TextBlock x:Name="PasswordLabel" x:Uid="/Account/PasswordLabel" Margin="0,5,0,0" />
         <PasswordBox AutomationProperties.LabeledBy="{Binding ElementName=PasswordLabel}"
-                     Password="{Binding Password, Mode=TwoWay}">
+                     Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="KeyUp">
                     <Core:CallMethodAction MethodName="TryLoginByEnter" TargetObject="{Binding}" />

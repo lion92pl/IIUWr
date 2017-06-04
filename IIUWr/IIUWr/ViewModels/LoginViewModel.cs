@@ -1,5 +1,7 @@
 ﻿using IIUWr.Fereol.Interface;
+using System;
 using System.ComponentModel;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Input;
 
 namespace IIUWr.ViewModels
@@ -61,6 +63,12 @@ namespace IIUWr.ViewModels
         
         public async void TryLoginAsync()
         {
+            if (DemoModeHelper.ToggleModeByLogin(Login))
+            {
+                await new MessageDialog("DemoModeToggled".Localized()).ShowAsync();
+                return;
+            }
+
             if (!string.IsNullOrWhiteSpace(Login) && !string.IsNullOrWhiteSpace(Password))
             {
                 var loggedIn = await _connection.LoginAsync(Login, Password);
@@ -74,7 +82,7 @@ namespace IIUWr.ViewModels
 
         public void TryLoginByEnter(object sender, KeyRoutedEventArgs args)
         {
-            if (args.Key == Windows.System.VirtualKey.Enter)
+        if (args.Key == Windows.System.VirtualKey.Enter)
             {
                 TryLoginAsync();
             }
