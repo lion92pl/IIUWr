@@ -74,7 +74,7 @@
         </StackPanel>
         <local:TutorialsControl DataContext="{Binding Tutorials}" Grid.Row="1" />
         <Grid x:Name="description" Grid.Column="1" Grid.RowSpan="2">
-            <WebView webView:Extensions.HTMLString="{Binding Course.Description}" />
+            <WebView webView:Extensions.HTMLString="{Binding Course.Description}" NavigationStarting="WebView_NavigationStarting" />
             <ProgressRing IsActive="{Binding IsRefreshing}" />
         </Grid>
     </Grid>

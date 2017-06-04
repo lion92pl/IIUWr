@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IIUWr.ViewModels.Fereol;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,41 +8,16 @@ using System.Threading.Tasks;
 
 namespace IIUWr.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public MainViewModel(AccountMenuItemViewModel accountItem)
+        public MainViewModel(AccountViewModel accountViewModel, SemestersViewModel semestersViewModel)
         {
-            AccountItem = accountItem;
-            Items = new[]
-            {
-                new MenuItemViewModel { Name = "Przedmioty", Glyph = "\uF168" },
-                new MenuItemViewModel { Name = "Plan zajęć", Symbol = Windows.UI.Xaml.Controls.Symbol.CalendarWeek }
-            };
-            BottomItems = new[] { AccountItem, new MenuItemViewModel { Name = "Test", Symbol = Windows.UI.Xaml.Controls.Symbol.Add } };
+            AccountViewModel = accountViewModel;
+            SemestersViewModel = semestersViewModel;
         }
 
-        public AccountMenuItemViewModel AccountItem { get; }
+        public AccountViewModel AccountViewModel { get; }
 
-        public IEnumerable<MenuItemViewModel> Items { get; }
-        public IEnumerable<MenuItemViewModel> BottomItems { get; }
-
-        private MenuItemViewModel _selectedItem;
-        public MenuItemViewModel SelectedItem
-        {
-            get { return _selectedItem; }
-            set
-            {
-                if (_selectedItem != value)
-                {
-                    _selectedItem = null;
-                    PropertyChanged.Notify(this);
-                    _selectedItem = value;
-                    PropertyChanged.Notify(this);
-                }
-            }
-        }
-
+        public SemestersViewModel SemestersViewModel { get; }
     }
 }

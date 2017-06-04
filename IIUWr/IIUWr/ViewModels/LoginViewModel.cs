@@ -1,10 +1,6 @@
 ﻿using IIUWr.Fereol.Interface;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.UI.Xaml.Input;
 
 namespace IIUWr.ViewModels
 {
@@ -65,14 +61,22 @@ namespace IIUWr.ViewModels
         
         public async void TryLoginAsync()
         {
-            var loggedIn = await _connection.LoginAsync(Login, Password);
-            if (loggedIn)
+            if (!string.IsNullOrWhiteSpace(Login) && !string.IsNullOrWhiteSpace(Password))
             {
-                await new Windows.UI.Popups.MessageDialog($"Logged in as {Login}").ShowAsync();
+                var loggedIn = await _connection.LoginAsync(Login, Password);
+                if (loggedIn)
+                {
+                    return;
+                }
             }
-            else
+            InvalidCredentials = true;
+        }
+
+        public void TryLoginByEnter(object sender, KeyRoutedEventArgs args)
+        {
+            if (args.Key == Windows.System.VirtualKey.Enter)
             {
-                InvalidCredentials = true;
+                TryLoginAsync();
             }
         }
     }

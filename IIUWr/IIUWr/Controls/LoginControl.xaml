@@ -9,15 +9,30 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <StackPanel>
         <TextBlock x:Name="IndexNumberLabel" x:Uid="/Account/IndexNumberLabel" />
         <TextBox AutomationProperties.LabeledBy="{Binding ElementName=IndexNumberLabel}"
-                 Text="{Binding Login, Mode=TwoWay}" />
-        <TextBlock x:Name="PasswordLabel" x:Uid="/Account/PasswordLabel" />
+                 Text="{Binding Login, Mode=TwoWay}">
+            <Interactivity:Interaction.Behaviors>
+                <Core:EventTriggerBehavior EventName="KeyUp">
+                    <Core:CallMethodAction MethodName="TryLoginByEnter" TargetObject="{Binding}" />
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
+        </TextBox>
+
+        <TextBlock x:Name="PasswordLabel" x:Uid="/Account/PasswordLabel" Margin="0,5,0,0" />
         <PasswordBox AutomationProperties.LabeledBy="{Binding ElementName=PasswordLabel}"
-                     Password="{Binding Password, Mode=TwoWay}" />
+                     Password="{Binding Password, Mode=TwoWay}">
+            <Interactivity:Interaction.Behaviors>
+                <Core:EventTriggerBehavior EventName="KeyUp">
+                    <Core:CallMethodAction MethodName="TryLoginByEnter" TargetObject="{Binding}" />
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
+        </PasswordBox>
+
         <TextBlock x:Uid="/Account/InvalidCredentialsLabel" Foreground="Red" Visibility="{Binding InvalidCredentials, Converter={StaticResource BooleanConverter}}" />
-        <Button x:Uid="/Account/LoginButton">
+        
+        <Button x:Uid="/Account/LoginButton" Margin="0,5,0,0" HorizontalAlignment="Stretch">
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="Click">
                     <Core:CallMethodAction MethodName="TryLoginAsync" TargetObject="{Binding}" />

@@ -3,37 +3,23 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IIUWr.Views"
+    xmlns:controls="using:IIUWr.Controls"
     xmlns:vm="using:IIUWr.ViewModels"
+    xmlns:flyoutHelper="using:LionCub.UI.Xaml.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
+    <Interactivity:Interaction.Behaviors>
+        <Core:EventTriggerBehavior EventName="Loaded">
+            <Core:CallMethodAction MethodName="Refresh" TargetObject="{Binding SemestersViewModel}" />
+        </Core:EventTriggerBehavior>
+    </Interactivity:Interaction.Behaviors>
 
     <Page.Resources>
-        <SolidColorBrush x:Key="TopBarColor" Color="{ThemeResource SystemChromeLowColor}" />
+        <SolidColorBrush x:Key="BottomBarColor" Color="{ThemeResource SystemChromeLowColor}" />
 
-        <Style x:Key="MenuItemContainerStyle" TargetType="ListViewItem">
-            <Setter Property="Padding" Value="0,0,15,0" />
-        </Style>
-
-        <Style x:Key="MenuItemBoxContainerStyle" TargetType="ListBoxItem">
-            <Setter Property="Padding" Value="0,0,15,0" />
-        </Style>
-
-        <DataTemplate x:Key="MenuItemTemplate" x:DataType="vm:MenuItemViewModel">
-            <StackPanel Orientation="Horizontal" Margin="0" Padding="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Interactivity:Interaction.Behaviors>
-                    <Core:EventTriggerBehavior EventName="Tapped">
-                        <Core:CallMethodAction MethodName="OnSelected" TargetObject="{Binding}" />
-                        <!--<Core:NavigateToPageAction TargetPage="IIUWr.Views.LoginView" Parameter="{Binding}" />-->
-                    </Core:EventTriggerBehavior>
-                </Interactivity:Interaction.Behaviors>
-                
-                <FontIcon Glyph="{x:Bind Glyph, Mode=OneWay}" Style="{StaticResource HamburgerMenuIcon}" />
-                <TextBlock Text="{x:Bind Name, Mode=OneWay}" VerticalAlignment="Center" />
-            </StackPanel>
-        </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -43,11 +29,6 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource VeryWideVisualState}" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="splitView.IsPaneOpen" Value="True" />
-                        <Setter Target="splitView.DisplayMode" Value="Inline" />
-                        <Setter Target="compactMenuButton.Visibility" Value="Collapsed" />
-                    </VisualState.Setters>
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
@@ -58,97 +39,40 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowVisualState}" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="splitView.DisplayMode" Value="Overlay" />
-                        <Setter Target="compactMenuButton.Visibility" Value="Collapsed" />
-                        <Setter Target="bottomItems.Visibility" Value="Collapsed" />
-                        <Setter Target="topBar.Visibility" Value="Visible" />
-                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MaxWidth="350" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
-        <Grid x:Name="topBar"
-              Visibility="Collapsed"
-              Background="{StaticResource TopBarColor}">
+        <controls:SemestersControl DataContext="{Binding SemestersViewModel}" d:DataContext="{d:DesignData /SampleData/SemestersViewModel.xaml}" />
+        <controls:CourseDetailsControl Grid.Column="1" Grid.RowSpan="2"
+            DataContext="{Binding SemestersViewModel.SelectedSemester.SelectedCourse}"
+            Visibility="{Binding Course, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" />
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Background="{StaticResource BottomBarColor}" DataContext="{Binding AccountViewModel}">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout>
+                    <controls:AccountFlyout Width="240" />
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+            <Interactivity:Interaction.Behaviors>
+                <Core:EventTriggerBehavior EventName="Tapped">
+                    <flyoutHelper:FlyoutAction Action="Show" />
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
             
-            <FontIcon x:Name="menuButton"
-                      Glyph="&#xE700;"
-                      Style="{StaticResource HamburgerMenuIcon}">
-                <Interactivity:Interaction.Behaviors>
-                    <Core:EventTriggerBehavior EventName="Tapped">
-                        <Core:ChangePropertyAction PropertyName="IsPaneOpen"
-                                               TargetObject="{Binding ElementName=splitView}"
-                                               Value="{Binding IsPaneOpen, ElementName=splitView, Converter={StaticResource BooleanConverter}, ConverterParameter=Negate}" />
-                    </Core:EventTriggerBehavior>
-                </Interactivity:Interaction.Behaviors>
-            </FontIcon>
-
-            <TextBlock DataContext="{Binding SelectedItem}" Text="{Binding Name, Mode=OneWay}" Grid.Column="1" VerticalAlignment="Center" />
-
-            <ListBox Grid.Column="2"
-                     ItemsSource="{Binding BottomItems}"
-                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                     ItemTemplate="{StaticResource MenuItemTemplate}"
-                     ItemContainerStyle="{StaticResource MenuItemBoxContainerStyle}">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Symbol="Contact" Style="{StaticResource HamburgerMenuIcon}" />
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+            </StackPanel>
         </Grid>
-
-        <SplitView DisplayMode="CompactOverlay" x:Name="splitView" Grid.Row="1">
-            <SplitView.Pane>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <FontIcon Glyph="&#xE700;"
-                              Style="{StaticResource HamburgerMenuIcon}"
-                              HorizontalAlignment="Left"
-                              x:Name="compactMenuButton">
-                        <Interactivity:Interaction.Behaviors>
-                            <Core:EventTriggerBehavior EventName="Tapped">
-                                <Core:ChangePropertyAction PropertyName="IsPaneOpen"
-                                                           TargetObject="{Binding ElementName=splitView}"
-                                                           Value="{Binding IsPaneOpen, ElementName=splitView, Converter={StaticResource BooleanConverter}, ConverterParameter=Negate}" />
-                            </Core:EventTriggerBehavior>
-                        </Interactivity:Interaction.Behaviors>
-                    </FontIcon>
-
-                    <ListView Grid.Row="1"
-                              ItemsSource="{Binding Items}"
-                              SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                              ItemTemplate="{StaticResource MenuItemTemplate}"
-                              ItemContainerStyle="{StaticResource MenuItemContainerStyle}" />
-
-                    <!--<ContentPresenter x:Name="compactAccountItem" Grid.Row="2" Content="{Binding AccountItem}" ContentTemplate="{StaticResource MenuItemTemplate}" />-->
-                    <ListView Grid.Row="2"
-                              x:Name="bottomItems"
-                              ItemsSource="{Binding BottomItems}"
-                              SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                              ItemTemplate="{StaticResource MenuItemTemplate}"
-                              ItemContainerStyle="{StaticResource MenuItemContainerStyle}" />
-                </Grid>
-            </SplitView.Pane>
-            <!--<Rectangle Fill="Red" Width="100" Height="100" />-->
-            <Frame x:Name="rootFrame" />
-        </SplitView>
     </Grid>
 </Page>

@@ -52,13 +52,13 @@
                     </Core:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </AppBarButton>
-            <AppBarButton Label="Filter" x:Uid="FilterAppBarButton" Icon="Filter">
+            <!--<AppBarButton Label="Filter" x:Uid="FilterAppBarButton" Icon="Filter">
                 <AppBarButton.Flyout>
                     <Flyout>
                         <controls:CourseTypeFilterControl DataContext="{Binding Filters.CourseTypeFilters}" />
                     </Flyout>
                 </AppBarButton.Flyout>
-            </AppBarButton>
+            </AppBarButton>-->
         </CommandBar>
 
         <ComboBox Grid.Row="1" HorizontalAlignment="Stretch"

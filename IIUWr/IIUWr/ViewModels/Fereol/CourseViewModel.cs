@@ -67,7 +67,7 @@ namespace IIUWr.ViewModels.Fereol
             IsRefreshing = true;
             var result = await _coursesService.RefreshCourse(Course);
             var tutorials = await _coursesService.GetTutorials(Course);
-            Tutorials = tutorials.Select(t =>
+            Tutorials = tutorials?.Select(t =>
             {
                 var vm = IoC.Get<TutorialViewModel>();
                 vm.Tutorial = t;

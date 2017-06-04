@@ -1,11 +1,7 @@
 ﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IIUWr.ViewModels
 {
@@ -25,18 +21,28 @@ namespace IIUWr.ViewModels
 
         public AuthenticationStatus AuthStatus => _connection.AuthStatus;
 
+        public string Name
+        {
+            get
+            {
+                if (AuthStatus?.Authenticated ?? false)
+                {
+                    return AuthStatus.Name;
+                }
+                else
+                {
+                    return "NotLoggedIn".Localized("Account");
+                }
+            }
+        }
+
         public LoginViewModel LoginViewModel { get; }
 
         public async void Logout()
         {
             await _connection.LogoutAsync();
         }
-
-        public void GoBack()
-        {
-            Utils.NavigationService.GoBack();
-        }
-
+        
         public void Dispose()
         {
             _connection.AuthStatusChanged -= AuthStatusChanged;
@@ -45,6 +51,7 @@ namespace IIUWr.ViewModels
         private void AuthStatusChanged(object sender, EventArgs e)
         {
             PropertyChanged.Notify(this, nameof(AuthStatus));
+            PropertyChanged.Notify(this, nameof(Name));
         }
     }
 }

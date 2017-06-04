@@ -12,10 +12,10 @@ namespace IIUWr.ViewModels.Fereol
     {
         private readonly ICoursesService _coursesService;
 
-        public SemestersViewModel(ICoursesService coursesService)
+        public SemestersViewModel(ICoursesService coursesService, FiltersViewModel filtersViewModel)
         {
             _coursesService = coursesService;
-            Filters = IoC.Get<FiltersViewModel>();
+            Filters = filtersViewModel;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

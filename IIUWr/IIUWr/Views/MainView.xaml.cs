@@ -25,8 +25,6 @@ namespace IIUWr.Views
         public MainView()
         {
             this.InitializeComponent();
-            IoC.AsInstance(rootFrame);
-            rootFrame.Navigate(typeof(MainPage), IoC.Get<ViewModels.Fereol.SemestersViewModel>());
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
