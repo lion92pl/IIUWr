@@ -52,7 +52,11 @@ namespace IIUWr
         {
             if (DemoModeHelper.IsDemoMode)
             {
+#if DEBUG
+                IoC.AsInstance(new Uri(@"http://localhost:8002/"));
+#else
                 IoC.AsInstance(new Uri(@"http://soltysik.net.pl:8002/"));
+#endif
 
             }
             else
@@ -64,6 +68,7 @@ namespace IIUWr
             Fereol.Common();
 
             Fereol.HTMLParsing();
+            Fereol.WebAPI();
         }
 
         public static void ViewModels()
@@ -85,6 +90,11 @@ namespace IIUWr
                 IoC.AsSingleton<HTMLParsing.Interface.IHTTPConnection, HTMLParsing.Connection>();
 
                 IoC.AsSingleton<ICoursesService, HTMLParsing.CoursesService>();
+            }
+
+            public static void WebAPI()
+            {
+                IoC.AsSingleton<WebAPI.Interface.ICoursesService, WebAPI.CoursesService>();
             }
         }
     }

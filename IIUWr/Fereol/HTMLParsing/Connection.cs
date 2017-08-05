@@ -174,7 +174,8 @@ namespace IIUWr.Fereol.HTMLParsing
             {
                 response = await _httpClientForLogin.SendRequestAsync(request);
                 SaveCookiesAfterLogin();
-                response = await _httpClient.SendRequestAsync(new HttpRequestMessage(HttpMethod.Get, new Uri(_endpoint, LoginPath)));
+                //response = await _httpClient.SendRequestAsync(new HttpRequestMessage(HttpMethod.Get, new Uri(_endpoint, LoginPath)));
+                response = await _httpClient.SendRequestAsync(new HttpRequestMessage(HttpMethod.Get, _endpoint));
             }
             catch
             {

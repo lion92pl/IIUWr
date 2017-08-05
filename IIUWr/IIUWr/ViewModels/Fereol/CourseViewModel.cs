@@ -65,7 +65,7 @@ namespace IIUWr.ViewModels.Fereol
         public async void Refresh()
         {
             IsRefreshing = true;
-            var result = await _coursesService.RefreshCourse(Course);
+            var result = await _coursesService.FillCourseDetails(Course);
             var tutorials = await _coursesService.GetTutorials(Course);
             Tutorials = tutorials?.Select(t =>
             {

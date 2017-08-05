@@ -2,8 +2,6 @@
 {
     public static class RegexGroups
     {
-        public const string Year = "year";
-        public const string YearHalf = "yearHalf";
         public const string Id = "id";
         public const string Course = "course";
         public const string Path = "path";

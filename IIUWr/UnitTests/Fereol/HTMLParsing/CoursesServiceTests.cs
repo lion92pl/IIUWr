@@ -58,7 +58,7 @@ namespace UnitTests.Fereol.HTMLParsing
             var coursesService = GetCoursesService("algebra_1516.html");
             var course = new Course { Id = 3457, Name = "Algebra", Path = "algebra_1516", Type = CourseType.Find(8), WasEnrolled = false, English = false, Exam = true, SuggestedFor1Year = true };
             var actual = coursesService.
-                RefreshCourse(course).
+                FillCourseDetails(course).
                 Result;
 
             Assert.AreEqual(true, actual);
@@ -87,7 +87,7 @@ namespace UnitTests.Fereol.HTMLParsing
                 SuggestedFor1Year = false
             };
 
-            var actual = coursesService.RefreshCourse(course).Result;
+            var actual = coursesService.FillCourseDetails(course).Result;
             
             Assert.AreEqual(true, actual);
             Assert.AreEqual("Kurs: Practical C# Enterprise Software Development", course.Name);
