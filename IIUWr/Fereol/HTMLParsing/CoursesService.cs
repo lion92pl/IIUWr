@@ -159,7 +159,6 @@ namespace IIUWr.Fereol.HTMLParsing
             string page;
             try
             {
-                //page = await _connection.GetStringAsync(CoursesPath + course.Path);
                 page = await _connection.GetStringAsync(course.Path);
             }
             catch
@@ -186,7 +185,6 @@ namespace IIUWr.Fereol.HTMLParsing
             string page;
             try
             {
-                //page = await _connection.GetStringAsync(CoursesPath + course.Path);
                 page = await _connection.GetStringAsync(course.Path);
             }
             catch
