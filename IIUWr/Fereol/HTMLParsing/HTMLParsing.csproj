@@ -115,6 +115,7 @@
     <Compile Include="Interface\IConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexGroups.cs" />
+    <Compile Include="ScheduleService.cs" />
     <Compile Include="Utils\HttpProgressHandler.cs" />
     <EmbeddedResource Include="Properties\HTMLParsing.rd.xml" />
   </ItemGroup>

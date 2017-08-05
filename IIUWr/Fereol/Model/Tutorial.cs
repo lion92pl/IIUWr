@@ -18,6 +18,8 @@ namespace IIUWr.Fereol.Model
 
         public bool AdvancedGroup { get; set; }
 
+        public IList<TimeAndLocation> Terms { get; set; }
+
         #region Enrollment
 
         public bool InterdisciplinaryGroup => LimitInterdisciplinary > 0;

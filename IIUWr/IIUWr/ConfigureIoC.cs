@@ -22,11 +22,7 @@ namespace IIUWr
             }
             set
             {
-                //if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Key))
-                {
-                    ApplicationData.Current.LocalSettings.Values[Key] = value;
-                }
-                //ApplicationData.Current.LocalSettings.Values.Add(Key, value);
+                ApplicationData.Current.LocalSettings.Values[Key] = value;
             }
         }
 
@@ -90,6 +86,7 @@ namespace IIUWr
                 IoC.AsSingleton<HTMLParsing.Interface.IHTTPConnection, HTMLParsing.Connection>();
 
                 IoC.AsSingleton<ICoursesService, HTMLParsing.CoursesService>();
+                IoC.AsSingleton<IScheduleService, HTMLParsing.ScheduleService>();
             }
 
             public static void WebAPI()

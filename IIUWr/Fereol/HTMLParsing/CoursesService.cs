@@ -96,7 +96,7 @@ namespace IIUWr.Fereol.HTMLParsing
 
         #endregion
 
-        #region Regeses
+        #region Regexes
 
         private static readonly Regex SemestersRegex = new Regex(SemestersPattern, RegexOptions.Compiled);
         private static readonly Regex SemesterRegex = new Regex(SemesterPattern, RegexOptions.Compiled);

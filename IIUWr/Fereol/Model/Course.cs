@@ -83,18 +83,7 @@ namespace IIUWr.Fereol.Model
                 }
             }
         }
-
-        private IEnumerable<Tuple<TutorialType, int>> hours;
-        public IEnumerable<Tuple<TutorialType, int>> Hours
-        {
-            get { return hours; }
-            set
-            {
-                hours = value;
-                PropertyChanged.Notify(this);
-            }
-        }
-
+        
         //TODO hours per tutorial type
         //TODO grupy efektów kształcenia (EffectTypes), tagi, percentage?
 
