@@ -53,7 +53,7 @@ namespace IIUWr.Fereol.HTMLParsing
         private static readonly string CourseFromListPattern =
             $@"(?snx)
             (?:<li>
-                <a(?:href=""/courses/(?<{RegexGroups.Path}>(?:\w|\-|\/)+)""|id=""course\-(?<{RegexGroups.Id}>\d+)""|\s*)+>
+                <a(?:href=""/courses/(?<{RegexGroups.Path}>(\w|\-|\/)+)""|id=""course\-(?<{RegexGroups.Id}>\d+)""|\s*)+>
                     (?<{RegexGroups.Name}>[^<]*)
                 </a>
                 (?<{RegexGroups.HiddenInput}>{CommonRegexes.HiddenInputPattern})*

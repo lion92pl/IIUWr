@@ -27,19 +27,19 @@ namespace IIUWr.Fereol.HTMLParsing
             (?:
             <tr\s+class=""courseHeader"">
                 <td\s+class=""name"">
-                    <a\s+href=""(?<{nameof(Course.Path)}>(?:\w|\-|\/)+)"">
-                        (?<{nameof(Course.Name)}>[^<]+)
+                    <a\s+href=""(?<{nameof(Course.Path)}>(\w|\-|\/)+)"">
+                        \s*(?<{nameof(Course.Name)}>[^<]+?)\s*
                     </a>
                 </td>
-                <td\s+(class=""ects""\s*|rowspan=""2""\s*){{2}}>
-                    (?<{nameof(Course.ECTS)}>\d+)
+                <td(\s+(class=""ects""|rowspan=""2"")){{2}}\s*>
+                    \s*(?<{nameof(Course.ECTS)}>\d+)\s*
                 </td>
             </tr>
             <tr\s+class=""courseDetails"">
                 <td><ul>
                     (?<{nameof(Tutorial)}><li>
                         {CommonRegexes.TagsPattern}
-                    </li>)
+                    </li>)+
                 </ul></td>
             </tr>
             )";
@@ -53,7 +53,7 @@ namespace IIUWr.Fereol.HTMLParsing
             (?<{nameof(Tutorial.Terms)}>
                 {CommonRegexes.TagsPattern}
             )+
-            <input\s+name=""term""\s+type=""hidden"" value="""">
+            <input(\s+(name=""term""|type=""hidden""|value="""")){{3}}\s*\/>
             )";
 
         private static readonly string TermPattern =
