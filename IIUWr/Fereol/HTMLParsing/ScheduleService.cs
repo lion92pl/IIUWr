@@ -18,7 +18,7 @@ namespace IIUWr.Fereol.HTMLParsing
 
         private static readonly string SchedulePattern =
             $@"(?snx)
-            (?:<table\s+class=""[^""]*""\s+id=""enr\-schedule\-listByCourse"">
+            (?:<table\s+(class=""[^""]*""\s*|id=""enr\-schedule\-listByCourse""\s*){{2}}>
                 {CommonRegexes.TagsPattern}
             </table>)";
 
@@ -27,11 +27,11 @@ namespace IIUWr.Fereol.HTMLParsing
             (?:
             <tr\s+class=""courseHeader"">
                 <td\s+class=""name"">
-                    <a\s+href=""(?<{nameof(Course.Path)}>(?:\w|\-)+)"">
+                    <a\s+href=""(?<{nameof(Course.Path)}>(?:\w|\-|\/)+)"">
                         (?<{nameof(Course.Name)}>[^<]+)
                     </a>
                 </td>
-                <td\s+class=""ects""\s+rowspan=""2"">
+                <td\s+(class=""ects""\s*|rowspan=""2""\s*){{2}}>
                     (?<{nameof(Course.ECTS)}>\d+)
                 </td>
             </tr>
@@ -51,13 +51,7 @@ namespace IIUWr.Fereol.HTMLParsing
                 (?<{nameof(Tutorial.Type)}>[^:]*):
             </span>
             (?<{nameof(Tutorial.Terms)}>
-            <span\s+class=""term"">
-                (?<{nameof(TimeAndLocation.Day)}>\d+)
-                (?<{nameof(TimeAndLocation.Start)}>\d{{0,1}}:\d{{2}})-(?<{nameof(TimeAndLocation.End)}>\d{{0,1}}:\d{{2}})
-            </span>
-            <span\s+class=""classroom"">
-                sala:\s+(?<{nameof(TimeAndLocation.Location)}>\d*)
-            </span>
+                {CommonRegexes.TagsPattern}
             )+
             <input\s+name=""term""\s+type=""hidden"" value="""">
             )";
@@ -113,7 +107,26 @@ namespace IIUWr.Fereol.HTMLParsing
             var match = ScheduleRegex.Match(page);
             if (match.Success)
             {
+                var courseMatches = CourseRecordRegex.Matches(match.Value);
+                foreach (Match courseMatch in courseMatches)
+                {
+                    var path = courseMatch.Groups[nameof(Course.Path)].Value;
+                    var name = courseMatch.Groups[nameof(Course.Name)].Value;
+                    var ects = int.Parse(courseMatch.Groups[nameof(Course.ECTS)].Value);
+                    var tutorialCaptures = courseMatch.Groups[nameof(Tutorial)].Captures;
 
+                    var course = new Course
+                    {
+                        Name = name,
+                        Path = path,
+                        ECTS = ects
+                    };
+
+                    foreach (Capture tutorialCapture in tutorialCaptures)
+                    {
+                        tutorials.Add(new Tutorial { Course = course });
+                    }
+                }
             }
             
             System.Diagnostics.Debug.WriteLine($"{nameof(GetSchedule)}: Finished parsing");
