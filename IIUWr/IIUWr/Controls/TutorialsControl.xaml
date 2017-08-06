@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IIUWr.Controls"
     xmlns:vmFereol="using:IIUWr.ViewModels.Fereol"
+    xmlns:fereolModel="using:IIUWr.Fereol.Model"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
@@ -31,6 +32,20 @@
                             <Core:ChangePropertyAction PropertyName="Background" Value="{StaticResource QueuedBrush}" />
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
+
+                    <ListBox ItemsSource="{x:Bind Tutorial.Terms}" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="fereolModel:TimeAndLocation">
+                                <TextBlock Style="{StaticResource DetailsLabel}">
+                                    <Run Text="{x:Bind Day, Converter={StaticResource LocaleTextConverter}}" />
+                                    <Run Text="{x:Bind Start}" />
+                                    <Run Text="{x:Bind End}" />
+                                    <Run Text="{x:Bind Location}" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
                     <TextBlock Text="{x:Bind Tutorial.Teacher.Name}" TextWrapping="Wrap" Padding="0,0,0,3" />
                     <TextBlock Text="{x:Bind Tutorial.Type, Converter={StaticResource LocaleTextConverter}}" Style="{StaticResource DetailsLabel}" />
                     <TextBlock x:Uid="/Tutorial/AdvancedGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{x:Bind Tutorial.AdvancedGroup, Converter={StaticResource BooleanConverter}}" />

@@ -17,6 +17,9 @@
                     <M:Tutorial.Teacher>
                         <M:Employee Name="Wiktor Zychla" />
                     </M:Tutorial.Teacher>
+                    <M:Tutorial.Terms>
+                        <M:TimeAndLocation Day="Monday" Start="18:00" End="20:00" Location="25" />
+                    </M:Tutorial.Terms>
                 </M:Tutorial>
             </VM:TutorialViewModel.Tutorial>
         </VM:TutorialViewModel>
@@ -26,6 +29,9 @@
                     <M:Tutorial.Teacher>
                         <M:Employee Name="Wiktor Zychla" />
                     </M:Tutorial.Teacher>
+                    <M:Tutorial.Terms>
+                        <M:TimeAndLocation Day="Monday" Start="18:00" End="20:00" Location="25" />
+                    </M:Tutorial.Terms>
                 </M:Tutorial>
             </VM:TutorialViewModel.Tutorial>
         </VM:TutorialViewModel>

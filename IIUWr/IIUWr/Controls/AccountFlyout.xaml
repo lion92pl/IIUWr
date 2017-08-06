@@ -19,7 +19,7 @@
         <StackPanel Visibility="{Binding AuthStatus.Authenticated, Converter={StaticResource BooleanConverter}, ConverterParameter=Negate}">
             <local:LoginControl DataContext="{Binding LoginViewModel}"/>
         </StackPanel>
-        <StackPanel Visibility="{Binding AuthStatus.Authenticated, Converter={StaticResource BooleanConverter}}">
+        <StackPanel Visibility="{Binding AuthStatus.Authenticated, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}">
             <TextBlock x:Uid="/Account/LoggedInAsLabel" Margin="0,0,0,5" />
             <TextBlock Text="{Binding AuthStatus.Name}" Margin="0,0,0,5" />
             <Button x:Uid="/Account/LogoutButton" HorizontalAlignment="Stretch">

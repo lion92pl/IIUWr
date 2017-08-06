@@ -70,6 +70,7 @@ namespace IIUWr
         public static void ViewModels()
         {
             IoC.AsSingleton<SemestersViewModel>();
+            IoC.AsSingleton<ScheduleViewModel>();
         }
         
         public static class Fereol

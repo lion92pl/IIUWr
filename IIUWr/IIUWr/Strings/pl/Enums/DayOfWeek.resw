@@ -117,54 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppName" xml:space="preserve">
-    <value>Zapisy II UWr</value>
-    <comment>App name</comment>
+  <data name="Friday" xml:space="preserve">
+    <value>piątek</value>
   </data>
-  <data name="DemoModeToggled" xml:space="preserve">
-    <value>Przełączono tryb demo. Uruchom ponownie, aby zmienić server.</value>
+  <data name="Friday@Short" xml:space="preserve">
+    <value>pią</value>
   </data>
-  <data name="False" xml:space="preserve">
+  <data name="Friday@Uppercase" xml:space="preserve">
+    <value>Piątek</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>poniedziałek</value>
+  </data>
+  <data name="Monday@Short" xml:space="preserve">
+    <value>pon</value>
+  </data>
+  <data name="Monday@Uppercase" xml:space="preserve">
+    <value>Poniedziałek</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>sobota</value>
+  </data>
+  <data name="Saturday@Short" xml:space="preserve">
+    <value>so</value>
+  </data>
+  <data name="Saturday@Uppercase" xml:space="preserve">
+    <value>Sobota</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>niedziela</value>
+  </data>
+  <data name="Sunday@Short" xml:space="preserve">
     <value>nie</value>
   </data>
-  <data name="False@Pascal" xml:space="preserve">
-    <value>Nie</value>
+  <data name="Sunday@Uppercase" xml:space="preserve">
+    <value>Niedziela</value>
   </data>
-  <data name="FilterAppBarButton.Label" xml:space="preserve">
-    <value>Filtr</value>
-    <comment>Filter</comment>
+  <data name="Thursday" xml:space="preserve">
+    <value>czwartek</value>
   </data>
-  <data name="II" xml:space="preserve">
-    <value>Instytut Informatyki</value>
-    <comment>Name of Computer Science faculty</comment>
+  <data name="Thursday@Short" xml:space="preserve">
+    <value>czw</value>
   </data>
-  <data name="LogInAppBarButton.Label" xml:space="preserve">
-    <value>Zaloguj</value>
-    <comment>Log in</comment>
+  <data name="Thursday@Uppercase" xml:space="preserve">
+    <value>Czwartek</value>
   </data>
-  <data name="Refresh" xml:space="preserve">
-    <value>Odśwież</value>
-    <comment>Refresh</comment>
+  <data name="Tuesday" xml:space="preserve">
+    <value>wtorek</value>
   </data>
-  <data name="RefreshAppBarButton.Label" xml:space="preserve">
-    <value>Odśwież</value>
-    <comment>Refresh</comment>
+  <data name="Tuesday@Short" xml:space="preserve">
+    <value>wt</value>
   </data>
-  <data name="RefreshButton.Content" xml:space="preserve">
-    <value>Odśwież</value>
-    <comment>Refresh</comment>
+  <data name="Tuesday@Uppercase" xml:space="preserve">
+    <value>Wtorek</value>
   </data>
-  <data name="ScheduleLabel.Text" xml:space="preserve">
-    <value>Plan</value>
+  <data name="Wednesday" xml:space="preserve">
+    <value>środa</value>
   </data>
-  <data name="True" xml:space="preserve">
-    <value>tak</value>
+  <data name="Wednesday@Short" xml:space="preserve">
+    <value>śr</value>
   </data>
-  <data name="True@Pascal" xml:space="preserve">
-    <value>Tak</value>
-  </data>
-  <data name="UWr" xml:space="preserve">
-    <value>Uniwersytet Wrocławski</value>
-    <comment>Name of University of Wrocław</comment>
+  <data name="Wednesday@Uppercase" xml:space="preserve">
+    <value>Środa</value>
   </data>
 </root>

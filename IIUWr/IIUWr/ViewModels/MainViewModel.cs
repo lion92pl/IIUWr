@@ -10,14 +10,17 @@ namespace IIUWr.ViewModels
 {
     public class MainViewModel
     {
-        public MainViewModel(AccountViewModel accountViewModel, SemestersViewModel semestersViewModel)
+        public MainViewModel(AccountViewModel accountViewModel, SemestersViewModel semestersViewModel, ScheduleViewModel scheduleViewModel)
         {
             AccountViewModel = accountViewModel;
             SemestersViewModel = semestersViewModel;
+            ScheduleViewModel = scheduleViewModel;
         }
 
         public AccountViewModel AccountViewModel { get; }
 
         public SemestersViewModel SemestersViewModel { get; }
+
+        public ScheduleViewModel ScheduleViewModel { get; }
     }
 }

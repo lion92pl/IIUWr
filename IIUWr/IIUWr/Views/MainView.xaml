@@ -46,6 +46,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="350" />
@@ -72,6 +73,24 @@
             <StackPanel Orientation="Horizontal">
                 <SymbolIcon Symbol="Contact" Style="{StaticResource HamburgerMenuIcon}" />
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Background="{StaticResource BottomBarColor}" DataContext="{Binding ScheduleViewModel}" Visibility="{Binding CanShow, Converter={StaticResource BooleanConverter}}">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout>
+                    <controls:ScheduleFlyout Width="320" />
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+            <Interactivity:Interaction.Behaviors>
+                <Core:EventTriggerBehavior EventName="Tapped">
+                    <flyoutHelper:FlyoutAction Action="Show" />
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
+
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Symbol="CalendarWeek" Style="{StaticResource HamburgerMenuIcon}" />
+                <TextBlock x:Uid="ScheduleLabel" VerticalAlignment="Center" />
             </StackPanel>
         </Grid>
     </Grid>

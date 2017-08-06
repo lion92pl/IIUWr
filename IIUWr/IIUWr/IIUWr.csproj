@@ -106,6 +106,7 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <PRIResource Include="Strings\pl\Enums\DayOfWeek.resw" />
     <PRIResource Include="Strings\en\Tutorial.resw" />
     <PRIResource Include="Strings\pl\Tutorial.resw" />
     <PRIResource Include="Strings\pl\Account.resw" />
@@ -131,6 +132,9 @@
     <Compile Include="Controls\CourseTypeFilterControl.xaml.cs">
       <DependentUpon>CourseTypeFilterControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ScheduleFlyout.xaml.cs">
+      <DependentUpon>ScheduleFlyout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SemestersControl.xaml.cs">
       <DependentUpon>SemestersControl.xaml</DependentUpon>
     </Compile>
@@ -141,6 +145,7 @@
     <Compile Include="ViewModels\Fereol\CourseTypeFilterViewModel.cs" />
     <Compile Include="ViewModels\Fereol\CourseViewModel.cs" />
     <Compile Include="ViewModels\Fereol\FiltersViewModel.cs" />
+    <Compile Include="ViewModels\Fereol\ScheduleViewModel.cs" />
     <Compile Include="ViewModels\Fereol\SemestersViewModel.cs" />
     <Compile Include="ViewModels\Fereol\SemesterViewModel.cs" />
     <Compile Include="ViewModels\Fereol\TutorialViewModel.cs" />
@@ -187,6 +192,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\CourseTypeFilterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ScheduleFlyout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

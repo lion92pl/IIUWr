@@ -37,7 +37,7 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 (<br\s*/?><span\s+class=""small"">(?<{nameof(Tutorial.AdvancedGroup)}>[^<]*)</span>)?
             </td>
             <td\s+class=""term"">
-                (<span>[^<]*</span>)+
+                (?<{nameof(Tutorial.Terms)}><span>[^<]*</span>)+
             </td>
             <td\s+class=""number\s+termLimit"">
                 ((?<{nameof(Tutorial.LimitInterdisciplinary)}>[^<]*)\+)?(?<{nameof(Tutorial.Limit)}>[^<]*)
@@ -59,9 +59,20 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 <span>(?<{nameof(Tutorial.Priority)}>\d)</span>
                 {CommonRegexes.TagsPattern}
             </td>)?";
+
+        private static readonly string TermPattern =
+            $@"(?x)
+            <span>
+                (?<{nameof(TimeAndLocation.Day)}>\w+)\s
+                (?<{nameof(TimeAndLocation.Start) + nameof(TimeSpan.Hours)}>\d{{1,2}}):(?<{nameof(TimeAndLocation.Start) + nameof(TimeSpan.Minutes)}>\d{{2}})
+                -
+                (?<{nameof(TimeAndLocation.End) + nameof(TimeSpan.Hours)}>\d{{1,2}}):(?<{nameof(TimeAndLocation.End) + nameof(TimeSpan.Minutes)}>\d{{2}})\s
+                \(s.(?<{nameof(TimeAndLocation.Location)}>\d+)\)
+            </span>";
         
         private static readonly Regex TutorialsRegex = new Regex(TutorialsPattern, RegexOptions.Compiled);
         private static readonly Regex TutorialRegex = new Regex(TutorialPattern, RegexOptions.Compiled);
+        private static readonly Regex TermRegex = new Regex(TermPattern, RegexOptions.Compiled);
 
         public static IEnumerable<Tutorial> ParseTutorials(Capture capture)
         {
@@ -108,6 +119,8 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                     Id = teacherId,
                     Name = teacherName
                 };
+
+                tutorial.Terms = ParseTerms(match.Groups[nameof(Tutorial.Terms)].Captures).ToList();
                 
                 tutorial.AdvancedGroup = match.Groups[nameof(Tutorial.AdvancedGroup)].Success;
                 tutorial.Limit = int.Parse(match.Groups[nameof(Tutorial.Limit)].Value.Trim());
@@ -141,6 +154,52 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             else
             {
                 return null;
+            }
+        }
+
+        private static IEnumerable<TimeAndLocation> ParseTerms(CaptureCollection captures)
+        {
+            var result = new List<TimeAndLocation>();
+            foreach (Capture capture in captures)
+            {
+                var match = TermRegex.Match(capture.Value);
+                if (match.Success)
+                {
+                    var dayString = match.Groups[nameof(TimeAndLocation.Day)].Value;
+                    var startHour = int.Parse(match.Groups[nameof(TimeAndLocation.Start) + nameof(TimeSpan.Hours)].Value);
+                    var startMinutes = int.Parse(match.Groups[nameof(TimeAndLocation.Start) + nameof(TimeSpan.Minutes)].Value);
+                    var endHour = int.Parse(match.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Hours)].Value);
+                    var endMinutes = int.Parse(match.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Minutes)].Value);
+
+                    var term = new TimeAndLocation
+                    {
+                        Day = ParseDayOfWeek(dayString),
+                        Start = new TimeSpan(startHour, startMinutes, 0),
+                        End = new TimeSpan(endHour, endMinutes, 0),
+                        Location = match.Groups[nameof(TimeAndLocation.Location)].Value
+                    };
+                    result.Add(term);
+                }
+            }
+            return result;
+        }
+
+        private static DayOfWeek ParseDayOfWeek(string dayString)
+        {
+            switch (dayString)
+            {
+                case "pn":
+                    return DayOfWeek.Monday;
+                case "wt":
+                    return DayOfWeek.Tuesday;
+                case "śr":
+                    return DayOfWeek.Wednesday;
+                case "cz":
+                    return DayOfWeek.Thursday;
+                case "pt":
+                    return DayOfWeek.Friday;
+                default:
+                    return DayOfWeek.Sunday;
             }
         }
     }

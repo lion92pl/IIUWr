@@ -15,11 +15,12 @@ namespace IIUWr.Fereol.HTMLParsing
 {
     public class Connection : IHTTPConnection, IDisposable
     {
-        private const string LoginPath = @"users/login/";
-        private const string LogoutPath = @"/users/logout/";
+        private const string LoginPath = "users/login/";
+        private const string LogoutPath = "/users/logout/";
         private const string SecurityTokenFormDataName = "csrfmiddlewaretoken";
         private const string SecurityCookieName = "csrftoken";
         private const string SessionCookieName = "sessionid";
+        private const string CookiePath = "/";
         private readonly Uri _endpoint;
         
         private readonly HttpBaseProtocolFilter _httpFilter;
@@ -51,13 +52,17 @@ namespace IIUWr.Fereol.HTMLParsing
             _httpClient = new HttpClient(_httpFilter);
             _httpClientForLogin = new HttpClient(_httpFilterForLogin);
 
-            if (_sessionManager.SessionIdentifier != null)
+            var sessionIdentifier = _sessionManager.SessionIdentifier;
+            if (sessionIdentifier != null)
             {
-                _httpFilter.CookieManager.SetCookie(new HttpCookie(SessionCookieName, _endpoint.Host, "/") { Value = _sessionManager.SessionIdentifier } );
+                var sessionCookie = new HttpCookie(SessionCookieName, _endpoint.Host, CookiePath) { Value = sessionIdentifier };
+                _httpFilter.CookieManager.SetCookie(sessionCookie);
             }
-            if (_sessionManager.MiddlewareToken != null)
+            var middlewareToken = _sessionManager.MiddlewareToken;
+            if (middlewareToken != null)
             {
-                _httpFilter.CookieManager.SetCookie(new HttpCookie(SecurityCookieName, _endpoint.Host, "/") { Value = _sessionManager.MiddlewareToken });
+                var securityCookie = new HttpCookie(SecurityCookieName, _endpoint.Host, CookiePath) { Value = middlewareToken };
+                _httpFilter.CookieManager.SetCookie(securityCookie);
             }
         }
 
