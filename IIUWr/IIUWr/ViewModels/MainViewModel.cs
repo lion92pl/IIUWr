@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IIUWr.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : IDisposable
     {
         public MainViewModel(AccountViewModel accountViewModel, SemestersViewModel semestersViewModel, ScheduleViewModel scheduleViewModel)
         {
@@ -22,5 +22,10 @@ namespace IIUWr.ViewModels
         public SemestersViewModel SemestersViewModel { get; }
 
         public ScheduleViewModel ScheduleViewModel { get; }
+
+        public void Dispose()
+        {
+            ScheduleViewModel.Dispose();
+        }
     }
 }

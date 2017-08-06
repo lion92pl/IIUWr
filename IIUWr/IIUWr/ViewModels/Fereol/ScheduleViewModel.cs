@@ -11,7 +11,7 @@ using IIUWr.Fereol.HTMLParsing.Interface;
 
 namespace IIUWr.ViewModels.Fereol
 {
-    public class ScheduleViewModel : IRefreshable
+    public class ScheduleViewModel : IRefreshable, IDisposable
     {
         private readonly IScheduleService _scheduleService;
         private readonly IHTTPConnection _connection;
@@ -57,10 +57,23 @@ namespace IIUWr.ViewModels.Fereol
 
         public async void Refresh()
         {
-            var tutorials = await _scheduleService.GetSchedule();
-            Tutorials = tutorials.ToList();
+            IsRefreshing = true;
+            try
+            {
+                var tutorials = await _scheduleService.GetSchedule();
+                Tutorials = tutorials.ToList();
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
         }
-        
+
+        public void Dispose()
+        {
+            _connection.AuthStatusChanged -= AuthStatusChanged;
+        }
+
         private void AuthStatusChanged(object sender, EventArgs e)
         {
             PropertyChanged.Notify(this, nameof(CanShow));
