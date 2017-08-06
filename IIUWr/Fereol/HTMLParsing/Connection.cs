@@ -97,6 +97,19 @@ namespace IIUWr.Fereol.HTMLParsing
             }
         }
 
+        public async Task<string> GetStringFromAPIAsync(string relativeUri)
+        {
+            try
+            {
+                return await _httpClient.GetStringAsync(new Uri(_endpoint, relativeUri)).AsTask(new HttpProgressHandler(relativeUri));
+            }
+            catch
+            {
+                //TODO handle errors properly
+                return string.Empty;
+            }
+        }
+
         public async Task<string> Post(string relativeUri, Dictionary<string, string> formData, bool addMiddlewareToken = true)
         {
             if (formData == null)

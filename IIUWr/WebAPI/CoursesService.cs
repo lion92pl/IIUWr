@@ -39,7 +39,7 @@ namespace WebAPI
             string page;
             try
             {
-                page = await _connection.GetStringAsync(CoursesPath + SemesterInfoPath + semester.Id);
+                page = await _connection.GetStringFromAPIAsync(CoursesPath + SemesterInfoPath + semester.Id);
             }
             catch
             {

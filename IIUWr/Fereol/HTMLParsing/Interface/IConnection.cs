@@ -12,6 +12,8 @@ namespace IIUWr.Fereol.HTMLParsing.Interface
     {
         Task<string> GetStringAsync(string relativeUri);
 
+        Task<string> GetStringFromAPIAsync(string relativeUri);
+
         Task<string> Post(string relativeUri, Dictionary<string, string> formData, bool addMiddlewareToken = true);
     }
 }
