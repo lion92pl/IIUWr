@@ -70,7 +70,7 @@ namespace IIUWr.Fereol.HTMLParsing
                 \s*
             </span>
             <span\s+class=""classroom"">
-                sala:\s+(?<{nameof(TimeAndLocation.Location)}>\d*)\s*
+                sala:\s+((?<{nameof(TimeAndLocation.Location)}>\d+)\s*)+
             </span>
             )";
 
@@ -144,7 +144,8 @@ namespace IIUWr.Fereol.HTMLParsing
                                 var startMinutes = int.Parse(termMatch.Groups[nameof(TimeAndLocation.Start) + nameof(TimeSpan.Minutes)].Value);
                                 var endHour = int.Parse(termMatch.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Hours)].Value);
                                 var endMinutes = int.Parse(termMatch.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Minutes)].Value);
-                                var locationString = termMatch.Groups[nameof(TimeAndLocation.Location)].Value;
+                                var locationCaptures = termMatch.Groups[nameof(TimeAndLocation.Location)].Captures;
+                                var locationString = string.Join(", ", locationCaptures.OfType<Capture>().Select(c => c.Value));
 
                                 var tutorial = new ScheduleTutorial
                                 {
@@ -185,6 +186,10 @@ namespace IIUWr.Fereol.HTMLParsing
                     return TutorialType.Lab;
                 case "ćwiczenia":
                     return TutorialType.Class;
+                case "seminarium":
+                    return TutorialType.Seminar;
+                case "ćwiczenio-pracownia":
+                    return TutorialType.Class_Lab;
                 // TODO parse other types
                 default:
                     return TutorialType.None;

@@ -41,5 +41,7 @@
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
+        <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center"
+                      Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanConverter}}" />
     </Grid>
 </UserControl>

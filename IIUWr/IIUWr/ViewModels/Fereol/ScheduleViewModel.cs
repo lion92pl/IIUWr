@@ -66,6 +66,7 @@ namespace IIUWr.ViewModels.Fereol
 
         public async void Refresh()
         {
+            Days = new List<Tuple<DayOfWeek, IList<ScheduleTutorial>>>();
             IsRefreshing = true;
             try
             {

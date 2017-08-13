@@ -67,7 +67,7 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                 (?<{nameof(TimeAndLocation.Start) + nameof(TimeSpan.Hours)}>\d{{1,2}}):(?<{nameof(TimeAndLocation.Start) + nameof(TimeSpan.Minutes)}>\d{{2}})
                 \-
                 (?<{nameof(TimeAndLocation.End) + nameof(TimeSpan.Hours)}>\d{{1,2}}):(?<{nameof(TimeAndLocation.End) + nameof(TimeSpan.Minutes)}>\d{{2}})\s
-                \(s.(?<{nameof(TimeAndLocation.Location)}>\d+)\)
+                \(s.((?<{nameof(TimeAndLocation.Location)}>\d+),?)+\)
             </span>";
         
         private static readonly Regex TutorialsRegex = new Regex(TutorialsPattern, RegexOptions.Compiled);
@@ -171,12 +171,15 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
                     var endHour = int.Parse(match.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Hours)].Value);
                     var endMinutes = int.Parse(match.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Minutes)].Value);
 
+                    var locationCaptures = match.Groups[nameof(TimeAndLocation.Location)].Captures;
+                    var locationString = string.Join(", ", locationCaptures.OfType<Capture>().Select(c => c.Value));
+
                     var term = new TimeAndLocation
                     {
                         Day = ParseDayOfWeek(dayString),
                         Start = new TimeSpan(startHour, startMinutes, 0),
                         End = new TimeSpan(endHour, endMinutes, 0),
-                        Location = match.Groups[nameof(TimeAndLocation.Location)].Value
+                        Location = locationString
                     };
                     result.Add(term);
                 }
