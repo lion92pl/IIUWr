@@ -27,11 +27,6 @@
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource VeryWideVisualState}" />
-                    </VisualState.StateTriggers>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource MediumVisualState}" />
                     </VisualState.StateTriggers>
                 </VisualState>
@@ -39,6 +34,12 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowVisualState}" />
                     </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="courseDetails.(Grid.Column)" Value="0" />
+                        <Setter Target="courseDetails.(Grid.RowSpan)" Value="1" />
+                        <Setter Target="firstColumn.MaxWidth" Value="Infinity" />
+                        <Setter Target="secondColumn.Width" Value="0" />
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
@@ -46,51 +47,53 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="350" />
-            <ColumnDefinition />
+            <ColumnDefinition MaxWidth="350" x:Name="firstColumn" />
+            <ColumnDefinition x:Name="secondColumn" />
         </Grid.ColumnDefinitions>
 
         <controls:SemestersControl DataContext="{Binding SemestersViewModel}" d:DataContext="{d:DesignData /SampleData/SemestersViewModel.xaml}" />
         <controls:CourseDetailsControl Grid.Column="1" Grid.RowSpan="2"
-            DataContext="{Binding SemestersViewModel.SelectedSemester.SelectedCourse}"
-            Visibility="{Binding Course, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" />
+                                       x:Name="courseDetails"
+                                       DataContext="{Binding SemestersViewModel.SelectedSemester.SelectedCourse}"
+                                       Visibility="{Binding Course, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}" />
 
-        <Grid Grid.Row="1" Background="{StaticResource BottomBarColor}" DataContext="{Binding AccountViewModel}">
-            <FlyoutBase.AttachedFlyout>
-                <Flyout>
-                    <controls:AccountFlyout Width="240" />
-                </Flyout>
-            </FlyoutBase.AttachedFlyout>
-            <Interactivity:Interaction.Behaviors>
-                <Core:EventTriggerBehavior EventName="Tapped">
-                    <flyoutHelper:FlyoutAction Action="Show" />
-                </Core:EventTriggerBehavior>
-            </Interactivity:Interaction.Behaviors>
-            
-            <StackPanel Orientation="Horizontal">
+        <Grid Grid.Row="1" Background="{StaticResource BottomBarColor}">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        DataContext="{Binding AccountViewModel}">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <controls:AccountFlyout Width="240" />
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+                <Interactivity:Interaction.Behaviors>
+                    <Core:EventTriggerBehavior EventName="Tapped">
+                        <flyoutHelper:FlyoutAction Action="Show" />
+                    </Core:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
+
                 <SymbolIcon Symbol="Contact" Style="{StaticResource HamburgerMenuIcon}" />
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
             </StackPanel>
-        </Grid>
 
-        <Grid Grid.Row="2" Background="{StaticResource BottomBarColor}" DataContext="{Binding ScheduleViewModel}" Visibility="{Binding CanShow, Converter={StaticResource BooleanConverter}}">
-            <FlyoutBase.AttachedFlyout>
-                <Flyout>
-                    <controls:ScheduleFlyout Width="320" />
-                </Flyout>
-            </FlyoutBase.AttachedFlyout>
-            <Interactivity:Interaction.Behaviors>
-                <Core:EventTriggerBehavior EventName="Tapped">
-                    <flyoutHelper:FlyoutAction Action="Show" />
-                </Core:EventTriggerBehavior>
-            </Interactivity:Interaction.Behaviors>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        DataContext="{Binding ScheduleViewModel}"
+                        Visibility="{Binding CanShow, Converter={StaticResource BooleanConverter}}">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <controls:ScheduleFlyout Width="320" />
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+                <Interactivity:Interaction.Behaviors>
+                    <Core:EventTriggerBehavior EventName="Tapped">
+                        <flyoutHelper:FlyoutAction Action="Show" />
+                    </Core:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
 
-            <StackPanel Orientation="Horizontal">
                 <SymbolIcon Symbol="CalendarWeek" Style="{StaticResource HamburgerMenuIcon}" />
-                <TextBlock x:Uid="ScheduleLabel" VerticalAlignment="Center" />
             </StackPanel>
         </Grid>
     </Grid>

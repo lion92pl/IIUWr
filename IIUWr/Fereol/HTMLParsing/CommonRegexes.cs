@@ -36,7 +36,7 @@ namespace IIUWr.Fereol.HTMLParsing
             $@"(?snx)
             (?:<div\s+class=""user-panel""[^>]*>\s*
                 [^<]*
-                <strong>(?<{nameof(AuthenticationStatus.Name)}>[^<]+)</strong>
+                <strong>\s*(?<{nameof(AuthenticationStatus.Name)}>[^<]+?)\s*</strong>
                 {TagsPattern}
             </div>)";
 

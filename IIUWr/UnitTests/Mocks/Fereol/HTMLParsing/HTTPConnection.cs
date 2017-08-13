@@ -34,6 +34,11 @@ namespace UnitTests.Mocks.Fereol.HTMLParsing
             return Task.FromResult(_result);
         }
 
+        public Task<string> GetStringFromAPIAsync(string relativeUri)
+        {
+            return Task.FromResult(_result);
+        }
+
         public Task<string> Post(string relativeUri, Dictionary<string, string> formData, bool addMiddlewareToken = true)
         {
             return Task.FromResult(_result);
