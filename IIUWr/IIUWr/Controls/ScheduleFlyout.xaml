@@ -4,46 +4,64 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:IIUWr.Controls"
     xmlns:model="using:IIUWr.Fereol.Model"
-    xmlns:system="using:System"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
-        <FlipView ItemsSource="{Binding Days}" Height="420" Background="Transparent">
-            <FlipView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="{Binding Item1, Converter={StaticResource LocaleTextConverter}}" HorizontalAlignment="Center" />
-                        <ListView ItemsSource="{Binding Item2}"
-                                  Grid.Row="1"
-                                  SelectionMode="None"
-                                  Margin="10,0">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="model:ScheduleTutorial">
-                                    <StackPanel Margin="0,5">
-                                        <TextBlock Text="{x:Bind Course.Name}" TextWrapping="WrapWholeWords" FontWeight="Bold" />
-                                        <TextBlock Text="{x:Bind Tutorial.Type, Converter={StaticResource LocaleTextConverter}}" />
-                                        <TextBlock>
-                                            <Run Text="{x:Bind Term.Start, Converter={StaticResource TimeOfDayConverter}}" />
-                                            -
-                                            <Run Text="{x:Bind Term.End, Converter={StaticResource TimeOfDayConverter}}" />
-                                        </TextBlock>
-                                        <TextBlock Text="{x:Bind Term.Location}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </DataTemplate>
-            </FlipView.ItemTemplate>
-        </FlipView>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="Day">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Item1, Converter={StaticResource LocaleTextConverter}}"
+                                   HorizontalAlignment="Center" />
+                    <local:ScheduleDay Grid.Row="1" DataContext="{Binding Item2}" />
+                </Grid>
+            </DataTemplate>
+            <ItemsPanelTemplate x:Key="GridViewPanel">
+                <ItemsWrapGrid MaximumRowsOrColumns="5"
+                               Orientation="Horizontal"
+                               ItemHeight="400"
+                               ItemWidth="280" />
+            </ItemsPanelTemplate>
+            <Style x:Key="GridViewItemPresenterStyle" TargetType="GridViewItem">
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Width="300" x:Name="root">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource VeryWideVisualState}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="root.Width" Value="1400" />
+                        <Setter Target="flipView.Visibility" Value="Collapsed" />
+                        <Setter Target="gridView.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <FlipView ItemsSource="{Binding Days}"
+                  x:Name="flipView"
+                  Height="420"
+                  Background="Transparent"
+                  Padding="10,0"
+                  ItemTemplate="{StaticResource Day}" />
+        <GridView ItemsSource="{Binding Days}"
+                  x:Name="gridView"
+                  ItemTemplate="{StaticResource Day}"
+                  ItemsPanel="{StaticResource GridViewPanel}"
+                  ItemContainerStyle="{StaticResource GridViewItemPresenterStyle}"
+                  Visibility="Collapsed" />
         <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center"
                       Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanConverter}}" />
     </Grid>

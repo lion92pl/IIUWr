@@ -132,6 +132,9 @@
     <Compile Include="Controls\CourseTypeFilterControl.xaml.cs">
       <DependentUpon>CourseTypeFilterControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ScheduleDay.xaml.cs">
+      <DependentUpon>ScheduleDay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ScheduleFlyout.xaml.cs">
       <DependentUpon>ScheduleFlyout.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\CourseTypeFilterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ScheduleDay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

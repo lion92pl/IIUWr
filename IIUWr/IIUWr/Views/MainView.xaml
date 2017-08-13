@@ -84,7 +84,12 @@
                         Visibility="{Binding CanShow, Converter={StaticResource BooleanConverter}}">
                 <FlyoutBase.AttachedFlyout>
                     <Flyout>
-                        <controls:ScheduleFlyout Width="320" />
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="MaxWidth" Value="1460" />
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+                        <controls:ScheduleFlyout />
                     </Flyout>
                 </FlyoutBase.AttachedFlyout>
                 <Interactivity:Interaction.Behaviors>
