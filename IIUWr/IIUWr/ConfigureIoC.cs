@@ -92,7 +92,7 @@ namespace IIUWr
 
             public static void WebAPI()
             {
-                IoC.AsSingleton<WebAPI.Interface.ICoursesService, WebAPI.CoursesService>();
+                IoC.AsSingleton<IIUWr.Fereol.WebAPI.Interface.ICoursesService, IIUWr.Fereol.WebAPI.CoursesService>();
             }
         }
     }

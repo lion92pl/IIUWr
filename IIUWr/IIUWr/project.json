@@ -3,7 +3,7 @@
     "LionCub.Patterns.DependencyInjection": "1.0.2-Dev",
     "LionCub.UI.Localization": "1.1.1-Dev",
     "LionCub.UI.Xaml.Behaviors": "2.1.0-Dev",
-    "LionCub.UI.Xaml.Data.Converters": "1.2.0-Dev",
+    "LionCub.UI.Xaml.Data.Converters": "1.2.2-Dev",
     "LionCub.UI.Xaml.Data.Observable": "1.0.2-Dev",
     "LionCub.UI.Xaml.WebView": "1.0.1-Dev",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",

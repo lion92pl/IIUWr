@@ -9,7 +9,7 @@ namespace IIUWr.Fereol.Interface
 {
     public interface IScheduleService
     {
-        Task<IEnumerable<Tutorial>> GetSchedule();
+        Task<IEnumerable<ScheduleTutorial>> GetSchedule();
     }
 }
  

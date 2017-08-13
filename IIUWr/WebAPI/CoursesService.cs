@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IIUWr.Fereol.Model;
-using WebAPI.Interface;
 using IIUWr.Fereol.HTMLParsing.Interface;
 using Newtonsoft.Json;
 
-namespace WebAPI
+namespace IIUWr.Fereol.WebAPI
 {
-    public class CoursesService : ICoursesService
+    public class CoursesService : Interface.ICoursesService
     {
         private const string CoursesPath = @"courses/";
         private const string SemesterInfoPath = @"get_semester_info/";

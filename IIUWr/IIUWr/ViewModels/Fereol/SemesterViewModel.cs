@@ -12,7 +12,7 @@ namespace IIUWr.ViewModels.Fereol
     {
         private readonly ICoursesService _coursesService;
 
-        public SemesterViewModel(WebAPI.Interface.ICoursesService coursesService)
+        public SemesterViewModel(IIUWr.Fereol.WebAPI.Interface.ICoursesService coursesService)
         {
             _coursesService = coursesService;
         }

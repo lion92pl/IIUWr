@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace WebAPI.Models
+namespace IIUWr.Fereol.WebAPI.Models
 {
     internal class SemesterInfoResponse
     {

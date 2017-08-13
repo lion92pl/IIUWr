@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using IIUWr.Fereol.Model;
 using IIUWr.Fereol.HTMLParsing.Interface;
 using System.Text.RegularExpressions;
+using IIUWr.Fereol.Model.Enums;
 
 namespace IIUWr.Fereol.HTMLParsing
 {
     public class ScheduleService : IScheduleService
     {
-        private const string SchedulePath = @"records/schedule";
+        private const string SchedulePath = @"records/schedule/";
 
         #region Patterns
 
@@ -52,7 +53,7 @@ namespace IIUWr.Fereol.HTMLParsing
             </span>
             (?<{nameof(Tutorial.Terms)}>
                 {CommonRegexes.TagsPattern}
-            )+
+            )
             <input(\s+(name=""term""|type=""hidden""|value="""")){{3}}\s*\/>
             )";
 
@@ -60,11 +61,16 @@ namespace IIUWr.Fereol.HTMLParsing
             $@"(?snx)
             (?:
             <span\s+class=""term"">
-                (?<{nameof(TimeAndLocation.Day)}>\d+)
-                (?<{nameof(TimeAndLocation.Start)}>\d{{0,1}}:\d{{2}})-(?<{nameof(TimeAndLocation.End)}>\d{{0,1}}:\d{{2}})
+                \s*
+                (?<{nameof(TimeAndLocation.Day)}>\w+)
+                \s*
+                (?<{nameof(TimeAndLocation.Start) + nameof(TimeSpan.Hours)}>\d{{1,2}}):(?<{nameof(TimeAndLocation.Start) + nameof(TimeSpan.Minutes)}>\d{{2}})
+                \-
+                (?<{nameof(TimeAndLocation.End) + nameof(TimeSpan.Hours)}>\d{{1,2}}):(?<{nameof(TimeAndLocation.End) + nameof(TimeSpan.Minutes)}>\d{{2}})
+                \s*
             </span>
             <span\s+class=""classroom"">
-                sala:\s+(?<{nameof(TimeAndLocation.Location)}>\d*)
+                sala:\s+(?<{nameof(TimeAndLocation.Location)}>\d*)\s*
             </span>
             )";
 
@@ -86,9 +92,9 @@ namespace IIUWr.Fereol.HTMLParsing
             _connection = connection;
         }
 
-        public async Task<IEnumerable<Tutorial>> GetSchedule()
+        public async Task<IEnumerable<ScheduleTutorial>> GetSchedule()
         {
-            var tutorials = new List<Tutorial>();
+            var tutorials = new List<ScheduleTutorial>();
 
             System.Diagnostics.Debug.WriteLine($"{nameof(GetSchedule)}: Start download");
 
@@ -124,7 +130,40 @@ namespace IIUWr.Fereol.HTMLParsing
 
                     foreach (Capture tutorialCapture in tutorialCaptures)
                     {
-                        tutorials.Add(new Tutorial { Course = course });
+                        var recordMatch = RecordRegex.Match(tutorialCapture.Value);
+                        if (recordMatch.Success)
+                        {
+                            var typeString = recordMatch.Groups[nameof(Tutorial.Type)].Value;
+                            var tutorialType = ParseTutorialType(typeString);
+                            var termsString = recordMatch.Groups[nameof(Tutorial.Terms)].Value;
+
+                            foreach (Match termMatch in TermRegex.Matches(termsString))
+                            {
+                                var dayString = termMatch.Groups[nameof(TimeAndLocation.Day)].Value;
+                                var startHour = int.Parse(termMatch.Groups[nameof(TimeAndLocation.Start) + nameof(TimeSpan.Hours)].Value);
+                                var startMinutes = int.Parse(termMatch.Groups[nameof(TimeAndLocation.Start) + nameof(TimeSpan.Minutes)].Value);
+                                var endHour = int.Parse(termMatch.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Hours)].Value);
+                                var endMinutes = int.Parse(termMatch.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Minutes)].Value);
+                                var locationString = termMatch.Groups[nameof(TimeAndLocation.Location)].Value;
+
+                                var tutorial = new ScheduleTutorial
+                                {
+                                    Course = course,
+                                    Tutorial = new Tutorial
+                                    {
+                                        Type = tutorialType
+                                    },
+                                    Term = new TimeAndLocation
+                                    {
+                                        Day = ParseDayOfWeek(dayString),
+                                        Start = new TimeSpan(startHour, startMinutes, 0),
+                                        End = new TimeSpan(endHour, endMinutes, 0),
+                                        Location = locationString
+                                    }
+                                };
+                                tutorials.Add(tutorial);
+                            }
+                        }
                     }
                 }
             }
@@ -132,6 +171,46 @@ namespace IIUWr.Fereol.HTMLParsing
             System.Diagnostics.Debug.WriteLine($"{nameof(GetSchedule)}: Finished parsing");
 
             return tutorials;
+        }
+
+        private static TutorialType ParseTutorialType(string typeString)
+        {
+            switch (typeString)
+            {
+                case "wykład":
+                    return TutorialType.Lecture;
+                case "repetytorium":
+                    return TutorialType.Revision;
+                case "pracownia":
+                    return TutorialType.Lab;
+                case "ćwiczenia":
+                    return TutorialType.Class;
+                // TODO parse other types
+                default:
+                    return TutorialType.None;
+            }
+        }
+
+        private static DayOfWeek ParseDayOfWeek(string dayString)
+        {
+            switch (dayString)
+            {
+                case "poniedziałek":
+                case "poniedzialek":
+                    return DayOfWeek.Monday;
+                case "wtorek":
+                    return DayOfWeek.Tuesday;
+                case "środa":
+                case "sroda":
+                    return DayOfWeek.Wednesday;
+                case "czwartek":
+                    return DayOfWeek.Thursday;
+                case "piątek":
+                case "piatek":
+                    return DayOfWeek.Friday;
+                default:
+                    return DayOfWeek.Saturday;
+            }
         }
     }
 }

@@ -16,6 +16,15 @@ namespace IIUWr.ViewModels.Fereol
         private readonly IScheduleService _scheduleService;
         private readonly IHTTPConnection _connection;
 
+        private static readonly DayOfWeek[] WorkingDays =
+        {
+            DayOfWeek.Monday,
+            DayOfWeek.Tuesday,
+            DayOfWeek.Wednesday,
+            DayOfWeek.Thursday,
+            DayOfWeek.Friday
+        };
+
         public ScheduleViewModel(IScheduleService scheduleService, IHTTPConnection connection)
         {
             _scheduleService = scheduleService;
@@ -23,15 +32,15 @@ namespace IIUWr.ViewModels.Fereol
             _connection.AuthStatusChanged += AuthStatusChanged;
         }
         
-        private IList<Tutorial> _tutorials;
-        public IList<Tutorial> Tutorials
+        private IList<Tuple<DayOfWeek, IList<ScheduleTutorial>>> _days;
+        public IList<Tuple<DayOfWeek, IList<ScheduleTutorial>>> Days
         {
-            get { return _tutorials; }
+            get { return _days; }
             set
             {
-                if (_tutorials != value)
+                if (_days != value)
                 {
-                    _tutorials = value;
+                    _days = value;
                     PropertyChanged.Notify(this);
                 }
             }
@@ -61,7 +70,15 @@ namespace IIUWr.ViewModels.Fereol
             try
             {
                 var tutorials = await _scheduleService.GetSchedule();
-                Tutorials = tutorials.ToList();
+                var days = new List<Tuple<DayOfWeek, IList<ScheduleTutorial>>>(5);
+                foreach (var dayOfWeek in WorkingDays)
+                {
+                    var dayTutorials = tutorials
+                        .Where(tutorial => tutorial.Term.Day == dayOfWeek)
+                        .ToList();
+                    days.Add(new Tuple<DayOfWeek, IList<ScheduleTutorial>>(dayOfWeek, dayTutorials));
+                }
+                Days = days;
             }
             finally
             {

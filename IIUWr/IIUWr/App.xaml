@@ -48,6 +48,7 @@
             
             <converters:LocaleTextConverter x:Key="LocaleTextConverter" />
             <converters:BooleanConverter x:Key="BooleanConverter" />
+            <converters:FormatConverter x:Key="TimeOfDayConverter" Format="hh&#92;:mm" />
 
             <converters:LocaleTextConverter x:Key="CourseTypeNameConverter" Map="CourseType" />
             <converters:LocaleTextConverter x:Key="PascalCaseLocaleTextConverter" Format="Pascal" />

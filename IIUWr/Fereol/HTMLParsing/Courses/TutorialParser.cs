@@ -65,7 +65,7 @@ namespace IIUWr.Fereol.HTMLParsing.Courses
             <span>
                 (?<{nameof(TimeAndLocation.Day)}>\w+)\s
                 (?<{nameof(TimeAndLocation.Start) + nameof(TimeSpan.Hours)}>\d{{1,2}}):(?<{nameof(TimeAndLocation.Start) + nameof(TimeSpan.Minutes)}>\d{{2}})
-                -
+                \-
                 (?<{nameof(TimeAndLocation.End) + nameof(TimeSpan.Hours)}>\d{{1,2}}):(?<{nameof(TimeAndLocation.End) + nameof(TimeSpan.Minutes)}>\d{{2}})\s
                 \(s.(?<{nameof(TimeAndLocation.Location)}>\d+)\)
             </span>";
