@@ -71,8 +71,9 @@ namespace IIUWr.Views
 
         private void BackRequested(object sender, BackRequestedEventArgs e)
         {
+            (DataContext as ViewModels.MainViewModel).SemestersViewModel.SelectedSemester.SelectedCourse = null;
             //TODO Clear selected course instead
-            courseDetails.Visibility = Visibility.Collapsed;
+            //courseDetails.Visibility = Visibility.Collapsed;
             e.Handled = true;
         }
 
