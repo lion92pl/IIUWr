@@ -70,7 +70,7 @@ namespace IIUWr.Fereol.HTMLParsing
                 \s*
             </span>
             <span\s+class=""classroom"">
-                sala:\s+((?<{nameof(TimeAndLocation.Location)}>\d+)\s*)+
+                sala:\s+((?<{nameof(TimeAndLocation.Location)}>\w*)\s*)+
             </span>
             )";
 
@@ -145,7 +145,7 @@ namespace IIUWr.Fereol.HTMLParsing
                                 var endHour = int.Parse(termMatch.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Hours)].Value);
                                 var endMinutes = int.Parse(termMatch.Groups[nameof(TimeAndLocation.End) + nameof(TimeSpan.Minutes)].Value);
                                 var locationCaptures = termMatch.Groups[nameof(TimeAndLocation.Location)].Captures;
-                                var locationString = string.Join(", ", locationCaptures.OfType<Capture>().Select(c => c.Value));
+                                var locationString = string.Join(", ", locationCaptures.OfType<Capture>().Select(c => c.Value).Where(s => !string.IsNullOrWhiteSpace(s)));
 
                                 var tutorial = new ScheduleTutorial
                                 {
