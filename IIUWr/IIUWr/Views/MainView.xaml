@@ -24,13 +24,13 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup x:Name="visualStates" CurrentStateChanged="VisualStateChanged">
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource MediumVisualState}" />
                     </VisualState.StateTriggers>
                 </VisualState>
-                <VisualState>
+                <VisualState x:Name="oneColumn">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowVisualState}" />
                     </VisualState.StateTriggers>

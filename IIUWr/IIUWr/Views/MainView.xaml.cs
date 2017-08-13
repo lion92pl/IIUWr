@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,9 +23,15 @@ namespace IIUWr.Views
     /// </summary>
     public sealed partial class MainView : Page
     {
+        private const string OneColumnVisualState = "oneColumn";
+
+        private readonly SystemNavigationManager _navigationManager;
+
         public MainView()
         {
             this.InitializeComponent();
+            _navigationManager = SystemNavigationManager.GetForCurrentView();
+            courseDetails.RegisterPropertyChangedCallback(VisibilityProperty, HandleCourseDetailsVisibility);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -33,5 +40,41 @@ namespace IIUWr.Views
 
             DataContext = e.Parameter;
         }
+
+        private void VisualStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            HandleCanGoBack();
+        }
+
+        private void HandleCanGoBack()
+        {
+            var canGoBack = visualStates.CurrentState?.Name == OneColumnVisualState
+                     && courseDetails.Visibility == Visibility.Visible;
+
+            _navigationManager.AppViewBackButtonVisibility = canGoBack
+                ? AppViewBackButtonVisibility.Visible
+                : AppViewBackButtonVisibility.Collapsed;
+            if (canGoBack)
+            {
+                _navigationManager.BackRequested += BackRequested;
+            }
+            else
+            {
+                _navigationManager.BackRequested -= BackRequested;
+            }
+        }
+
+        private void HandleCourseDetailsVisibility(DependencyObject sender, DependencyProperty property)
+        {
+            HandleCanGoBack();
+        }
+
+        private void BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            //TODO Clear selected course instead
+            courseDetails.Visibility = Visibility.Collapsed;
+            e.Handled = true;
+        }
+
     }
 }
