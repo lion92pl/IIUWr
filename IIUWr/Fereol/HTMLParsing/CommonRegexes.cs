@@ -23,7 +23,7 @@ namespace IIUWr.Fereol.HTMLParsing
             (?(opentag)(?!))";
 
         public const string HiddenInputPattern =
-            @"<input(?:\s*(type=(""|')hidden(""|')|name=(""|')[^""']*(""|')|value=(""|')[^""']*(""|'))){3}[^>]*>";
+            @"<input(?:\s*(type=(""|')hidden(""|')|name=(""|')[^""']*(""|')|value=(""|')({[^}]*}|[^""']*)(""|'))){3}[^>]*>";
 
         private static readonly string AuthenticatedPattern =
             $@"(?snx)
@@ -41,7 +41,7 @@ namespace IIUWr.Fereol.HTMLParsing
             </div>)";
 
         private static readonly string InternalHiddenInputPattern =
-            $@"<input(?:\s*(type=(""|')hidden(""|')|name=(""|')(?<{RegexGroups.Name}>[^""']*)(""|')|value=(""|')(?<{RegexGroups.Value}>[^""']*)(""|'))){{3}}[^>]*>";
+            $@"<input(?:\s*(type=(""|')hidden(""|')|name=(""|')(?<{RegexGroups.Name}>[^""']*)(""|')|value=(""|')(?<{RegexGroups.Value}>({{[^}}]*}}|[^""']*))(""|'))){{3}}[^>]*>";
 
         private static readonly Regex AuthenticatedRegex = new Regex(AuthenticatedPattern, RegexOptions.Compiled);
 

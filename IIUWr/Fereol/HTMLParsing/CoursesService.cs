@@ -388,11 +388,11 @@ namespace IIUWr.Fereol.HTMLParsing
                 var parsed = CommonRegexes.ParseHiddenInput(hiddenInput);
                 if (parsed.Item1 == "ajax-course-data")
                 {
-                    if (parsed.Item2.Contains("is_recording_open&quot;: true"))
+                    if (parsed.Item2.Contains("is_recording_open\": true"))
                     {
                         course.CanEnroll = true;
                     }
-                    if (parsed.Item2.Contains("is_recording_open&quot;: false"))
+                    if (parsed.Item2.Contains("is_recording_open\": false"))
                     {
                         course.CanEnroll = false;
                     }

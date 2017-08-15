@@ -67,10 +67,10 @@
                 <Run x:Uid="/Course/ForFirstYearLabel" />
                 <Run Text="{Binding Course.SuggestedFor1Year, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
             </TextBlock>
-            <TextBlock TextWrapping="WrapWholeWords">
+            <!--<TextBlock TextWrapping="WrapWholeWords">
                 <Run x:Uid="/Course/WasEnrolledLabel" />
                 <Run Text="{Binding Course.WasEnrolled, Converter={StaticResource PascalCaseLocaleTextConverter}}" />
-            </TextBlock>
+            </TextBlock>-->
         </StackPanel>
         <local:TutorialsControl DataContext="{Binding Tutorials}" Grid.Row="1" />
         <Grid x:Name="description" Grid.Column="1" Grid.RowSpan="2">

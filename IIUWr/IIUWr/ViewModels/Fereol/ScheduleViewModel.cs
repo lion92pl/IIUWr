@@ -76,6 +76,7 @@ namespace IIUWr.ViewModels.Fereol
                 {
                     var dayTutorials = tutorials
                         .Where(tutorial => tutorial.Term.Day == dayOfWeek)
+                        .OrderBy(tutorial => tutorial.Term.Start)
                         .ToList();
                     days.Add(new Tuple<DayOfWeek, IList<ScheduleTutorial>>(dayOfWeek, dayTutorials));
                 }
