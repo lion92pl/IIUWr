@@ -1,62 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace IIUWr.Fereol.WebAPI.Models
 {
+    [DataContract]
     internal class SemesterInfoResponse
     {
-        [JsonProperty("courseList")]
+        [DataMember(Name ="courseList")]
         public List<Course> Courses { get; set; }
     }
 
+    [DataContract]
     internal class Course
     {
-        [JsonProperty("status")]
+        [DataMember(Name = "status")]
         public int Status { get; set; }
 
-        [JsonProperty("exam")]
+        [DataMember(Name = "exam")]
         public bool Exam { get; set; }
 
-        [JsonProperty("suggested_for_first_year")]
+        [DataMember(Name = "suggested_for_first_year")]
         public bool SuggestedForFirstYear { get; set; }
 
-        [JsonProperty("is_recording_open")]
+        [DataMember(Name = "is_recording_open")]
         public bool RecordingOpen { get; set; }
 
-        [JsonProperty("english")]
+        [DataMember(Name = "english")]
         public bool English { get; set; }
 
-        [JsonProperty("id")]
+        [DataMember(Name = "id")]
         public int Id { get; set; }
 
-        [JsonProperty("type")]
+        [DataMember(Name = "type")]
         public int Type { get; set; }
 
-        [JsonProperty("teacher")]
+        [DataMember(Name = "teacher")]
         public int TeacherId { get; set; }
 
-        [JsonProperty("tags")]
+        [DataMember(Name = "tags")]
         public int[] Tags { get; set; }
 
-        [JsonProperty("effects")]
+        [DataMember(Name = "effects")]
         public int[] Effects { get; set; }
 
-        [JsonProperty("name")]
+        [DataMember(Name = "name")]
         public string Name { get; set; }
 
-        [JsonProperty("short_name")]
+        [DataMember(Name = "short_name")]
         public string ShortName { get; set; }
 
-        [JsonProperty("url")]
+        [DataMember(Name = "url")]
         public string Url { get; set; }
 
-        public static implicit operator IIUWr.Fereol.Model.Course(Course course)
+        public static implicit operator Model.Course(Course course)
         {
-            return new IIUWr.Fereol.Model.Course()
+            return new Model.Course()
             {
                 Name = course.Name,
                 English = course.English,
@@ -64,7 +62,7 @@ namespace IIUWr.Fereol.WebAPI.Models
                 Id = course.Id,
                 SuggestedFor1Year = course.SuggestedForFirstYear,
                 Path = course.Url,
-                Type = IIUWr.Fereol.Model.CourseType.Find(course.Type)
+                Type = Model.CourseType.Find(course.Type)
             };
         }
     }

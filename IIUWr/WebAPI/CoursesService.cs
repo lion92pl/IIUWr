@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IIUWr.Fereol.Model;
 using IIUWr.Fereol.HTMLParsing.Interface;
-using Newtonsoft.Json;
+using System.Runtime.Serialization.Json;
 
 namespace IIUWr.Fereol.WebAPI
 {
@@ -50,7 +50,10 @@ namespace IIUWr.Fereol.WebAPI
             Models.SemesterInfoResponse response;
             try
             {
-                response = JsonConvert.DeserializeObject<Models.SemesterInfoResponse>(page);
+                var serializer = new DataContractJsonSerializer(typeof(Models.SemesterInfoResponse));
+                var bytes = Encoding.UTF8.GetBytes(page);
+                var memoryStream = new System.IO.MemoryStream(bytes);
+                response = serializer.ReadObject(memoryStream) as Models.SemesterInfoResponse;
             }
             catch
             {
