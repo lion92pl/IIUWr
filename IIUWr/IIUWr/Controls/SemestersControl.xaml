@@ -44,7 +44,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <CommandBar x:Name="commandBar">
+        <!--<CommandBar x:Name="commandBar">
             <AppBarButton Label="Refresh" x:Uid="RefreshAppBarButton" Icon="Refresh">
                 <Interactivity:Interaction.Behaviors>
                     <Core:EventTriggerBehavior EventName="Click">
@@ -52,14 +52,7 @@
                     </Core:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </AppBarButton>
-            <!--<AppBarButton Label="Filter" x:Uid="FilterAppBarButton" Icon="Filter">
-                <AppBarButton.Flyout>
-                    <Flyout>
-                        <controls:CourseTypeFilterControl DataContext="{Binding Filters.CourseTypeFilters}" />
-                    </Flyout>
-                </AppBarButton.Flyout>
-            </AppBarButton>-->
-        </CommandBar>
+        </CommandBar>-->
 
         <ComboBox Grid.Row="1" HorizontalAlignment="Stretch"
                   ItemsSource="{Binding Semesters}"
@@ -80,6 +73,8 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+        <ProgressBar Grid.Row="2" VerticalAlignment="Stretch" IsIndeterminate="True"
+                     Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}"/>
         <ProgressBar Grid.Row="2" VerticalAlignment="Stretch" IsIndeterminate="True"
                      DataContext="{Binding SelectedSemester}"
                      Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanConverter}, FallbackValue=Collapsed}"/>
