@@ -29,8 +29,8 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowVisualState}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="commandBar.(AppBar.ClosedDisplayMode)" Value="Minimal" />
-                        <Setter Target="commandBar.(Grid.Row)" Value="4" />
+                        <!--<Setter Target="commandBar.(AppBar.ClosedDisplayMode)" Value="Minimal" />
+                        <Setter Target="commandBar.(Grid.Row)" Value="4" />-->
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
