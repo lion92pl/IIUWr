@@ -68,7 +68,7 @@
         </trans-unit>
         <trans-unit id="ScheduleLabel.Text" translate="yes" xml:space="preserve">
           <source>Plan</source>
-          <target state="new">Plan</target>
+          <target state="translated">Plan</target>
         </trans-unit>
       </group>
     </body>
@@ -409,87 +409,87 @@
       <group id="IIUWR/STRINGS/PL/ENUMS/DAYOFWEEK.RESW" datatype="resx">
         <trans-unit id="Friday" translate="yes" xml:space="preserve">
           <source>piątek</source>
-          <target state="new">piątek</target>
+          <target state="translated">Friday</target>
         </trans-unit>
         <trans-unit id="Friday@Short" translate="yes" xml:space="preserve">
           <source>pią</source>
-          <target state="new">pią</target>
+          <target state="translated">Fr</target>
         </trans-unit>
         <trans-unit id="Friday@Uppercase" translate="yes" xml:space="preserve">
           <source>Piątek</source>
-          <target state="new">Piątek</target>
+          <target state="translated">Friday</target>
         </trans-unit>
         <trans-unit id="Monday" translate="yes" xml:space="preserve">
           <source>poniedziałek</source>
-          <target state="new">poniedziałek</target>
+          <target state="translated">Monday</target>
         </trans-unit>
         <trans-unit id="Monday@Short" translate="yes" xml:space="preserve">
           <source>pon</source>
-          <target state="new">pon</target>
+          <target state="translated">Mo</target>
         </trans-unit>
         <trans-unit id="Monday@Uppercase" translate="yes" xml:space="preserve">
           <source>Poniedziałek</source>
-          <target state="new">Poniedziałek</target>
+          <target state="translated">Monday</target>
         </trans-unit>
         <trans-unit id="Saturday" translate="yes" xml:space="preserve">
           <source>sobota</source>
-          <target state="new">sobota</target>
+          <target state="translated">Saturday</target>
         </trans-unit>
         <trans-unit id="Saturday@Short" translate="yes" xml:space="preserve">
           <source>so</source>
-          <target state="new">so</target>
+          <target state="translated">Sa</target>
         </trans-unit>
         <trans-unit id="Saturday@Uppercase" translate="yes" xml:space="preserve">
           <source>Sobota</source>
-          <target state="new">Sobota</target>
+          <target state="translated">Saturday</target>
         </trans-unit>
         <trans-unit id="Sunday" translate="yes" xml:space="preserve">
           <source>niedziela</source>
-          <target state="new">niedziela</target>
+          <target state="translated">Sunday</target>
         </trans-unit>
         <trans-unit id="Sunday@Short" translate="yes" xml:space="preserve">
           <source>nie</source>
-          <target state="new">nie</target>
+          <target state="translated">Su</target>
         </trans-unit>
         <trans-unit id="Sunday@Uppercase" translate="yes" xml:space="preserve">
           <source>Niedziela</source>
-          <target state="new">Niedziela</target>
+          <target state="translated">Sunday</target>
         </trans-unit>
         <trans-unit id="Thursday" translate="yes" xml:space="preserve">
           <source>czwartek</source>
-          <target state="new">czwartek</target>
+          <target state="translated">Thursday</target>
         </trans-unit>
         <trans-unit id="Thursday@Short" translate="yes" xml:space="preserve">
           <source>czw</source>
-          <target state="new">czw</target>
+          <target state="translated">Th</target>
         </trans-unit>
         <trans-unit id="Thursday@Uppercase" translate="yes" xml:space="preserve">
           <source>Czwartek</source>
-          <target state="new">Czwartek</target>
+          <target state="translated">Thursday</target>
         </trans-unit>
         <trans-unit id="Wednesday" translate="yes" xml:space="preserve">
           <source>środa</source>
-          <target state="new">środa</target>
+          <target state="translated">Wednesday</target>
         </trans-unit>
         <trans-unit id="Wednesday@Short" translate="yes" xml:space="preserve">
           <source>śr</source>
-          <target state="new">śr</target>
+          <target state="translated">We</target>
         </trans-unit>
         <trans-unit id="Wednesday@Uppercase" translate="yes" xml:space="preserve">
           <source>Środa</source>
-          <target state="new">Środa</target>
+          <target state="translated">Wednesday</target>
         </trans-unit>
         <trans-unit id="Tuesday" translate="yes" xml:space="preserve">
           <source>wtorek</source>
-          <target state="new">wtorek</target>
+          <target state="translated">Tuesday</target>
         </trans-unit>
         <trans-unit id="Tuesday@Short" translate="yes" xml:space="preserve">
           <source>wt</source>
-          <target state="new">wt</target>
+          <target state="translated">Tu</target>
         </trans-unit>
         <trans-unit id="Tuesday@Uppercase" translate="yes" xml:space="preserve">
           <source>Wtorek</source>
-          <target state="new">Wtorek</target>
+          <target state="translated">Tuesday</target>
         </trans-unit>
       </group>
     </body>

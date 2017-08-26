@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Friday" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="Friday@Short" xml:space="preserve">
+    <value>Fr</value>
+  </data>
+  <data name="Friday@Uppercase" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="Monday@Short" xml:space="preserve">
+    <value>Mo</value>
+  </data>
+  <data name="Monday@Uppercase" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="Saturday@Short" xml:space="preserve">
+    <value>Sa</value>
+  </data>
+  <data name="Saturday@Uppercase" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
+  <data name="Sunday@Short" xml:space="preserve">
+    <value>Su</value>
+  </data>
+  <data name="Sunday@Uppercase" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="Thursday@Short" xml:space="preserve">
+    <value>Th</value>
+  </data>
+  <data name="Thursday@Uppercase" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="Wednesday@Short" xml:space="preserve">
+    <value>We</value>
+  </data>
+  <data name="Wednesday@Uppercase" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="Tuesday@Short" xml:space="preserve">
+    <value>Tu</value>
+  </data>
+  <data name="Tuesday@Uppercase" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+</root>
