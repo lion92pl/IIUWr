@@ -1,5 +1,6 @@
 ﻿using IIUWr.Fereol.Interface;
 using IIUWr.Fereol.Model;
+using IIUWr.Fereol.Model.Enums;
 using IIUWr.ViewModels.Interfaces;
 using LionCub.Patterns.DependencyInjection;
 using System;
@@ -34,8 +35,10 @@ namespace IIUWr.ViewModels.Fereol
             }
         }
 
-        private IList<TutorialViewModel> _tutorials;
-        public IList<TutorialViewModel> Tutorials
+        //private IList<TutorialViewModel> _tutorials;
+        //public IList<TutorialViewModel> Tutorials
+        private IList<IGrouping<TutorialType, TutorialViewModel>> _tutorials;
+        public IList<IGrouping<TutorialType, TutorialViewModel>> Tutorials
         {
             get { return _tutorials; }
             set
@@ -73,13 +76,17 @@ namespace IIUWr.ViewModels.Fereol
                 vm.Tutorial = t;
                 vm.EnrollmentStatusChanged += TutorialsEnrollmentStatusChanged;
                 return vm;
-            }).ToList();
+            })
+            .GroupBy(g => g.Tutorial.Type)
+            .ToList();
             IsRefreshing = false;
         }
 
         private void TutorialsEnrollmentStatusChanged(object sender, EventArgs args)
         {
-            foreach (var vm in Tutorials)
+            foreach (var vm in Tutorials
+                .SelectMany(g => g.ToList())
+                )
             {
                 vm.EnrollmentStatusChanged -= TutorialsEnrollmentStatusChanged;
             }

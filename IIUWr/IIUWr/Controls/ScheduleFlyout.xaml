@@ -60,6 +60,7 @@
                   x:Name="gridView"
                   ItemTemplate="{StaticResource Day}"
                   ItemsPanel="{StaticResource GridViewPanel}"
+                  SelectionMode="None"
                   ItemContainerStyle="{StaticResource GridViewItemPresenterStyle}"
                   Visibility="Collapsed" />
         <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center"

@@ -19,7 +19,6 @@
 
     <Page.Resources>
         <SolidColorBrush x:Key="BottomBarColor" Color="{ThemeResource SystemChromeLowColor}" />
-
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

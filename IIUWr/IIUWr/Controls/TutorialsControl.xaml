@@ -16,6 +16,8 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <CollectionViewSource IsSourceGrouped="True" Source="{Binding}" x:Name="collection" />
+
             <Style x:Key="DetailsLabel" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="10" />
                 <Setter Property="Foreground" Value="Gray" />
@@ -23,99 +25,113 @@
             </Style>
 
             <DataTemplate x:Key="TutorialTemplate" x:DataType="vmFereol:TutorialViewModel">
-                <StackPanel Padding="10,5">
-                    <Interactivity:Interaction.Behaviors>
-                        <Core:DataTriggerBehavior Binding="{x:Bind Tutorial.IsEnrolled}" Value="True">
-                            <Core:ChangePropertyAction PropertyName="Background" Value="{StaticResource EnrolledBrush}" />
-                        </Core:DataTriggerBehavior>
-                        <Core:DataTriggerBehavior Binding="{x:Bind Tutorial.IsQueued}" Value="True">
-                            <Core:ChangePropertyAction PropertyName="Background" Value="{StaticResource QueuedBrush}" />
-                        </Core:DataTriggerBehavior>
-                    </Interactivity:Interaction.Behaviors>
+                <StackPanel Margin="0,5,10,5" Orientation="Horizontal" HorizontalAlignment="Stretch">
 
-                    <ListBox ItemsSource="{x:Bind Tutorial.Terms}" Background="Transparent">
+                    <Rectangle Fill="Transparent" Width="4" VerticalAlignment="Stretch" Margin="0,0,6,0">
+                        <Interactivity:Interaction.Behaviors>
+                            <Core:DataTriggerBehavior Binding="{x:Bind Tutorial.IsEnrolled}" Value="True">
+                                <Core:ChangePropertyAction PropertyName="Fill" Value="{StaticResource EnrolledBrush}" />
+                            </Core:DataTriggerBehavior>
+                            <Core:DataTriggerBehavior Binding="{x:Bind Tutorial.IsQueued}" Value="True">
+                                <Core:ChangePropertyAction PropertyName="Fill" Value="{StaticResource QueuedBrush}" />
+                            </Core:DataTriggerBehavior>
+                        </Interactivity:Interaction.Behaviors>
+                    </Rectangle>
+
+                    <StackPanel>
+                        <TextBlock Text="{x:Bind Tutorial.Teacher.Name}" TextWrapping="Wrap" Padding="0,0,0,3" />
+                        <TextBlock x:Uid="/Tutorial/AdvancedGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{x:Bind Tutorial.AdvancedGroup, Converter={StaticResource BooleanConverter}}" />
+                        <TextBlock x:Uid="/Tutorial/InterdisciplinaryGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{x:Bind Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}" />
+                        <TextBlock Style="{StaticResource DetailsLabel}">
+                                <Run x:Uid="/Tutorial/EnrolledLabel" />:
+                                <Run Text="{x:Bind Tutorial.Enrolled}" />
+                                ,
+                                <Run x:Uid="/Tutorial/LimitLabel" />:
+                                <Run Text="{x:Bind Tutorial.Limit}" />
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource DetailsLabel}" Visibility="{x:Bind Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}">
+                                <Run x:Uid="/Tutorial/InterdisciplinaryEnrolledLabel" />:
+                                <Run Text="{x:Bind Tutorial.EnrolledInterdisciplinary}" />
+                                ,
+                                <Run x:Uid="/Tutorial/InterdisciplinaryLimitLabel" />:
+                                <Run Text="{x:Bind Tutorial.LimitInterdisciplinary}" />
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource DetailsLabel}" Visibility="{x:Bind IsFull, Converter={StaticResource BooleanConverter}}">
+                                <Run x:Uid="/Tutorial/QueueLabel" />:
+                                <Run Text="{x:Bind Tutorial.Queue}" />
+                        </TextBlock>
+                        <StackPanel Visibility="{x:Bind Tutorial.Course.CanEnroll, Converter={StaticResource BooleanConverter}}" Orientation="Horizontal" Margin="0,5,0,2">
+                            <Button x:Uid="/Tutorial/EnrollButton" Visibility="{x:Bind CanEnroll, Converter={StaticResource BooleanConverter}}">
+                                <Interactivity:Interaction.Behaviors>
+                                    <Core:EventTriggerBehavior EventName="Click">
+                                        <Core:CallMethodAction MethodName="Enroll" TargetObject="{x:Bind}" />
+                                    </Core:EventTriggerBehavior>
+                                </Interactivity:Interaction.Behaviors>
+                            </Button>
+                            <Button x:Uid="/Tutorial/QueueButton" Visibility="{x:Bind CanQueue, Converter={StaticResource BooleanConverter}}">
+                                <Interactivity:Interaction.Behaviors>
+                                    <Core:EventTriggerBehavior EventName="Click">
+                                        <Core:CallMethodAction MethodName="Enroll" TargetObject="{x:Bind}" />
+                                    </Core:EventTriggerBehavior>
+                                </Interactivity:Interaction.Behaviors>
+                            </Button>
+                            <Button x:Uid="/Tutorial/UnEnrollButton" Visibility="{x:Bind Tutorial.IsEnrolled, Converter={StaticResource BooleanConverter}}">
+                                <Interactivity:Interaction.Behaviors>
+                                    <Core:EventTriggerBehavior EventName="Click">
+                                        <Core:CallMethodAction MethodName="UnEnroll" TargetObject="{x:Bind}" />
+                                    </Core:EventTriggerBehavior>
+                                </Interactivity:Interaction.Behaviors>
+                            </Button>
+                            <Button x:Uid="/Tutorial/UnQueueButton" Visibility="{x:Bind Tutorial.IsQueued, Converter={StaticResource BooleanConverter}}">
+                                <Interactivity:Interaction.Behaviors>
+                                    <Core:EventTriggerBehavior EventName="Click">
+                                        <Core:CallMethodAction MethodName="UnEnroll" TargetObject="{x:Bind}" />
+                                    </Core:EventTriggerBehavior>
+                                </Interactivity:Interaction.Behaviors>
+                            </Button>
+                            <ComboBox Visibility="{x:Bind Tutorial.IsQueued, Converter={StaticResource BooleanConverter}}"
+                                      ItemsSource="{x:Bind vmFereol:TutorialViewModel.Priorities}"
+                                      SelectedValue="{Binding Tutorial.Priority}"
+                                      Margin="15,0,0,0">
+                                <Interactivity:Interaction.Behaviors>
+                                    <Core:EventTriggerBehavior EventName="SelectionChanged">
+                                        <Core:CallMethodAction MethodName="SetPriority" TargetObject="{x:Bind}" />
+                                    </Core:EventTriggerBehavior>
+                                </Interactivity:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <ListBox ItemsSource="{x:Bind Tutorial.Terms}" Background="Transparent" HorizontalAlignment="Right">
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="fereolModel:TimeAndLocation">
                                 <TextBlock Style="{StaticResource DetailsLabel}">
-                                    <Run Text="{x:Bind Day, Converter={StaticResource LocaleTextConverter}}" />
-                                    <Run Text="{x:Bind Start}" />
-                                    <Run Text="{x:Bind End}" />
-                                    <Run Text="{x:Bind Location}" />
+                                        <Run Text="{x:Bind Day, Converter={StaticResource LocaleTextConverter}}" />
+                                        <Run Text="{x:Bind Start}" />
+                                        <Run Text="{x:Bind End}" />
+                                        <Run Text="{x:Bind Location}" />
                                 </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-
-                    <TextBlock Text="{x:Bind Tutorial.Teacher.Name}" TextWrapping="Wrap" Padding="0,0,0,3" />
-                    <TextBlock Text="{x:Bind Tutorial.Type, Converter={StaticResource LocaleTextConverter}}" Style="{StaticResource DetailsLabel}" />
-                    <TextBlock x:Uid="/Tutorial/AdvancedGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{x:Bind Tutorial.AdvancedGroup, Converter={StaticResource BooleanConverter}}" />
-                    <TextBlock x:Uid="/Tutorial/InterdisciplinaryGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{x:Bind Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}" />
-                    <TextBlock Style="{StaticResource DetailsLabel}">
-                            <Run x:Uid="/Tutorial/EnrolledLabel" />:
-                            <Run Text="{x:Bind Tutorial.Enrolled}" />
-                            ,
-                            <Run x:Uid="/Tutorial/LimitLabel" />:
-                            <Run Text="{x:Bind Tutorial.Limit}" />
-                    </TextBlock>
-                    <TextBlock Style="{StaticResource DetailsLabel}" Visibility="{x:Bind Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}">
-                            <Run x:Uid="/Tutorial/InterdisciplinaryEnrolledLabel" />:
-                            <Run Text="{x:Bind Tutorial.EnrolledInterdisciplinary}" />
-                            ,
-                            <Run x:Uid="/Tutorial/InterdisciplinaryLimitLabel" />:
-                            <Run Text="{x:Bind Tutorial.LimitInterdisciplinary}" />
-                    </TextBlock>
-                    <TextBlock Style="{StaticResource DetailsLabel}" Visibility="{x:Bind IsFull, Converter={StaticResource BooleanConverter}}">
-                            <Run x:Uid="/Tutorial/QueueLabel" />:
-                            <Run Text="{x:Bind Tutorial.Queue}" />
-                    </TextBlock>
-                    <StackPanel Visibility="{x:Bind Tutorial.Course.CanEnroll, Converter={StaticResource BooleanConverter}}" Orientation="Horizontal" Margin="0,5,0,2">
-                        <Button x:Uid="/Tutorial/EnrollButton" Visibility="{x:Bind CanEnroll, Converter={StaticResource BooleanConverter}}">
-                            <Interactivity:Interaction.Behaviors>
-                                <Core:EventTriggerBehavior EventName="Click">
-                                    <Core:CallMethodAction MethodName="Enroll" TargetObject="{x:Bind}" />
-                                </Core:EventTriggerBehavior>
-                            </Interactivity:Interaction.Behaviors>
-                        </Button>
-                        <Button x:Uid="/Tutorial/QueueButton" Visibility="{x:Bind CanQueue, Converter={StaticResource BooleanConverter}}">
-                            <Interactivity:Interaction.Behaviors>
-                                <Core:EventTriggerBehavior EventName="Click">
-                                    <Core:CallMethodAction MethodName="Enroll" TargetObject="{x:Bind}" />
-                                </Core:EventTriggerBehavior>
-                            </Interactivity:Interaction.Behaviors>
-                        </Button>
-                        <Button x:Uid="/Tutorial/UnEnrollButton" Visibility="{x:Bind Tutorial.IsEnrolled, Converter={StaticResource BooleanConverter}}">
-                            <Interactivity:Interaction.Behaviors>
-                                <Core:EventTriggerBehavior EventName="Click">
-                                    <Core:CallMethodAction MethodName="UnEnroll" TargetObject="{x:Bind}" />
-                                </Core:EventTriggerBehavior>
-                            </Interactivity:Interaction.Behaviors>
-                        </Button>
-                        <Button x:Uid="/Tutorial/UnQueueButton" Visibility="{x:Bind Tutorial.IsQueued, Converter={StaticResource BooleanConverter}}">
-                            <Interactivity:Interaction.Behaviors>
-                                <Core:EventTriggerBehavior EventName="Click">
-                                    <Core:CallMethodAction MethodName="UnEnroll" TargetObject="{x:Bind}" />
-                                </Core:EventTriggerBehavior>
-                            </Interactivity:Interaction.Behaviors>
-                        </Button>
-                        <ComboBox Visibility="{x:Bind Tutorial.IsQueued, Converter={StaticResource BooleanConverter}}"
-                                  ItemsSource="{x:Bind vmFereol:TutorialViewModel.Priorities}"
-                                  SelectedValue="{Binding Tutorial.Priority}"
-                                  Margin="15,0,0,0">
-                            <Interactivity:Interaction.Behaviors>
-                                <Core:EventTriggerBehavior EventName="SelectionChanged">
-                                    <Core:CallMethodAction MethodName="SetPriority" TargetObject="{x:Bind}" />
-                                </Core:EventTriggerBehavior>
-                            </Interactivity:Interaction.Behaviors>
-                        </ComboBox>
-                    </StackPanel>
                 </StackPanel>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
-        <ListView ItemsSource="{Binding}"
+        <ListView ItemsSource="{x:Bind collection.View, Mode=OneWay}"
                   ItemTemplate="{StaticResource TutorialTemplate}"
-                  SelectionMode="None" />
+                  SelectionMode="None">
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Key, Converter={StaticResource LocaleTextConverter}}" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
     </Grid>
 </UserControl>
