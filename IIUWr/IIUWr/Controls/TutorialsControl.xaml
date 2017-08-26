@@ -25,7 +25,13 @@
             </Style>
 
             <DataTemplate x:Key="TutorialTemplate" x:DataType="vmFereol:TutorialViewModel">
-                <StackPanel Margin="0,5,10,5" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <Grid Margin="0,5,10,5" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
                     <Rectangle Fill="Transparent" Width="4" VerticalAlignment="Stretch" Margin="0,0,6,0">
                         <Interactivity:Interaction.Behaviors>
@@ -38,7 +44,7 @@
                         </Interactivity:Interaction.Behaviors>
                     </Rectangle>
 
-                    <StackPanel>
+                    <StackPanel Grid.Column="1">
                         <TextBlock Text="{x:Bind Tutorial.Teacher.Name}" TextWrapping="Wrap" Padding="0,0,0,3" />
                         <TextBlock x:Uid="/Tutorial/AdvancedGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{x:Bind Tutorial.AdvancedGroup, Converter={StaticResource BooleanConverter}}" />
                         <TextBlock x:Uid="/Tutorial/InterdisciplinaryGroupLabel" Style="{StaticResource DetailsLabel}" Visibility="{x:Bind Tutorial.InterdisciplinaryGroup, Converter={StaticResource BooleanConverter}}" />
@@ -102,19 +108,25 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <ListBox ItemsSource="{x:Bind Tutorial.Terms}" Background="Transparent" HorizontalAlignment="Right">
+                    <ListBox ItemsSource="{x:Bind Tutorial.Terms}" Background="Transparent" Grid.Column="3" IsHitTestVisible="False">
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="fereolModel:TimeAndLocation">
-                                <TextBlock Style="{StaticResource DetailsLabel}">
+                                <TextBlock Style="{StaticResource DetailsLabel}" Foreground="{ThemeResource TextControlForeground}">
                                         <Run Text="{x:Bind Day, Converter={StaticResource LocaleTextConverter}}" />
-                                        <Run Text="{x:Bind Start}" />
-                                        <Run Text="{x:Bind End}" />
+                                        <Run Text="{x:Bind Start, Converter={StaticResource TimeOfDayConverter}}" FontWeight="Bold" />
+                                        <Run Text="-" />
+                                        <Run Text="{x:Bind End, Converter={StaticResource TimeOfDayConverter}}" FontWeight="Bold" />
                                         <Run Text="{x:Bind Location}" />
                                 </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Padding" Value="3" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                     </ListBox>
-                </StackPanel>
+                </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
