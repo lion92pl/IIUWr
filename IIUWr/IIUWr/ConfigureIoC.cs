@@ -16,8 +16,7 @@ namespace IIUWr
         {
             get
             {
-                object demoMode;
-                ApplicationData.Current.LocalSettings.Values.TryGetValue(Key, out demoMode);
+                ApplicationData.Current.LocalSettings.Values.TryGetValue(Key, out object demoMode);
                 return demoMode != null && demoMode is bool demo && demo;
             }
             set
