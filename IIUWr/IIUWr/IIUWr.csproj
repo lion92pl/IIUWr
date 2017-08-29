@@ -257,7 +257,7 @@
       <Project>{3ca09b84-c4fe-44d3-9322-b39ba56f3271}</Project>
       <Name>Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebAPI\WebAPI.csproj">
+    <ProjectReference Include="..\Fereol\WebAPI\WebAPI.csproj">
       <Project>{66fb0259-f176-43cb-b2dd-655e0ff51565}</Project>
       <Name>WebAPI</Name>
     </ProjectReference>

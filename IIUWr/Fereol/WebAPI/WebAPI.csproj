@@ -114,20 +114,19 @@
     <EmbeddedResource Include="Properties\WebAPI.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fereol\HTMLParsing\HTMLParsing.csproj">
+    <ProjectReference Include="..\HTMLParsing\HTMLParsing.csproj">
       <Project>{335E1699-84F6-4323-BF14-5A672919AD4B}</Project>
       <Name>HTMLParsing</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fereol\Interface\Interface.csproj">
+    <ProjectReference Include="..\Interface\Interface.csproj">
       <Project>{97d0194c-87bc-4026-a58d-b94d959c540a}</Project>
       <Name>Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fereol\Model\Model.csproj">
+    <ProjectReference Include="..\Model\Model.csproj">
       <Project>{3CA09B84-C4FE-44D3-9322-B39BA56F3271}</Project>
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
-  
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
