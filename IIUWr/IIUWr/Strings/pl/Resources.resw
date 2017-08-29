@@ -122,7 +122,7 @@
     <comment>App name</comment>
   </data>
   <data name="DemoModeToggled" xml:space="preserve">
-    <value>Przełączono tryb demo. Uruchom ponownie, aby zmienić server.</value>
+    <value>Przełączono tryb demo. Uruchom ponownie, aby zmienić serwer.</value>
   </data>
   <data name="False" xml:space="preserve">
     <value>nie</value>

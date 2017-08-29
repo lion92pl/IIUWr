@@ -57,7 +57,7 @@
     <comment>Log in</comment>
   </data>
   <data name="DemoModeToggled" xml:space="preserve">
-    <value>Dome mode toggled. Restart app to change server.</value>
+    <value>Demo mode toggled. Restart app to change server.</value>
   </data>
   <data name="ScheduleLabel.Text" xml:space="preserve">
     <value>Plan</value>

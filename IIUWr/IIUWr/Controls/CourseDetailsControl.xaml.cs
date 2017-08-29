@@ -25,12 +25,12 @@ namespace IIUWr.Controls
             this.InitializeComponent();
         }
 
-        private void WebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        private async void WebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
             if (args.Uri != null)
             {
                 args.Cancel = true;
-                Launcher.LaunchUriAsync(args.Uri);
+                await Launcher.LaunchUriAsync(args.Uri);
             }
         }
     }

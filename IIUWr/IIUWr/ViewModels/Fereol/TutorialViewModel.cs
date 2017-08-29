@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace IIUWr.ViewModels.Fereol
 {
-    public class TutorialViewModel : IRefreshable, INotifyPropertyChanged
+    public class TutorialViewModel : INotifyPropertyChanged
     {
         public static int[] Priorities { get; } = { 1, 2, 3, 4, 5 };
 
@@ -47,20 +47,6 @@ namespace IIUWr.ViewModels.Fereol
         public bool CanQueue => !Tutorial.IsEnrolled && !Tutorial.IsQueued && IsFull;
         public bool IsFull => Tutorial.Limit <= Tutorial.Enrolled;
         
-        private bool _isRefreshing;
-        public bool IsRefreshing
-        {
-            get { return _isRefreshing; }
-            private set
-            {
-                if (_isRefreshing != value)
-                {
-                    _isRefreshing = value;
-                    PropertyChanged.Notify(this);
-                }
-            }
-        }
-
         public async void Enroll()
         {
             await _coursesService.Enroll(Tutorial, true);
@@ -82,13 +68,6 @@ namespace IIUWr.ViewModels.Fereol
                 await _coursesService.SetPriority(Tutorial, priority.Value);
                 EnrollmentStatusChanged.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        public async void Refresh()
-        {
-            IsRefreshing = true;
-            //var tutorials = await _coursesService.GetTutorials();
-            IsRefreshing = false;
         }
     }
 }
